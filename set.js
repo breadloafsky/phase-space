@@ -1,8 +1,9 @@
+import { SingletonFactory } from "./singleton.js";
 
 
+export function PointSet(){
 
-
-export function PointSet(sets){
+    this.singleton = SingletonFactory.getInstance();
     this.x = Math.random()*100;
     this.y = Math.random()*100;
     this.z = Math.random()*100;
@@ -14,21 +15,39 @@ export function PointSet(sets){
     this.previousTime=0;
     this.dt =2 * Math.random();
     this.startTime=null;
-    sets.push(this);
+
     this.timeoffset = 0;
+
+    this.life = 0;
+    this.lifeMax = 50 +100 * Math.random();
 }
 
 
 
-PointSet.prototype.update = function(mode, time,length,equation,t){
+PointSet.prototype.update = function(time){
 
     var x = this.x;
     var y = this.y;
     var z = this.z;
+    const t = this.singleton.t;
+    const equation = this.singleton.equation;
+    const length = this.singleton.setLength;
+    const mode = this.singleton.mode;
+    const respawn = this.singleton.respawn;
+
     
+    if(respawn)
+    {
+        this.life++;
 
-
-
+        if(this.life >= this.lifeMax)
+        {
+            this.singleton.sets.splice(this.singleton.sets.indexOf(this), 1);
+            this.singleton.sets.push(new PointSet());
+        }
+    
+    }
+    
     if(mode === "normal")
     {
         if(this.points.length > length)
@@ -90,15 +109,16 @@ PointSet.prototype.update = function(mode, time,length,equation,t){
     {
         this.points = [];
         for (let i = 0; i < length; i++) {
-            x = equation.x(x, y, z, t, i);
-            y = equation.y(x, y, z, t, i);
-            z = equation.z(x, y, z, t, i);
-
             this.points.push({
                 x: x,
                 y: y,
                 z: z,
             });
+            x = equation.x(x, y, z, t, i);
+            y = equation.y(x, y, z, t, i);
+            z = equation.z(x, y, z, t, i);
+
+            
         }
 
 

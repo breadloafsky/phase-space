@@ -1,4 +1,7 @@
 import { Camera } from "./camera.js";
+import { SingletonFactory } from "./singleton.js";
+
+const singleton = SingletonFactory.getInstance();
 
 var camera = new Camera([0, 0, 1]);
 
@@ -19,7 +22,7 @@ const btnVec = document.querySelector("#btnVec").addEventListener("click", (e) =
   showVectors =! showVectors;
 });
 
-var showVectors = false;
+var showVectors = true;
 
 
 export function GL(canvas) {
@@ -206,13 +209,15 @@ GL.prototype.getPos = function ()  {
 
 
 
-
-
-
 //  draw
-GL.prototype.drawScene = function (
-  sets, vectors
-)  {
+GL.prototype.drawScene = function ()  {
+
+  let sets = singleton.sets;
+
+  let vectors = singleton.vectors;
+
+
+
 
   const buffers = this.buffers;
 
@@ -296,18 +301,18 @@ GL.prototype.drawScene = function (
       var modelMatrix = mat4.create();
       mat4.translate(modelMatrix, modelMatrix, [point.x, point.y, point.z]);
       const previous = i == 0 ? [points[i+1].x,points[i+1].y,points[i+1].z] : [points[i-1].x,points[i-1].y,points[i-1].z];
-      const distance = vec3.distance( [point.x,point.y,point.z],previous);
+      //const distance = vec3.distance( [point.x,point.y,point.z],previous);
       const normal = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z],previous) :vec3.subtract([],previous, [point.x,point.y,point.z]) 
       );
       const target = mat4.targetTo([],[0,0,0],normal,[1,0,0]);
       mat4.multiply(modelMatrix, modelMatrix, target);
       mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i)/points.length), [0,0,1]);
-        //console.log(` x:${point.x} y:${point.y} z:${point.z}`);
+
       mat4.scale(modelMatrix, modelMatrix, [
-        (scale * (i+1)) / points.length,
-        (scale * (i+1)) / points.length,
-        (scale * (i+1)) / points.length,
+        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
       ]);
 
       gl.uniformMatrix4fv(

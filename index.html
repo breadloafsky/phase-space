@@ -85,7 +85,7 @@
 
                             <label>
                                 Length
-                                <input style="width: 5em;" type="number" id="length" min="1" step="10" value="100">
+                                <input style="width: 5em;" type="number" id="setLength" min="1" step="10" value="100">
                             </label>
 
                             <label>
@@ -96,10 +96,10 @@
                                 Mode:
                                 <button id="btnMode">normal</button>
                             </label>
-                            <!-- <label>
+                            <label>
                                 Respawn and die:
                                 <input type="checkbox" id="respawn"></input>
-                            </label> -->
+                            </label>
                             <label>
                                 Iterate:
                                 <button id="btnPlay" style="background-color: red;">⏸︎</button>
@@ -134,7 +134,6 @@
 
                     </label>
                 </div>
-
                 <div>
                     <div class="font-italic" style="font-style: italic; padding-bottom: 10px;">t = <output
                             id="tVal"></output>
@@ -173,6 +172,15 @@
 
     </div>
     <script src="main.js" type="module"></script>
+    <script src="io.js" type="module"></script>
+    <script>
+        document.querySelectorAll(".pin").forEach((e) => {
+            e.addEventListener("click", () => {
+                const parent = e.parentElement.parentElement;
+                parent.dataset.pinned = parent.dataset.pinned == "false" ? "true" : "false";
+            });
+        });
+    </script>
 </body>
 
 
