@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+        integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+        crossorigin="anonymous" defer>
+        </script>
+
+
+
+    </script>
+
+    <base href=".">
+</head>
+
+<body style="margin: 0%;">
+    <div id="main" data-fullscreen="false"
+        style="height:100vh; overflow: hidden; background-color: black; position: relative;">
+        <canvas oncontextmenu="return false" id="canvas"
+            style="z-index: 50; cursor:crosshair; width: 100%; height: 100%;">
+        </canvas>
+
+        <div class="controls">
+            <div data-pinned="true" class="controls-bottom">
+                <div style="padding-left: 40px;">
+                    t min:
+                    <input style="width: 3em;" type="number" id="timeMin" min="-10" max="0" value="-1">
+                </div>
+
+                <input style=" flex-grow: 1; margin-inline:10px ;" type="range" id="slider" max="1" step="0.0001"
+                    value="0">
+
+                <div style="padding-right: 30px; ">
+                    t max:
+                    <input style="width: 3em;" type="number" id="timeMax" min="0" value="1">
+                </div>
+                <div style="padding-right: 30px; ">
+                    <button>A</button>
+                </div>
+                <div>
+                    <label style="display: flex; padding-right: 10px; justify-content: space-around; " for="step">
+                        't' Speed&nbsp;
+                        <input style="margin-bottom: 10px;" type="range" id="step" min="0.0" max="21" step="0.5"
+                            value="2">
+                    </label>
+                </div>
+                <div>
+                    <svg class="pin" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.5538 2.66232C14.4174 1.85314 15.75 1.85663 16.6089 2.64211L16.7341 2.7658L21.4991 7.85135C21.6191 7.97942 21.7237 8.12108 21.8108 8.27345C22.4005 9.30545 22.0832 10.6078 21.1103 11.2587L20.9736 11.3433L16.0771 14.1413C15.9593 14.2086 15.8626 14.3062 15.7964 14.4232L15.7526 14.5144L13.9505 19.028C13.7641 19.4949 13.1888 19.6418 12.8033 19.3497L12.7237 19.2804L9.48597 16.0442L4.53489 21.0033L3.46997 21L3.47201 19.9449L8.42497 14.9832L5.22008 11.7804C4.86452 11.425 4.95639 10.8384 5.37685 10.5992L5.47194 10.5535L9.96721 8.7569C10.0987 8.70436 10.2119 8.61598 10.2946 8.50278L10.3506 8.4134L13.1069 3.24538C13.2229 3.02786 13.3739 2.83088 13.5538 2.66232Z"
+                            fill="dimgray" />
+                    </svg>
+                </div>
+            </div>
+            <div data-pinned="true" class="controls-right">
+                <div style="padding-block:  10px;">
+                    <svg class="pin" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.5538 2.66232C14.4174 1.85314 15.75 1.85663 16.6089 2.64211L16.7341 2.7658L21.4991 7.85135C21.6191 7.97942 21.7237 8.12108 21.8108 8.27345C22.4005 9.30545 22.0832 10.6078 21.1103 11.2587L20.9736 11.3433L16.0771 14.1413C15.9593 14.2086 15.8626 14.3062 15.7964 14.4232L15.7526 14.5144L13.9505 19.028C13.7641 19.4949 13.1888 19.6418 12.8033 19.3497L12.7237 19.2804L9.48597 16.0442L4.53489 21.0033L3.46997 21L3.47201 19.9449L8.42497 14.9832L5.22008 11.7804C4.86452 11.425 4.95639 10.8384 5.37685 10.5992L5.47194 10.5535L9.96721 8.7569C10.0987 8.70436 10.2119 8.61598 10.2946 8.50278L10.3506 8.4134L13.1069 3.24538C13.2229 3.02786 13.3739 2.83088 13.5538 2.66232Z"
+                            fill="dimgray" />
+                    </svg>
+                </div>
+                <div id="setParams">
+                    <div>
+                        <div class="controls-section">
+
+                            <div class="title">Set properties</div>
+
+                            <label>
+                                Number of sets
+                                <input style=" width: 5em;" type="number" id="setNum" step="1" min="1" value="1">
+                            </label>
+
+
+                            <!--   <label>
+                                Monochrome
+                                <input type="checkbox" id="colorMode">
+                            </label> -->
+                            a
+                            <label>
+                                Length
+                                <input style="width: 5em;" type="number" id="length" min="1" step="10" value="100">
+                            </label>
+
+                            <label>
+                                Size
+                                <input style="width: 5em;" type="number" id="size" step="0.1" min="0" value="0.1">
+                            </label>
+                            <label>
+                                Mode:
+                                <button id="btnMode">normal</button>
+                            </label>
+                            <!-- <label>
+                                Respawn and die:
+                                <input type="checkbox" id="respawn"></input>
+                            </label> -->
+                            <label>
+                                Iterate:
+                                <button id="btnPlay" style="background-color: red;">⏸︎</button>
+                            </label>
+
+                            <label>
+                                Vectors:
+                                <button id="btnVec">show/hide</button>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-pinned="true" class="controls-left">
+                <div style="display:flex;flex-direction: row-reverse; padding-top: 10px;">
+                    <svg class="pin" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M13.5538 2.66232C14.4174 1.85314 15.75 1.85663 16.6089 2.64211L16.7341 2.7658L21.4991 7.85135C21.6191 7.97942 21.7237 8.12108 21.8108 8.27345C22.4005 9.30545 22.0832 10.6078 21.1103 11.2587L20.9736 11.3433L16.0771 14.1413C15.9593 14.2086 15.8626 14.3062 15.7964 14.4232L15.7526 14.5144L13.9505 19.028C13.7641 19.4949 13.1888 19.6418 12.8033 19.3497L12.7237 19.2804L9.48597 16.0442L4.53489 21.0033L3.46997 21L3.47201 19.9449L8.42497 14.9832L5.22008 11.7804C4.86452 11.425 4.95639 10.8384 5.37685 10.5992L5.47194 10.5535L9.96721 8.7569C10.0987 8.70436 10.2119 8.61598 10.2946 8.50278L10.3506 8.4134L13.1069 3.24538C13.2229 3.02786 13.3739 2.83088 13.5538 2.66232Z"
+                            fill="dimgray" />
+                    </svg>
+                </div>
+                <div style="padding-bottom: 20px;">
+                    <label for="preset" style="padding-right: 10px; text-align: center;">
+                        Preset:
+                        <br />
+                        <div style="display: flex; justify-content:center;">
+                            <button id="previousPreset">&lt;</button>
+                            <div id="preset" style="width: 6em;"></div>
+                            <button id="nextPreset">&gt;</button>
+                        </div>
+
+                    </label>
+                </div>
+
+                <div>
+                    <div class="font-italic" style="font-style: italic; padding-bottom: 10px;">t = <output
+                            id="tVal"></output>
+                    </div>
+                </div>
+                <div>
+                    <label for="variableX">
+                        <div class="font-italic" style="font-style: italic;">ẋ =</div>
+                        <textarea data-var="x" class="variable" rows="1" cols="50" id="variableX"></textarea>
+                    </label>
+                </div>
+                <br />
+                <div>
+                    <label for="variableY">
+                        <div class="font-italic" style="font-style: italic;">ẏ =</div>
+                        <textarea data-var="y" class="variable" rows="1" cols="50" id="variableY"></textarea>
+                    </label>
+
+                </div>
+                <br />
+                <div>
+                    <label for="variableZ">
+                        <div class="font-italic" style="font-style: italic;">ż =</div>
+
+                        <textarea data-var="z" class="variable" rows="1" cols="50" id="variableZ"></textarea>
+                    </label>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+    <script src="main.js" type="module"></script>
+</body>
+
+
+
+
+</html>
