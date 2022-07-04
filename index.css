@@ -151,7 +151,7 @@ textarea:focus {
     border-color: rgba(255, 235, 205, 0.158);
 }
 
-.controls-section>* {
+.controls-section>label {
     padding-top: 10px;
     display: flex;
     justify-content: space-between;

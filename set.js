@@ -4,12 +4,12 @@ import { SingletonFactory } from "./singleton.js";
 export function PointSet(){
 
     this.singleton = SingletonFactory.getInstance();
-    this.x = Math.random()*100;
-    this.y = Math.random()*100;
-    this.z = Math.random()*100;
+    const sRnd = this.singleton.startRnd;
+    this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX ,//* (Math.random() < 0.5 ? -1 : 1);
+    this.y = (Math.random()*sRnd-sRnd/2) + this.singleton.startY, 
+    this.z = (Math.random()*sRnd-sRnd/2) + this.singleton.startZ,
     this.points = [];
-  
-    this.size = 0.1;
+
     this.lastIter = 0;
 
     this.previousTime=0;
@@ -19,9 +19,9 @@ export function PointSet(){
     this.timeoffset = 0;
 
     this.life = 0;
-    this.lifeMax = 50 +100 * Math.random();
-}
+    this.lifeMax = this.singleton.respawnRate +this.singleton.respawnRate * Math.random();
 
+}
 
 
 PointSet.prototype.update = function(time){
@@ -29,10 +29,9 @@ PointSet.prototype.update = function(time){
     var x = this.x;
     var y = this.y;
     var z = this.z;
-    const t = this.singleton.t;
+    const v = this.singleton.v;
     const equation = this.singleton.equation;
     const length = this.singleton.setLength;
-    const mode = this.singleton.mode;
     const respawn = this.singleton.respawn;
 
     
@@ -45,98 +44,51 @@ PointSet.prototype.update = function(time){
             this.singleton.sets.splice(this.singleton.sets.indexOf(this), 1);
             this.singleton.sets.push(new PointSet());
         }
-    
     }
-    
-    if(mode === "normal")
+    else if (this.life > 0)
     {
-        if(this.points.length > length)
-        {
-            for (let i = length-1; i < this.points.length; i++) {
-                this.points.splice(0,1);
-            }
-        }
+        this.life = 0
+        this.lifeMax = 1;
+    }
+    
+   
+  
+    this.points = [];
+    for (let i = 0; i < length; i++) {
+        this.points.push({
+            x: x,
+            y: y,
+            z: z,
+        });
 
-        if(this.points.length < length)
-        {
-            for (let i = 0; i < length-1; i++) {
-                x = equation.x(x, y, z, t, i);
-                y = equation.y(x, y, z, t, i);
-                z = equation.z(x, y, z, t, i);
-    
-                this.points.push({
-                    x: x,
-                    y: y,
-                    z: z,
-                });
-            }
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-       
-    
-    
-        if(time != null && time > this.previousTime+10*this.dt)
-        {
-            const i = 1;
-            //for(let i = 0;  i < 1; i++)
-            {
-                this.points.splice(0,1);
-                x = equation.x(x, y, z, t, i);
-                y = equation.y(x, y, z, t, i);
-                z = equation.z(x, y, z, t, i);
-    
-                this.points.push({
-                    x: x,
-                    y: y,
-                    z: z,
-                });
-            }
-    
-            this.x = x;
-            this.y = y;
-            this.z = z;
-    
-            this.previousTime = time;
-        }
-    
-    
-        
+        x += equation.x(x, y, z, v);
+        y += equation.y(x, y, z, v);
+        z += equation.z(x, y, z, v);
     }
 
-    else if(mode === "prediction")
+
+
+    if(time != null && time > this.previousTime+10*this.dt)
     {
-        this.points = [];
-        for (let i = 0; i < length; i++) {
-            this.points.push({
-                x: x,
-                y: y,
-                z: z,
-            });
-            x = equation.x(x, y, z, t, i);
-            y = equation.y(x, y, z, t, i);
-            z = equation.z(x, y, z, t, i);
 
-            
-        }
-
-
-
-        if(time != null && time > this.previousTime+10*this.dt)
-        {
-
-            this.x = this.points[1].x;
-            this.y = this.points[1].y;
-            this.z = this.points[1].z;
-            this.previousTime = time;
-        }
-        
+        this.x = this.points[1].x;
+        this.y = this.points[1].y;
+        this.z = this.points[1].z;
+        this.previousTime = time;
     }
+        
+    
 
 
 
 }
+
+
+
+
+
+
+
 
 
 

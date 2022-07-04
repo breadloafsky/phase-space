@@ -27,23 +27,23 @@
         <div class="controls">
             <div data-pinned="true" class="controls-bottom">
                 <div style="padding-left: 40px;">
-                    t min:
-                    <input style="width: 3em;" type="number" id="timeMin" min="-10" max="0" value="-1">
+                    v min:
+                    <input style="width: 3em;" type="number" id="vMin" min="-10" max="0" value="-1">
                 </div>
 
                 <input style=" flex-grow: 1; margin-inline:10px ;" type="range" id="slider" max="1" step="0.0001"
                     value="0">
 
                 <div style="padding-right: 30px; ">
-                    t max:
-                    <input style="width: 3em;" type="number" id="timeMax" min="0" value="1">
+                    v max:
+                    <input style="width: 3em;" type="number" id="vMax" min="0" value="1">
                 </div>
                 <div style="padding-right: 30px; ">
                     <button>A</button>
                 </div>
                 <div>
                     <label style="display: flex; padding-right: 10px; justify-content: space-around; " for="step">
-                        't' Speed&nbsp;
+                        v "Speed"&nbsp;
                         <input style="margin-bottom: 10px;" type="range" id="step" min="0.0" max="21" step="0.5"
                             value="2">
                     </label>
@@ -74,41 +74,55 @@
 
                             <label>
                                 Number of sets
-                                <input style=" width: 5em;" type="number" id="setNum" step="1" min="1" value="1">
+                                <input style=" width: 5em;" type="number" id="setNum" step="1" min="1" value="2">
                             </label>
-
-
-                            <!--   <label>
-                                Monochrome
-                                <input type="checkbox" id="colorMode">
-                            </label> -->
 
                             <label>
                                 Length
-                                <input style="width: 5em;" type="number" id="setLength" min="1" step="10" value="100">
+                                <input style="width: 5em;" type="number" id="setLength" min="1" step="10" value="500">
                             </label>
 
                             <label>
-                                Size
+                                Point Size
                                 <input style="width: 5em;" type="number" id="size" step="0.1" min="0" value="0.1">
                             </label>
                             <label>
-                                Mode:
-                                <button id="btnMode">normal</button>
-                            </label>
-                            <label>
-                                Respawn and die:
+                                Respawn/destruction:
                                 <input type="checkbox" id="respawn"></input>
                             </label>
+                            <label>
+                                Respawn time:
+                                <input style="width: 5em;" type="number" id="respawnRate" step="10" min="0" value="100">
+                            </label>
+                            <br />
+                            <div class="controls-section">
+                                Start Point:
+                                <label>
+                                    <div class="font-italic" style="font-style: italic;">x:</div>
+                                    <input style="width: 5em;" type="number" id="sx" step="10" value="0">
+                                </label>
+                                <label>
+                                    <div class="font-italic" style="font-style: italic;">y:</div>
+                                    <input style="width: 5em;" type="number" id="sy" step="10" value="0">
+                                </label>
+                                <label>
+                                    <div class="font-italic" style="font-style: italic;">z</div>
+                                    <input style="width: 5em;" type="number" id="sz" step="10" value="0">
+                                </label>
+                                <label>
+                                    Randomness ±:
+                                    <input style="width: 5em;" type="number" id="srnd" min="0" step="10" value="1">
+                                </label>
+
+                            </div>
+
+
                             <label>
                                 Iterate:
                                 <button id="btnPlay" style="background-color: red;">⏸︎</button>
                             </label>
 
-                            <label>
-                                Vectors:
-                                <button id="btnVec">show/hide</button>
-                            </label>
+
                         </div>
                     </div>
                 </div>
@@ -135,8 +149,8 @@
                     </label>
                 </div>
                 <div>
-                    <div class="font-italic" style="font-style: italic; padding-bottom: 10px;">t = <output
-                            id="tVal"></output>
+                    <div class="font-italic" style="font-style: italic; padding-bottom: 10px;">v = <output
+                            id="vVal"></output>
                     </div>
                 </div>
                 <div>
@@ -161,15 +175,8 @@
                         <textarea data-var="z" class="variable" rows="1" cols="50" id="variableZ"></textarea>
                     </label>
                 </div>
-
-
-
-
-
             </div>
         </div>
-
-
     </div>
     <script src="main.js" type="module"></script>
     <script src="io.js" type="module"></script>

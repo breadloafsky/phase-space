@@ -14,7 +14,9 @@ export function Camera(p) {
   this.yaw = -Math.PI / 2; // Without this you would be started rotated 90 degrees right
 
   // The field of view of the camera (radians)
-  this.fov = Math.PI / 2;
+  this.fov = 1;
+
+  this.movement = [0, 0];
 }
 
 Camera.prototype.addPitch = function (v) {
@@ -42,6 +44,18 @@ Camera.prototype.getViewMatrix = function () {
 };
 Camera.prototype.getProjectionMatrix = function (aspectRatio) {
   return mat4.perspective(mat4.create(), this.fov, aspectRatio, 0.1, 10000);
+};
+
+Camera.prototype.move = function () {
+  this.position = vec3.add(
+    [],
+    this.position,
+    vec3.add(
+      [],
+      this.right.map((p) => p * this.movement[1]),
+      this.front.map((p) => p * this.movement[0])
+    )
+  );
 };
 
 Camera.prototype.updateVectors = function () {

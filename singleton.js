@@ -1,7 +1,7 @@
 import { presets } from "./presets.js";
 import { PointSet } from "./set.js";
 
-
+import { Camera } from "./camera.js";
 export const SingletonFactory = (function(){
 
     var instance;
@@ -22,20 +22,29 @@ class Singleton
     sets = [];
     vectors = [];
     equation = null;
-    camera = null;
+    camera = new Camera([0, 0, 1]);;
     iterate = true;
     setLength = 4;
-    mode = "normal";
     respawn = false;
+    respawnRate = 100;
     presetCurrent = 2;
     setNum = 2;
     step = 0;
-    t = 0.5;
+    startX = 0.;
+    startY = 0.;
+    startZ = 0.;
+    startRnd = 100.;
+    
+
+    pointSize = 0.1;
+    showVectors = false;
+
+    v = 0.5;
     
     
 
     constructor() {
-        
+
     }
     
 }

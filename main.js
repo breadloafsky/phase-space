@@ -1,4 +1,3 @@
-import { presets } from "./presets.js";
 
 import { GL } from "./webgl.js";
 
@@ -19,7 +18,7 @@ var previousTime = 0;
 //  UPDATE LOOP
 function update() {
 
-  var t = slider.valueAsNumber;
+  var v = slider.valueAsNumber;
   var stp = Math.pow(2, step.valueAsNumber) / 100000000;
 
   const currentTime = new Date();
@@ -39,21 +38,20 @@ function update() {
     gl.drawScene();
     
     });
-    if (t < timeMax.valueAsNumber - stp && previousTime != time) {
-    } else if (timeMin.valueAsNumber < timeMax.valueAsNumber) {
-      t = timeMin.valueAsNumber;
+    if (v < vMax.valueAsNumber - stp && previousTime != time) {
+    } else if (vMin.valueAsNumber < vMax.valueAsNumber) {
+      v = vMin.valueAsNumber;
     }
 
   if (!step.disabled && stp > 0.00000001) {
-    t += stp;
+    v += stp;
   }
 
 
-  slider.valueAsNumber = t;
-  singleton.t = t;
+  slider.valueAsNumber = v;
+  singleton.v = v;
 
-
-  document.querySelector("#tVal").value = slider.valueAsNumber;
+  document.querySelector("#vVal").value = slider.valueAsNumber;
 }
 
 

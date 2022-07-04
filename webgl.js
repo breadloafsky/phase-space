@@ -1,41 +1,22 @@
 import { Camera } from "./camera.js";
 import { SingletonFactory } from "./singleton.js";
-
+import { models } from "./models.js";
 const singleton = SingletonFactory.getInstance();
-
-var camera = new Camera([0, 0, 1]);
-
-var mouseDown;
-
-var movement = [0, 0];
-
 var scale = 0.1;
 var screen = [100,100];
 
 
 
-document.querySelector("#size").addEventListener("input", (e) =>{
-  scale = e.target.value;
-});
 
-const btnVec = document.querySelector("#btnVec").addEventListener("click", (e) =>{
-  showVectors =! showVectors;
-});
 
 var showVectors = true;
 
 
 export function GL(canvas) {
 
+  this.buffers = {};
   this.gl =
     canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-
-  canvas.addEventListener("mousedown", (e) => {
-    mouseDown = e.button;
-  });
-  canvas.addEventListener("mouseup", () => {
-    mouseDown = null;
-  });
 
   const resize = () =>{
     screen = [
@@ -51,32 +32,7 @@ export function GL(canvas) {
   window.addEventListener("resize",() => resize());
   resize();
 
-  canvas.addEventListener("mousemove", (e) => {
-    if (mouseDown == 0) {
-      camera.yaw += e.movementX / 100;
-      camera.addPitch(-e.movementY / 100);
-    }
-  });
-  canvas.onwheel = (e) => {
-    camera.position = vec3.add(
-      [],
-      camera.position,
-      camera.front.map((p) => (p * -Math.sign(e.deltaY)) / 4)
-    );
-  };
-
-  document.addEventListener("keydown", (e) => {
-    if (e.code == "KeyW") movement[0] = 1;
-    else if (e.code == "KeyS") movement[0] = -1;
-    else if (e.code == "KeyA") movement[1] = -1;
-    else if (e.code == "KeyD") movement[1] = 1;
-  });
-  document.addEventListener("keyup", (e) => {
-    if (["KeyW", "KeyS"].includes(e.code)) movement[0] = 0;
-    else if (["KeyA", "KeyD"].includes(e.code)) movement[1] = 0;
-  });
-
-  camera.setFov(1);
+ 
 
 
 
@@ -94,9 +50,17 @@ export function GL(canvas) {
     uniform mat4 uProjection;
     
     varying lowp vec4 vColor;
+
+    
     
     void main(void) {
+      
+      
       gl_Position = uProjection * uView*  uModel *  aVertexPosition; 
+
+  
+      
+      
       vColor = aVertexColor;
     }
   `;
@@ -125,64 +89,28 @@ export function GL(canvas) {
     },
   };
 
-  this.initBuffers();
+  this.initPointsBuffers();
+
 
   return this;
 }
 
 
-GL.prototype.initBuffers = function()  {
+GL.prototype.initPointsBuffers = function()  {
 
   const gl = this.gl;
   const positionBuffer = gl.createBuffer();
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  const size = 1;
+  var positions = models.pointCube.positions;
+  var faceColors = models.pointCube.faceColors;
 
-  var positions = [
-    // Front face
-    -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0,
-    1.0, -1.0, 1.0, 1.0,
-
-    // Back face
-    -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0, 1.0,
-    1.0, -1.0, 1.0, -1.0, -1.0,
-
-    // Top face
-    -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, 1.0,
-    1.0, 1.0, 1.0, -1.0,
-
-    // Bottom face
-    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0,
-    -1.0, 1.0, -1.0, -1.0, 1.0,
-
-    // Right face
-    1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0,
-    1.0, 1.0, -1.0, 1.0,
-
-    // Left face
-    -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0,
-    1.0, 1.0, -1.0, 1.0, -1.0,
-  ].map((p) => p * size);
-
-  var faceColors = [];
-
-  faceColors = [
-    [1.0, 0.0, 0.0, 1.0],
-    [1.0, 0.0, 0.0, 1.0],
-    [0.0, 1.0, 0.0, 1.0],
-    [0.0, 1.0, 0.0, 1.0],
-    [0.0, 0.0, 1.0, 1.0],
-    [0.0, 0.0, 1.0, 1.0],
-  ];
 
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW);
-
   var colors = [];
   for (var j = 0; j < faceColors.length; ++j) {
     const c = faceColors[j];
-
     colors = colors.concat(c, c, c, c, c, c);
   }
 
@@ -193,7 +121,7 @@ GL.prototype.initBuffers = function()  {
   const indexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-  this.buffers = {
+  this.buffers.points = {
     position: positionBuffer,
     color: colorBuffer,
     indices: indexBuffer,
@@ -202,9 +130,10 @@ GL.prototype.initBuffers = function()  {
 
 
 
-GL.prototype.getPos = function ()  {
-  return camera.front;
-};
+
+
+
+
 
 
 
@@ -212,31 +141,25 @@ GL.prototype.getPos = function ()  {
 //  draw
 GL.prototype.drawScene = function ()  {
 
-  let sets = singleton.sets;
-
-  let vectors = singleton.vectors;
-
-
-
+  const sets = singleton.sets;
+  const vectors = singleton.vectors;
+  const size = singleton.pointSize;
 
   const buffers = this.buffers;
 
   const gl = this.gl;
   const programInfo = this.programInfo;
-  camera.position = vec3.add(
-    [],
-    camera.position,
-    vec3.add(
-      [],
-      camera.right.map((p) => p * movement[1]),
-      camera.front.map((p) => p * movement[0])
-    )
-  );
+
+  
+  const camera = singleton.camera;
+  camera.move();
+
+
   gl.enable(gl.CULL_FACE);
   gl.enable(gl.DEPTH_TEST);
-  //gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  /* gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); */
 
   const projectionMatrix = camera.getProjectionMatrix(screen[0] / screen[1]);
   const viewMatrix = camera.getViewMatrix();
@@ -260,7 +183,7 @@ GL.prototype.drawScene = function ()  {
     const normalize = false;
     const stride = 0;
     const offset = 0;
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.position);
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.position);
     gl.vertexAttribPointer(
       programInfo.attribLocations.vertexPosition,
       numComponents,
@@ -278,7 +201,7 @@ GL.prototype.drawScene = function ()  {
     const normalize = false;
     const stride = 0;
     const offset = 0;
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.color);
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.color);
     gl.vertexAttribPointer(
       programInfo.attribLocations.vertexColor,
       numComponents,
@@ -290,7 +213,7 @@ GL.prototype.drawScene = function ()  {
     gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
   }
 
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indices);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.points.indices);
 
 
   //  points
@@ -307,12 +230,13 @@ GL.prototype.drawScene = function ()  {
       );
       const target = mat4.targetTo([],[0,0,0],normal,[1,0,0]);
       mat4.multiply(modelMatrix, modelMatrix, target);
-      mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i)/points.length), [0,0,1]);
+
+      mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i*3)/points.length), [0,0,1]);
 
       mat4.scale(modelMatrix, modelMatrix, [
-        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
-        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
-        (scale * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
       ]);
 
       gl.uniformMatrix4fv(
@@ -324,6 +248,56 @@ GL.prototype.drawScene = function ()  {
     });
     
   });
+
+
+
+  
+  // coordinates vecotrs
+  {
+    /* 
+    const numComponents = 3;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.coords.position);
+    gl.vertexAttribPointer(
+      programInfo.attribLocations.vertexPosition,
+      numComponents,
+      type,
+      normalize,
+      stride,
+      offset
+    );
+    gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+
+    const numComponents = 4;
+    const type = gl.FLOAT;
+    const normalize = false;
+    const stride = 0;
+    const offset = 0;
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.coords.color);
+    gl.vertexAttribPointer(
+      programInfo.attribLocations.vertexColor,
+      numComponents,
+      type,
+      normalize,
+      stride,
+      offset
+    );
+    gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
+  
+
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.coords.indices);
+  var modelMatrix = mat4.create();
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.modelMatrix,
+    false,
+    modelMatrix
+  );
+  gl.drawArrays(gl.TRIANGLES, 0, 12); */
+  }
+  
 
 
   //  debug
