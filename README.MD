@@ -3,7 +3,8 @@
 This application shows 3-dimensional phase portraits in phase space defined by the system of ordinary differential equations.
 
 ## Demo
-https://ilgo6991.github.io/phase-space
+https://ilgo6991.github.io/phase-space\
+(epilepsy warning)
 
 ## Usage
 
