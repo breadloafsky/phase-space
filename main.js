@@ -38,20 +38,22 @@ function update() {
     gl.drawScene();
     
     });
+    
+
+    if (!step.disabled && stp > 0.00000001) {
+      v += stp;
+    }
     if (v < vMax.valueAsNumber - stp && previousTime != time) {
-    } else if (vMin.valueAsNumber < vMax.valueAsNumber) {
+    } 
+
+    else if (v > vMax.valueAsNumber && !step.valueAsNumber == 0) {
       v = vMin.valueAsNumber;
     }
-
-  if (!step.disabled && stp > 0.00000001) {
-    v += stp;
-  }
-
 
   slider.valueAsNumber = v;
   singleton.v = v;
 
-  document.querySelector("#vVal").value = slider.valueAsNumber;
+  vVal.value = slider.valueAsNumber
 }
 
 

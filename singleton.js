@@ -24,11 +24,11 @@ class Singleton
     equation = null;
     camera = new Camera([0, 0, 1]);;
     iterate = true;
+    setNum = 2;
     setLength = 4;
     respawn = false;
     respawnRate = 100;
     presetCurrent = 2;
-    setNum = 2;
     step = 0;
     startX = 0.;
     startY = 0.;

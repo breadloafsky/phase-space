@@ -111,12 +111,19 @@ setPreset();
 
 
 document.querySelector("#nextPreset").addEventListener("click", () => {
-  presets.length > presetCurrent ? (presetCurrent += 1) : {};
-  setPreset();
+  if(presets.length > presetCurrent) 
+  {
+    presetCurrent++; 
+    setPreset();
+  }
+  
 });
 document.querySelector("#previousPreset").addEventListener("click", () => {
-  presetCurrent > 1 ? (presetCurrent -= 1) : {};
-  setPreset();
+  if(presetCurrent > 1) 
+  {
+    presetCurrent--;
+    setPreset();
+  }
 });
 
 document.querySelectorAll("input").forEach((e) => {
@@ -146,7 +153,7 @@ step.oninput = () => {
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
 };
 
-
+const vVal = document.querySelector("#vVal");
 
 
 function setEquationFromString() {
@@ -184,6 +191,7 @@ function setPreset() {
   const preset = presets[presetCurrent - 1];
   document.querySelector("#preset").innerHTML =
     presetCurrent + "/" + presets.length;
+  document.querySelector("#presetName").innerHTML = preset.name;
   document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var]);
   vMin.valueAsNumber = Math.floor(preset.v);
   vMax.valueAsNumber = preset.max;
@@ -194,6 +202,20 @@ function setPreset() {
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
   setEquationFromString();
   step.disabled = false;
+
+  singleton.camera.position = preset.camPos;
+  singleton.camera.pitch = preset.camPitch;
+  singleton.camera.yaw = preset.camYaw;
+  singleton.camera.updateVectors();
+
+  setLength.valueAsNumber = preset.setLength;
+  singleton.setLength = preset.setLength;
+  setNum.valueAsNumber = preset.setNum;
+  singleton.setNum = preset.setNum;
+
+
+  singleton.sets = [];
+  singleton.updateSetsLength();
 }
 
 
