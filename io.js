@@ -4,6 +4,10 @@ import { SingletonFactory } from "./singleton.js";
 
 const singleton = SingletonFactory.getInstance();
 
+var presetCurrent = 1;
+
+
+
 
 /** @type {HTMLInputElement} */
 export const slider = document.querySelector("#slider");
@@ -26,11 +30,7 @@ step.addEventListener("input", e =>{
 
 
 
-document.querySelector("#btnPlay").addEventListener("click", (e) =>{
-    singleton.iterate = !singleton.iterate;
-    e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
-    e.target.innerHTML = singleton.iterate ? "⏸︎" : "⏵︎";
-});
+
 
 
 /** @type {HTMLInputElement} */
@@ -38,7 +38,11 @@ const setLength = document.querySelector("#setLength");
 setLength.addEventListener("input", e =>{
     singleton.setLength = parseInt(e.target.valueAsNumber);
 });
-singleton.setLength = setLength.valueAsNumber;
+function setSetLength(v)
+{
+  setLength.valueAsNumber = v;
+  singleton.setLength = v;
+}
 
 
 /** @type {HTMLInputElement} */
@@ -47,7 +51,39 @@ setNum.addEventListener("input", e =>{
     singleton.setNum = parseInt(e.target.valueAsNumber);
     singleton.updateSetsLength();
 });
-singleton.setNum = parseInt(setNum.valueAsNumber);
+function setSetNum(v)
+{
+  setNum.valueAsNumber = v;
+  singleton.setNum = v;
+}
+
+
+
+
+/** @type {HTMLInputElement} */
+const pointSize = document.querySelector("#pointSize")
+pointSize.addEventListener("input", (e) =>{
+    singleton.pointSize = e.target.valueAsNumber;
+});
+function setPointSize(v)
+{
+    pointSize.valueAsNumber = v;
+    singleton.pointSize = v;
+}
+
+
+
+
+/** @type {HTMLInputElement} */
+const sizeRatio = document.querySelector("#sizeRatio"); 
+sizeRatio.addEventListener("input", () =>{
+    singleton.sizeRatio = sizeRatio.checked;
+});
+function setSizeRatio(v)
+{
+    sizeRatio.checked = v;
+    singleton.sizeRatio = v;
+}
 
 
 /** @type {HTMLInputElement} */
@@ -55,17 +91,11 @@ const respawn = document.querySelector("#respawn");
 respawn.addEventListener("input", () =>{
     singleton.respawn = respawn.checked;
 });
-singleton.respawn = respawn.checked;
-
-
-/** @type {HTMLInputElement} */
-const size = document.querySelector("#size")
-size.addEventListener("input", (e) =>{
-    singleton.pointSize = e.target.valueAsNumber;
-});
-size.valueAsNumber = singleton.pointSize;
-
-
+function setRespawn(v)
+{
+    respawn.checked = v;
+    singleton.respawn = v;
+}
 
 
 /** @type {HTMLInputElement} */
@@ -73,7 +103,11 @@ const respawnRate = document.querySelector("#respawnRate")
 respawnRate.addEventListener("input", (e) =>{
     singleton.respawnRate = e.target.valueAsNumber;
 });
-respawnRate.valueAsNumber = singleton.respawnRate;
+function setRespawnRate(v)
+{
+    respawnRate.valueAsNumber = v;
+    singleton.respawnRate = v;
+}
 
 
 /** @type {HTMLInputElement} */
@@ -81,35 +115,57 @@ const startX = document.querySelector("#sx")
 startX.addEventListener("input", (e) =>{
     singleton.startX = e.target.valueAsNumber;
 });
-startX.valueAsNumber = singleton.startX;
-
 /** @type {HTMLInputElement} */
 const startY = document.querySelector("#sy")
 startY.addEventListener("input", (e) =>{
     singleton.startY = e.target.valueAsNumber;
 });
-startY.valueAsNumber = singleton.startY;
-
 /** @type {HTMLInputElement} */
 const startZ = document.querySelector("#sz")
 startZ.addEventListener("input", (e) =>{
     singleton.startZ = e.target.valueAsNumber;
 });
-startZ.valueAsNumber = singleton.startZ;
 
+function setStart([x,y,z])
+{
+  startX.valueAsNumber = x;
+  startY.valueAsNumber = y;
+  startZ.valueAsNumber = z;
+}
 
 /** @type {HTMLInputElement} */
 const startRnd = document.querySelector("#srnd")
 startRnd.addEventListener("input", (e) =>{
     singleton.startRnd = e.target.valueAsNumber;
 });
-startRnd.valueAsNumber = singleton.startRnd;
+function setStartRnd(v)
+{
+  startRnd.valueAsNumber = v;
+  singleton.startRnd = v;
+}
 
 
-var presetCurrent = 1;
+document.querySelector("#btnIterate").addEventListener("click", (e) =>{
+  singleton.iterate = !singleton.iterate;
+  e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
+  e.target.innerHTML = singleton.iterate ? "⏸︎" : "⏵︎";
+});
+
+
+/** @type {HTMLInputElement} */
+const iterationStep = document.querySelector("#iterStep")
+iterationStep.addEventListener("input", (e) =>{
+    singleton.iterationStep = e.target.valueAsNumber;
+});
+function setIterationStep(v)
+{
+  iterationStep.valueAsNumber = v;
+  singleton.iterationStep = v;
+}
+
+
+
 setPreset();
-
-
 document.querySelector("#nextPreset").addEventListener("click", () => {
   if(presets.length > presetCurrent) 
   {
@@ -193,25 +249,41 @@ function setPreset() {
     presetCurrent + "/" + presets.length;
   document.querySelector("#presetName").innerHTML = preset.name;
   document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var]);
+
+
   vMin.valueAsNumber = Math.floor(preset.v);
   vMax.valueAsNumber = preset.max;
   slider.min = vMin.valueAsNumber;
   slider.max = preset.max;
-  slider.valueAsNumber = preset.t;
+
+  slider.valueAsNumber = preset.v;
   step.valueAsNumber = preset.step;
+
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
   setEquationFromString();
-  step.disabled = false;
+
+  setStart(preset.pointStart);
 
   singleton.camera.position = preset.camPos;
   singleton.camera.pitch = preset.camPitch;
   singleton.camera.yaw = preset.camYaw;
   singleton.camera.updateVectors();
 
-  setLength.valueAsNumber = preset.setLength;
-  singleton.setLength = preset.setLength;
-  setNum.valueAsNumber = preset.setNum;
-  singleton.setNum = preset.setNum;
+  setSetLength(preset.setLength);
+  setSetNum(preset.setNum);
+  setIterationStep(1);
+  setStartRnd(preset.startRandomness);
+  if(preset.respawnRate)
+  {
+    setRespawn(true)
+    setRespawnRate(preset.respawnRate);
+  }
+  else{
+    setRespawn(false)
+    setRespawnRate(100);
+  }
+  setPointSize(preset.pointSize);
+  setSizeRatio(preset.sizeRatio);
 
 
   singleton.sets = [];

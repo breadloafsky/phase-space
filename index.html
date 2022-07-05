@@ -84,10 +84,14 @@
 
                             <label>
                                 Point Size
-                                <input style="width: 5em;" type="number" id="size" step="0.1" min="0" value="0.1">
+                                <input style="width: 5em;" type="number" id="pointSize" step="0.01" min="0" value="0.1">
                             </label>
                             <label>
-                                Respawn/Destruction:
+                                Size decrease with Length:
+                                <input type="checkbox" id="sizeRatio"></input>
+                            </label>
+                            <label>
+                                Respawn / Destruction:
                                 <input type="checkbox" id="respawn"></input>
                             </label>
                             <label>
@@ -96,7 +100,7 @@
                             </label>
                             <br />
                             <div class="controls-section">
-                                Start Point:
+                                Spawn Point:
                                 <label>
                                     <div class="font-italic" style="font-style: italic;">x:</div>
                                     <input style="width: 5em;" type="number" id="sx" step="10" value="0">
@@ -116,10 +120,14 @@
 
                             </div>
 
+                            <label>
+                                Iteration step:
+                                <input style="width: 5em;" type="number" id="iterStep" min="1" step="1" value="1">
+                            </label>
 
                             <label>
                                 Iterate the starting point:
-                                <button id="btnPlay" style="background-color: red;">⏸︎</button>
+                                <button id="btnIterate" style="background-color: red;">⏸︎</button>
                             </label>
 
 
@@ -130,11 +138,11 @@
             <div data-pinned="true" class="controls-left">
 
                 <!-- debug -->
-                <!-- <output id="debug1"></output>
+                <output id="debug1"></output>
                 <br />
                 <output id="debug2"></output>
                 <br />
-                <output id="debug3"></output> -->
+                <output id="debug3"></output>
 
                 <div style="display:flex;flex-direction: row-reverse; padding-top: 10px;">
                     <svg class="pin" width="24px" height="24px" viewBox="0 0 24 24" fill="none"

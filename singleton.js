@@ -20,10 +20,10 @@ export const SingletonFactory = (function(){
 class Singleton
 {
     sets = [];
-    vectors = [];
     equation = null;
     camera = new Camera([0, 0, 1]);;
     iterate = true;
+    iterationStep = 1;
     setNum = 2;
     setLength = 4;
     respawn = false;
@@ -34,6 +34,7 @@ class Singleton
     startY = 0.;
     startZ = 0.;
     startRnd = 100.;
+    sizeRatio = true;
     
 
     pointSize = 0.1;

@@ -9,7 +9,6 @@ var screen = [100,100];
 
 
 
-var showVectors = true;
 
 
 export function GL(canvas) {
@@ -142,8 +141,9 @@ GL.prototype.initPointsBuffers = function()  {
 GL.prototype.drawScene = function ()  {
 
   const sets = singleton.sets;
-  const vectors = singleton.vectors;
   const size = singleton.pointSize;
+
+  const sizeRatio = singleton.sizeRatio;
 
   const buffers = this.buffers;
 
@@ -221,22 +221,27 @@ GL.prototype.drawScene = function ()  {
     const points = s.points;
     
     points.forEach((point, i) => {
+
       var modelMatrix = mat4.create();
+
       mat4.translate(modelMatrix, modelMatrix, [point.x, point.y, point.z]);
       const previous = i == 0 ? [points[i+1].x,points[i+1].y,points[i+1].z] : [points[i-1].x,points[i-1].y,points[i-1].z];
       //const distance = vec3.distance( [point.x,point.y,point.z],previous);
+
       const normal = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z],previous) :vec3.subtract([],previous, [point.x,point.y,point.z]) 
       );
+
       const target = mat4.targetTo([],[0,0,0],normal,[1,0,0]);
       mat4.multiply(modelMatrix, modelMatrix, target);
-
       mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i*3)/points.length), [0,0,1]);
+      
+      const sizeFactor =  size * (singleton.sizeRatio ? (i+1) / points.length : 1) / (s.lifeMax()/(s.lifeMax()-s.life));
 
       mat4.scale(modelMatrix, modelMatrix, [
-        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
-        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
-        (size * (i+1)) / points.length / (s.lifeMax/(s.lifeMax-s.life)),
+        sizeFactor,
+        sizeFactor,
+        sizeFactor,
       ]);
 
       gl.uniformMatrix4fv(
@@ -250,106 +255,6 @@ GL.prototype.drawScene = function ()  {
   });
 
 
-
-  
-  // coordinates vecotrs
-  {
-    /* 
-    const numComponents = 3;
-    const type = gl.FLOAT;
-    const normalize = false;
-    const stride = 0;
-    const offset = 0;
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.coords.position);
-    gl.vertexAttribPointer(
-      programInfo.attribLocations.vertexPosition,
-      numComponents,
-      type,
-      normalize,
-      stride,
-      offset
-    );
-    gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
-
-    const numComponents = 4;
-    const type = gl.FLOAT;
-    const normalize = false;
-    const stride = 0;
-    const offset = 0;
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffers.coords.color);
-    gl.vertexAttribPointer(
-      programInfo.attribLocations.vertexColor,
-      numComponents,
-      type,
-      normalize,
-      stride,
-      offset
-    );
-    gl.enableVertexAttribArray(programInfo.attribLocations.vertexColor);
-  
-
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.coords.indices);
-  var modelMatrix = mat4.create();
-  gl.uniformMatrix4fv(
-    programInfo.uniformLocations.modelMatrix,
-    false,
-    modelMatrix
-  );
-  gl.drawArrays(gl.TRIANGLES, 0, 12); */
-  }
-  
-
-
-  //  debug
-  if(showVectors)
-  {
-    vectors.forEach((s,k) => {
-      const points = s.points;
-      
-       points.forEach((point, i) => {
-        var modelMatrix = mat4.create();
-        mat4.translate(modelMatrix, modelMatrix, [point.x, point.y, point.z]);
-        const previous = i == 0 ? [points[i+1].x,points[i+1].y,points[i+1].z] : [points[i-1].x,points[i-1].y,points[i-1].z];
-
-
-        const distance = vec3.distance( [point.x,point.y,point.z],previous);
-        const normal = vec3.normalize([],
-          i == 0 ? vec3.subtract([], [point.x,point.y,point.z],previous) :vec3.subtract([],previous, [point.x,point.y,point.z]) 
-        );
-        const target = mat4.targetTo([],[0,0,0],normal,[1,0,0]);
-        mat4.multiply(modelMatrix, modelMatrix, target);
-        mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i)/points.length), [0,0,1]);
-  
-        mat4.scale(modelMatrix, modelMatrix, [
-          1/(21),//1/(distance+0.1),
-          1/(21),
-          1/(21),
-        ]);
-        mat4.scale(modelMatrix, modelMatrix, [
-          (0.2 * (50)) / 2,//points.length,
-          (0.2 * (50)) / 2,//points.length,
-          (0.2 * (50)) / 2,//points.length,
-        ]);
-  
-        /* mat4.scale(modelMatrix, modelMatrix, [
-          (0.2 * (points.length-i)) / points.length,
-          (0.2* (points.length-i)) / points.length,
-          (0.2* (points.length-i)) / points.length,
-        ]); */
-        
-  
-  
-        gl.uniformMatrix4fv(
-          programInfo.uniformLocations.modelMatrix,
-          false,
-          modelMatrix
-        );
-        gl.drawArrays(gl.TRIANGLES, 0, 36);
-  
-      }); 
-      
-    });  
-  }
   
   
 }

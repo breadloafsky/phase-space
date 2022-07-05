@@ -31,9 +31,6 @@ function update() {
       singleton.sets.forEach(s =>{
         s.update(time);
       })
-      singleton.vectors.forEach(s =>{
-        s.update();
-      })
       
     gl.drawScene();
     
@@ -66,12 +63,6 @@ window.addEventListener("load", function init(e) {
 
   singleton.updateSetsLength();
 
-    /* for(let i = 0; i < 600; i++)
-      {
-        const w =100;
-        new FieldVector(vectors,w-Math.random()*w*2,w-Math.random()*w*2,w-Math.random()*w*2);
-    } */
-  
   var interval = setInterval(() => {
     if (!step.disabled) update();
   }, 10);

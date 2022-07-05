@@ -5,22 +5,21 @@ export function PointSet(){
 
     this.singleton = SingletonFactory.getInstance();
     const sRnd = this.singleton.startRnd;
-    this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX ,//* (Math.random() < 0.5 ? -1 : 1);
+    this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX,
     this.y = (Math.random()*sRnd-sRnd/2) + this.singleton.startY, 
     this.z = (Math.random()*sRnd-sRnd/2) + this.singleton.startZ,
     this.points = [];
-
     this.lastIter = 0;
 
-    this.previousTime=0;
-    this.dt =2 * Math.random();
-    this.startTime=null;
-
-    this.timeoffset = 0;
 
     this.life = 0;
-    this.lifeMax = this.singleton.respawnRate +this.singleton.respawnRate * Math.random();
+    this.lifeRand = Math.random();  // random factor
 
+
+}
+
+PointSet.prototype.lifeMax = function() {
+    return this.singleton.respawnRate +this.singleton.respawnRate*this.lifeRand/2;
 }
 
 
@@ -33,23 +32,23 @@ PointSet.prototype.update = function(time){
     const equation = this.singleton.equation;
     const length = this.singleton.setLength;
     const respawn = this.singleton.respawn;
+    const respawnRate = this.singleton.respawnRate;
+
+
+    const iterationStep =  this.singleton.iterationStep;
 
     
     if(respawn)
     {
         this.life++;
 
-        if(this.life >= this.lifeMax)
+        if(this.life >= this.lifeMax())
         {
             this.singleton.sets.splice(this.singleton.sets.indexOf(this), 1);
             this.singleton.sets.push(new PointSet());
         }
     }
-    else if (this.life > 0)
-    {
-        this.life = 0
-        this.lifeMax = 1;
-    }
+    
     
    
   
@@ -68,14 +67,34 @@ PointSet.prototype.update = function(time){
 
 
 
-    if(time != null && time > this.previousTime+10*this.dt)
+  
+    if(this.singleton.iterate)
     {
+        if(iterationStep < length)
+        {
+            this.x = this.points[iterationStep].x;
+            this.y = this.points[iterationStep].y;
+            this.z = this.points[iterationStep].z;
+        }
+        else if(iterationStep >= length){
+            x = this.points[length-1].x;
+            y = this.points[length-1].y;
+            z = this.points[length-1].z;
 
-        this.x = this.points[1].x;
-        this.y = this.points[1].y;
-        this.z = this.points[1].z;
-        this.previousTime = time;
+            for(let i = 0; i < iterationStep-length; i++)
+            {
+                x += equation.x(x, y, z, v);
+                y += equation.y(x, y, z, v);
+                z += equation.z(x, y, z, v);
+            }
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+        
     }
+        
+  
         
     
 
