@@ -221,7 +221,7 @@ GL.prototype.drawScene = function ()  {
       mat4.multiply(modelMatrix, modelMatrix, target);
       mat4.rotate(modelMatrix, modelMatrix,Math.PI*Math.sin((k+i*3)/points.length), [0,0,1]);
       
-      const sizeFactor =  size * (singleton.sizeRatio ? (i+1) / points.length : 1) / (s.lifeMax()/(s.lifeMax()-s.life));
+      const sizeFactor =  size * (singleton.sizeRatio ? (i+1) / points.length : 1) / (singleton.respawn ? s.lifeMax()/(s.lifeMax()-s.life) : 1);
 
       mat4.scale(modelMatrix, modelMatrix, [
         sizeFactor,
