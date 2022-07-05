@@ -1,3 +1,20 @@
+.source{
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    text-decoration: none; 
+    color: white; 
+    margin: 3px; 
+    padding: 3px; 
+    border: 1px; 
+    border-color: rgb(78, 78, 78); 
+    border-style: solid;
+    border-radius: 2px;
+}
+.source:hover{
+    background-color: rgb(68, 68, 68);
+}
+
 .pin {
     cursor: pointer;
 }

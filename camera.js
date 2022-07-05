@@ -48,9 +48,10 @@ Camera.prototype.getProjectionMatrix = function (aspectRatio) {
 
 Camera.prototype.move = function () {
 
-  document.querySelector("#debug1").value = this.position;
-  document.querySelector("#debug2").value = this.pitch;
-  document.querySelector("#debug3").value = this.yaw;
+  /* document.querySelector("#debug").innerHTML = `
+   pos = ${this.position}
+   pitch = ${this.pitch}
+   yaw = ${this.yaw}`; */
 
   this.position = vec3.add(
     [],

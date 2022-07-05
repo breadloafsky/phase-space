@@ -46,20 +46,11 @@ export function GL(canvas) {
     attribute vec4 aVertexColor;
     uniform mat4 uModel;
     uniform mat4 uView;
-    uniform mat4 uProjection;
-    
+    uniform mat4 uProjection;    
     varying lowp vec4 vColor;
 
-    
-    
     void main(void) {
-      
-      
       gl_Position = uProjection * uView*  uModel *  aVertexPosition; 
-
-  
-      
-      
       vColor = aVertexColor;
     }
   `;
@@ -126,12 +117,6 @@ GL.prototype.initPointsBuffers = function()  {
     indices: indexBuffer,
   };
 }
-
-
-
-
-
-
 
 
 

@@ -121,29 +121,19 @@
                             </div>
 
                             <label>
-                                Iteration step:
+                                Change step:
                                 <input style="width: 5em;" type="number" id="iterStep" min="1" step="1" value="1">
                             </label>
 
                             <label>
-                                Iterate the starting point:
+                                Starting point change:
                                 <button id="btnIterate" style="background-color: red;">⏸︎</button>
                             </label>
-
-
                         </div>
                     </div>
                 </div>
             </div>
             <div data-pinned="true" class="controls-left">
-
-                <!-- debug -->
-                <output id="debug1"></output>
-                <br />
-                <output id="debug2"></output>
-                <br />
-                <output id="debug3"></output>
-
                 <div style="display:flex;flex-direction: row-reverse; padding-top: 10px;">
                     <svg class="pin" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -152,6 +142,7 @@
                             fill="dimgray" />
                     </svg>
                 </div>
+                <pre id="debug"></pre>
                 <div style="padding-bottom: 20px;">
                     <label for="preset" style="padding-right: 10px; text-align: center;">
                         Preset:
@@ -174,14 +165,14 @@
                 <div>
                     <label for="variableX">
                         <div class="font-italic" style="font-style: italic;">ẋ =</div>
-                        <textarea data-var="x" class="variable" rows="1" cols="50" id="variableX"></textarea>
+                        <textarea data-var="x" class="variable" rows="1" cols="40" id="variableX"></textarea>
                     </label>
                 </div>
                 <br />
                 <div>
                     <label for="variableY">
                         <div class="font-italic" style="font-style: italic;">ẏ =</div>
-                        <textarea data-var="y" class="variable" rows="1" cols="50" id="variableY"></textarea>
+                        <textarea data-var="y" class="variable" rows="1" cols="40" id="variableY"></textarea>
                     </label>
 
                 </div>
@@ -190,12 +181,15 @@
                     <label for="variableZ">
                         <div class="font-italic" style="font-style: italic;">ż =</div>
 
-                        <textarea data-var="z" class="variable" rows="1" cols="50" id="variableZ"></textarea>
+                        <textarea data-var="z" class="variable" rows="1" cols="40" id="variableZ"></textarea>
                     </label>
                 </div>
             </div>
         </div>
     </div>
+    <a href="https://github.com/Ilgo6991/phase-space" class="source">
+        source code
+    </a>
     <script src="main.js" type="module"></script>
     <script src="io.js" type="module"></script>
     <script>
