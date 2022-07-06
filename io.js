@@ -292,6 +292,8 @@ function setPreset() {
   singleton.sets = [];
   singleton.updateSetsLength();
   setEquationFromString();
+
+  singleton.d = 0;
 }
 
 function update(){

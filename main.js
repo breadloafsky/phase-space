@@ -23,18 +23,17 @@ function update() {
 
   const currentTime = new Date();
   const time = currentTime.getMilliseconds() + currentTime.getSeconds() * 1000;
+  
+  if (time < previousTime) previousTime -= 600000;
 
-  if (time < previousTime) previousTime -= 60000;
-    requestAnimationFrame((time) => {
-      if(!singleton.iterate) time = null;
+  singleton.sets.forEach(s =>{
+    s.update(time);
+  });
 
-      singleton.sets.forEach(s =>{
-        s.update(time);
-      })
-      
+  requestAnimationFrame((time) => {
+    //if(!singleton.iterate) time = null;
     gl.drawScene();
-    
-    });
+  });
     
 
     if (!step.disabled && stp > 0.00000001) {

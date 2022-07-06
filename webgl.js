@@ -125,10 +125,12 @@ GL.prototype.initPointsBuffers = function()  {
 //  draw
 GL.prototype.drawScene = function ()  {
 
+
+
   const sets = singleton.sets;
   const size = singleton.pointSize;
 
-  const sizeRatio = singleton.sizeRatio;
+
 
   const buffers = this.buffers;
 
@@ -142,9 +144,10 @@ GL.prototype.drawScene = function ()  {
 
   gl.enable(gl.CULL_FACE);
   gl.enable(gl.DEPTH_TEST);
-  /* gl.clearColor(0.0, 0.0, 0.0, 1.0);
+  
+  gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); */
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   const projectionMatrix = camera.getProjectionMatrix(screen[0] / screen[1]);
   const viewMatrix = camera.getViewMatrix();
@@ -200,7 +203,7 @@ GL.prototype.drawScene = function ()  {
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.points.indices);
 
-
+  
   //  points
   sets.forEach((s,k) => {
     const points = s.points;

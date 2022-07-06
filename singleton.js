@@ -35,7 +35,8 @@ class Singleton
     startZ = 0.;
     startRnd = 100.;
     sizeRatio = true;
-    
+
+ 
 
     pointSize = 0.1;
     showVectors = false;

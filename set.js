@@ -20,6 +20,7 @@ export function PointSet(){
 
 PointSet.prototype.lifeMax = function() {
     return this.singleton.respawnRate +this.singleton.respawnRate*this.lifeRand/2;
+    
 }
 
 
@@ -32,7 +33,6 @@ PointSet.prototype.update = function(time){
     const equation = this.singleton.equation;
     const length = this.singleton.setLength;
     const respawn = this.singleton.respawn;
-    const respawnRate = this.singleton.respawnRate;
 
 
     const iterationStep =  this.singleton.iterationStep;
