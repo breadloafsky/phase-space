@@ -8,7 +8,7 @@ import { slider } from "./io.js";
 
 const step = document.querySelector("#step");
 const singleton = SingletonFactory.getInstance();
-const gl = new GL(canvas = document.querySelector("#canvas"));
+const gl = new GL(document.querySelector("#canvas"));
 
 
 
