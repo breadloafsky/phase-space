@@ -165,7 +165,7 @@ function setIterationStep(v)
 
 
 
-setPreset();
+
 document.querySelector("#nextPreset").addEventListener("click", () => {
   if(presets.length > presetCurrent) 
   {
@@ -187,15 +187,18 @@ document.querySelectorAll("input").forEach((e) => {
 });
 
 document.querySelectorAll(".variable").forEach((e) => {
-  e.addEventListener("input", (e)  => onEdit(e.target));
-  e.addEventListener("blur", (e)   =>setEquationFromString());
+  e.addEventListener("input", (e)  => {e.inputType == "insertText" && onEdit(e.target)});
+  e.addEventListener("blur", (e)   => setEquationFromString());
 });
 
 
 function onEdit(input){
-  input.style.color = "#ffd000"
-  input.style.height = "auto";
-  input.style.height = input.scrollHeight + "px";
+ 
+    input.style.color = "#ffd000"
+    input.style.height = "auto";
+    input.style.height = input.scrollHeight + "px";
+  
+  
 }
 
 
@@ -216,7 +219,7 @@ function setEquationFromString() {
   singleton.equation = {};
   document.querySelectorAll(".variable").forEach(input =>{
     const varName = input.dataset.var;
-    onEdit(input);
+    //onEdit(input);
     input.style.outlineStyle = "solid";
     if (["undefined", undefined, "", null].includes(input.value)) {
       input.value = "";
@@ -249,7 +252,7 @@ function setPreset() {
     presetCurrent + "/" + presets.length;
   document.querySelector("#presetName").innerHTML = preset.name;
   document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var]);
-
+  
 
   vMin.valueAsNumber = Math.floor(preset.v);
   vMax.valueAsNumber = preset.max;
@@ -260,7 +263,7 @@ function setPreset() {
   step.valueAsNumber = preset.step;
 
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
-  setEquationFromString();
+  
 
   setStart(preset.pointStart);
 
@@ -288,11 +291,10 @@ function setPreset() {
 
   singleton.sets = [];
   singleton.updateSetsLength();
+  setEquationFromString();
 }
 
-
 function update(){
-
 }
 
 
@@ -348,3 +350,10 @@ canvas.addEventListener("mousedown", (e) => {
   });
 
 
+ 
+  window.addEventListener("load", function init(e) {
+    window.removeEventListener("load", init);
+    setPreset();
+ 
+
+  });
