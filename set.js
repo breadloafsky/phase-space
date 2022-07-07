@@ -14,11 +14,19 @@ export function PointSet(){
     this.life = 0;
     this.lifeRand = Math.random();  // random factor
 
+    this.lastVector = [];
+
 
 }
 
 PointSet.prototype.lifeMax = function() {
     return this.singleton.respawnRate +this.singleton.respawnRate*this.lifeRand/2;
+}
+
+
+PointSet.prototype.getVector = function()
+{
+
 }
 
 
@@ -64,7 +72,11 @@ PointSet.prototype.update = function(time){
     }
 
 
-
+    x += equation.x(x, y, z, v);
+    y += equation.y(x, y, z, v);
+    z += equation.z(x, y, z, v);
+    this.lastVector = [x,y,z];
+    
   
     if(this.singleton.iterate)
     {
@@ -75,11 +87,13 @@ PointSet.prototype.update = function(time){
             this.z = this.points[iterationStep].z;
         }
         else if(iterationStep >= length){
+
+            
             x = this.points[length-1].x;
             y = this.points[length-1].y;
             z = this.points[length-1].z;
 
-            for(let i = 0; i < iterationStep-length; i++)
+            for(let i = 0; i < iterationStep-length+1; i++)
             {
                 x += equation.x(x, y, z, v);
                 y += equation.y(x, y, z, v);
@@ -88,6 +102,7 @@ PointSet.prototype.update = function(time){
             this.x = x;
             this.y = y;
             this.z = z;
+            
         }
         
     }
