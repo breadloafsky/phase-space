@@ -1,5 +1,6 @@
 
 export function parse(str){
-    str = str.replace(/([a-z])\w+/, 'Math.$&');
+    str = str.replace(/([A-z])\w+/, 'Math.$&');
     return str;
+
 }

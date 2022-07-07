@@ -1,9 +1,10 @@
 
 import { GL } from "./webgl.js";
 
+import "./io.js";
 import { SingletonFactory } from "./singleton.js";
 
-import { slider } from "./io.js";
+
 
 
 const step = document.querySelector("#step");

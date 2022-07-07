@@ -49,9 +49,24 @@ export function GL(canvas) {
     uniform mat4 uProjection;    
     varying lowp vec4 vColor;
 
+
+    vec3 pos = vec3(2.,2.,2.);
+
+    mat4 m = mat4(1.0);
+    
+
     void main(void) {
-      gl_Position = uProjection * uView*  uModel *  aVertexPosition; 
-      vColor = aVertexColor;
+
+    gl_Position = uProjection * uView*  uModel *  aVertexPosition; 
+
+    vec4 col= aVertexColor;
+
+    //col=vec4(1.,1.,0.,1.);
+    /* if(position.x >2.)
+    {
+      col= aVertexColor+(gl_Position.z);
+    } */
+    vColor = col;
     }
   `;
 
@@ -93,11 +108,40 @@ GL.prototype.initPointsBuffers = function()  {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-  var positions = models.pointCube.positions;
-  var faceColors = models.pointCube.faceColors;
+  /* var positions = models.pointCube.positions;
+  var faceColors = models.pointCube.faceColors; */
 
+  var positions = [
+    // Front face
+    -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0,
+    1.0, -1.0, 1.0, 1.0,
+    // Back face
+    -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0, 1.0,
+    1.0, -1.0, 1.0, -1.0, -1.0,
+    // Top face
+    -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0, -1.0,
+    // Bottom face
+    -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0,
+    -1.0, 1.0, -1.0, -1.0, 1.0,
+    // Right face
+    1.0, -1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0,
+    1.0, 1.0, -1.0, 1.0,
+    // Left face
+    -1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0,
+    1.0, 1.0, -1.0, 1.0, -1.0,
+  ];
 
+  var faceColors = [
+        [1.0, 0.0, 0.0, 1.0], //R
+        [1.0, 0.0, 0.0, 1.0], //R
+        [0.0, 1.0, 0.0, 1.0], //G
+        [0.0, 1.0, 0.0, 1.0], //G
+        [0.0, 0.0, 1.0, 1.0], //B
+        [0.0, 0.0, 1.0, 1.0], //B
+        ];
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW);
+
   var colors = [];
   for (var j = 0; j < faceColors.length; ++j) {
     const c = faceColors[j];
@@ -116,6 +160,7 @@ GL.prototype.initPointsBuffers = function()  {
     color: colorBuffer,
     indices: indexBuffer,
   };
+
 }
 
 
@@ -232,6 +277,8 @@ GL.prototype.drawScene = function ()  {
         sizeFactor,
       ]);
 
+      
+      
       gl.uniformMatrix4fv(
         programInfo.uniformLocations.modelMatrix,
         false,
