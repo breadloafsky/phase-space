@@ -61,7 +61,7 @@ export const presets = [
   {
     name:"Rössler (Bifurcation)",
     x: `-(y+z)*0.05`,
-    y: `(x+v*y)*0.05`,
+    y: `(x+v*y)*0.05`,  
     z: `(0.2+z*(x-5.7))*0.05`,
     v: 0.06,
     step: 16,
@@ -78,9 +78,9 @@ export const presets = [
   },
   {
     name:"Thomas",
-    x: `(Math.sin(y)-0.087*x)*0.2`,
-    y: `(Math.sin(z)-0.087*y)*0.2`,
-    z: `(Math.sin(x)-0.087*z)*0.2`,
+    x: `(sin(y)-0.087*x)*0.2`,
+    y: `(sin(z)-0.087*y)*0.2`,
+    z: `(sin(x)-0.087*z)*0.2`,
     v: -0,
     step: 0,
     max: 0,
@@ -96,8 +96,8 @@ export const presets = [
   },  
   {
     name:"\"Particles\"",
-    x: `(10*(y-x))*0.005+Math.cos(v*8+y/z)`,
-    y: `(x*(28-z)-y+v/z)*0.005-Math.sin(v*4+z/10)`,
+    x: `(10*(y-x))*0.005+cos(v*8+y/z)`,
+    y: `(x*(28-z)-y+v/z)*0.005-sin(v*4+z/10)`,
     z: `(x*y-(8/3)*z)*0.005`,
     v: 0,
     step: 18.5,
@@ -115,8 +115,8 @@ export const presets = [
   {
     name:"\"Clouds\"",
     x: `(x-z*0.001*y)*0.002`,
-    y: `(Math.cos(100*z/x)*400)*0.002`,
-    z: `(x/z*500*Math.sin(y*44))*0.002`,
+    y: `(cos(100*z/x)*400)*0.002`,
+    z: `(x/z*500*sin(y*44))*0.002`,
     v: 0,
     step: 0,
     max: 0,

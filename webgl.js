@@ -204,10 +204,10 @@ GL.prototype.drawScene = function ()  {
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.points.indices);
 
   
+  
   //  points
   sets.forEach((s,k) => {
     const points = s.points;
-    
     points.forEach((point, i) => {
 
       var modelMatrix = mat4.create();

@@ -56,7 +56,6 @@ function update() {
 
 
 
-
 window.addEventListener("load", function init(e) {
   window.removeEventListener("load", init);
 
@@ -65,4 +64,5 @@ window.addEventListener("load", function init(e) {
   var interval = setInterval(() => {
     if (!step.disabled) update();
   }, 10);
+  
 });

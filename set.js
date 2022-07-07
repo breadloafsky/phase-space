@@ -11,7 +11,6 @@ export function PointSet(){
     this.points = [];
     this.lastIter = 0;
 
-
     this.life = 0;
     this.lifeRand = Math.random();  // random factor
 
@@ -20,7 +19,6 @@ export function PointSet(){
 
 PointSet.prototype.lifeMax = function() {
     return this.singleton.respawnRate +this.singleton.respawnRate*this.lifeRand/2;
-    
 }
 
 

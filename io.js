@@ -1,6 +1,6 @@
 import { presets } from "./presets.js";
 import { SingletonFactory } from "./singleton.js";
-
+import { parse } from "./parser.js";
 
 const singleton = SingletonFactory.getInstance();
 
@@ -224,8 +224,13 @@ function setEquationFromString() {
     if (["undefined", undefined, "", null].includes(input.value)) {
       input.value = "";
       input.parentElement.querySelector("div").style.color = "gray";
-    } else input.parentElement.querySelector("div").style.color = null;
-     const eq= new Function("x,y,z,v", "return " + input.value );
+    } 
+    else 
+      input.parentElement.querySelector("div").style.color = null;
+
+    const eq= new Function("x,y,z,v", "return " + parse(input.value) );
+
+
     try {
       if(typeof eq === 'function')
       {
