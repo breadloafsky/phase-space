@@ -3,6 +3,7 @@ import { SingletonFactory } from "./singleton.js";
 
 export function PointSet(){
 
+    
     this.singleton = SingletonFactory.getInstance();
     const sRnd = this.singleton.startRnd;
     this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX,

@@ -2,7 +2,7 @@
 
 
 export const presets = [
-  
+
   {
     name:"Lorenz",
     x: `(10*(y-x))*0.01`,
@@ -11,7 +11,7 @@ export const presets = [
     v: -0,
     step: 0,
     max: 0,
-    pointSize: 0.1,
+    pointSize: 0.3,
     sizeRatio:true,
     camPos:[-40,16,-4],
     camPitch:-0.36,
@@ -30,7 +30,7 @@ export const presets = [
     v: 0.3,
     step: 16,
     max: 1,
-    pointSize: 0.04,
+    pointSize: 0.1,
     sizeRatio:true,
     camPos:[-18,6,9],
     camPitch: -0.3,
@@ -48,7 +48,7 @@ export const presets = [
     v: -0,
     step: 0,
     max: 0,
-    pointSize: 0.05,
+    pointSize: 0.2,
     sizeRatio:true,
     camPos:[-14,13,26],
     camPitch:-0.5,
@@ -66,7 +66,7 @@ export const presets = [
     v: 0.06,
     step: 16,
     max: 0.4,
-    pointSize: 0.02,
+    pointSize: 0.2,
     sizeRatio:true,
     camPos:[-14,13,26],
     camPitch:-0.5,
@@ -84,7 +84,7 @@ export const presets = [
     v: -0,
     step: 0,
     max: 0,
-    pointSize: 0.04,
+    pointSize: 0.1,
     sizeRatio:true,
     camPos:[17,13,16],
     camPitch:-0.55,
@@ -102,7 +102,7 @@ export const presets = [
     v: 0,
     step: 18.5,
     max: 3,
-    pointSize: 0.05,
+    pointSize: 0.1,
     sizeRatio:true,
     camPos:[-40,16,-4],
     camPitch:-0.36,
@@ -139,7 +139,7 @@ export const presets = [
     v: 0.5,
     step: 14.5,
     max: 1,
-    pointSize: 0.2,
+    pointSize: 1,
     sizeRatio:false,
     camPos:[-85,53,-58],
     camPitch: -0.55,

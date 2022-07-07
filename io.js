@@ -228,6 +228,8 @@ function setEquationFromString() {
     else 
       input.parentElement.querySelector("div").style.color = null;
 
+   
+
     const eq= new Function("x,y,z,v", "return " + parse(input.value) );
 
 
