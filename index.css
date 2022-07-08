@@ -119,6 +119,34 @@ textarea:focus {
     }
 }
 
+.controls-info {
+    padding-block: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 40vw;   
+}
+.controls-info > div{
+    margin-inline: 10px;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.keyboard-key{
+    font-size: 0.6rem;
+    text-align: center;
+    padding: 2px;
+    margin: 1px;
+    width: 0.6rem;
+    border: #424242;
+    border-style: solid;
+}
 
 .controls-bottom[data-pinned="true"],
 .controls-bottom:hover {

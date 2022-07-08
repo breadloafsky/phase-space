@@ -5,11 +5,12 @@ This application shows 3-dimensional phase portraits in phase space defined by t
 ## Demo
 https://ilgo6991.github.io/phase-space
 
-(epilepsy warning)
+(epilepsy warning
+& the application can crash your the browser)
 
 ## Usage
 
-The system of differential equations is written in JavaScript on the left side.
+The system of differential equations can be defined on the left sidebar.
 
 There are 3 variables ( x, y, z ) for the phase space.\
 Variable "v" can be used to add change with time.

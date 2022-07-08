@@ -7,7 +7,8 @@ import { SingletonFactory } from "./singleton.js";
 
 
 
-const step = document.querySelector("#step");
+
+
 const singleton = SingletonFactory.getInstance();
 const gl = new GL(document.querySelector("#canvas"));
 
@@ -22,28 +23,29 @@ function update() {
   var v = slider.valueAsNumber;
   var stp = Math.pow(2, step.valueAsNumber) / 100000000;
 
-  const currentTime = new Date();
-  const time = currentTime.getMilliseconds() + currentTime.getSeconds() * 1000;
-  
-  if (time < previousTime) previousTime -= 600000;
+
 
   singleton.sets.forEach(s =>{
-    s.update(time);
+    s.update();
   });
 
   requestAnimationFrame((time) => {
-    //if(!singleton.iterate) time = null;
-    gl.drawScene();
+    if(previousTime+16 < time)
+    {
+      gl.drawScene();
+      previousTime = time;
+    }
+    
   });
     
 
     if (!step.disabled && stp > 0.00000001) {
       v += stp;
     }
-    if (v < vMax.valueAsNumber - stp && previousTime != time) {
-    } 
-
-    else if (v > vMax.valueAsNumber && !step.valueAsNumber == 0) {
+  
+    
+    if (v > vMax.valueAsNumber && step.valueAsNumber != 0) {
+      
       v = vMin.valueAsNumber;
     }
 

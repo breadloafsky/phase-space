@@ -254,16 +254,7 @@ GL.prototype.drawScene = function ()  {
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.camPos);
 
-  /* gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.camPos);
-  gl.vertexAttribPointer(
-    programInfo.attribLocations.camPos,
-    numComponents,
-    type,
-    normalize,
-    stride,
-    offset
-  );
-  gl.enableVertexAttribArray(programInfo.attribLocations.camPos); */
+
   
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.sizeFactor);
   gl.vertexAttribPointer(

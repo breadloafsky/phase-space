@@ -31,7 +31,7 @@ PointSet.prototype.getVector = function()
 }
 
 
-PointSet.prototype.update = function(time){
+PointSet.prototype.update = function(){
 
     var x = this.x;
     var y = this.y;

@@ -9,11 +9,6 @@
         integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
         crossorigin="anonymous" defer>
         </script>
-
-
-
-    </script>
-
     <base href=".">
 </head>
 
@@ -25,6 +20,7 @@
         </canvas>
 
         <div class="controls">
+
             <div data-pinned="true" class="controls-bottom">
                 <div style="padding-left: 40px;">
                     v min:
@@ -163,14 +159,14 @@
                     </div>
                 </div>
                 <div>
-                    <label for="variableX">
+                    <label for="variableX" style="display: flex;">
                         <div class="font-italic" style="font-style: italic;">ẋ =</div>
                         <textarea data-var="x" class="variable" rows="1" cols="40" id="variableX"></textarea>
                     </label>
                 </div>
                 <br />
                 <div>
-                    <label for="variableY">
+                    <label for="variableY" style="display: flex;">
                         <div class="font-italic" style="font-style: italic;">ẏ =</div>
                         <textarea data-var="y" class="variable" rows="1" cols="40" id="variableY"></textarea>
                     </label>
@@ -178,12 +174,29 @@
                 </div>
                 <br />
                 <div>
-                    <label for="variableZ">
+                    <label for="variableZ" style="display: flex;">
                         <div class="font-italic" style="font-style: italic;">ż =</div>
 
                         <textarea data-var="z" class="variable" rows="1" cols="40" id="variableZ"></textarea>
                     </label>
                 </div>
+            </div>
+            <div data-pinned="true" class="controls-info">
+
+                <div>Use</div>
+                <div class="keyboard">
+                    <div class="keyboard-key">W</div>
+                    <div style="display: flex;">
+                        <div class="keyboard-key">A</div>
+                        <div class="keyboard-key">S</div>
+                        <div class="keyboard-key">D</div>
+                    </div>
+                </div>
+                <div>
+                    and mouse to fly around
+                </div>
+                <button type="button" id="closeInfo">close</button>
+
             </div>
         </div>
     </div>
@@ -192,12 +205,9 @@
     </a>
     <script src="main.js" type="module"></script>
     <script>
-        document.querySelectorAll(".pin").forEach((e) => {
-            e.addEventListener("click", () => {
-                const parent = e.parentElement.parentElement;
-                parent.dataset.pinned = parent.dataset.pinned == "false" ? "true" : "false";
-            });
-        });
+
+
+
     </script>
 </body>
 

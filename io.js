@@ -10,7 +10,7 @@ var presetCurrent = 1;
 
 
 /** @type {HTMLInputElement} */
-export const slider = document.querySelector("#slider");
+export const slider = document.querySelector("#slider");  // defines the value of 'v'
 slider.addEventListener("input", e =>{
     singleton.v = e.target.valueAsNumber;
 });
@@ -164,6 +164,14 @@ function setIterationStep(v)
 }
 
 
+document.querySelector("#closeInfo").addEventListener("click", (e) => {e.target.parentNode.remove();});
+
+document.querySelectorAll(".pin").forEach((e) => {
+  e.addEventListener("click", () => {
+      const parent = e.parentElement.parentElement;
+      parent.dataset.pinned = parent.dataset.pinned == "false" ? "true" : "false";
+  });
+});
 
 
 document.querySelector("#nextPreset").addEventListener("click", () => {
@@ -187,18 +195,16 @@ document.querySelectorAll("input").forEach((e) => {
 });
 
 document.querySelectorAll(".variable").forEach((e) => {
-  e.addEventListener("input", (e)  => {e.inputType == "insertText" && onEdit(e.target)});
+  e.style.height = e.scrollHeight + "px";
+  e.addEventListener("input", (e)  => {e.inputType.length > 0 && onEdit(e.target);});
   e.addEventListener("blur", (e)   => setEquationFromString());
 });
 
 
 function onEdit(input){
- 
     input.style.color = "#ffd000"
     input.style.height = "auto";
     input.style.height = input.scrollHeight + "px";
-  
-  
 }
 
 
@@ -227,8 +233,6 @@ function setEquationFromString() {
     } 
     else 
       input.parentElement.querySelector("div").style.color = null;
-
-   
 
     const eq= new Function("x,y,z,v", "return " + parse(input.value) );
 
