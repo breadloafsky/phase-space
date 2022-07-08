@@ -6,7 +6,7 @@ This application shows 3-dimensional phase portraits in phase space defined by t
 https://ilgo6991.github.io/phase-space
 
 (epilepsy warning
-& the application can crash your the browser)
+& the application can crash your browser)
 
 ## Usage
 
