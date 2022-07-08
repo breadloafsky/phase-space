@@ -17,7 +17,7 @@ Variable "v" can be used to add change with time.
 The controls for "v" are on the bottom bar.
 
 Each space variable has its corresponding differential equation.\
-The differential equations are written and can be edited as JavaScript code on the left sidebar.
+The equations can be edited on the left sidebar.
 
 The sets of points are defined on the right side.
 

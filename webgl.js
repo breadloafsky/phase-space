@@ -55,7 +55,7 @@ export function GL(canvas) {
 
       
 
-      vec3 col = mix(vec3(0.,1.,0.),vec3(0.,0.,1.)*2., aColorVector.y);
+      vec3 col = mix(vec3(0.,1.,0.)/1.2,vec3(0.,0.,1.)*2., aColorVector.y);
       col = mix(col,vec3(1.,0.,0.), aColorVector.x); 
 
 
@@ -74,10 +74,17 @@ export function GL(canvas) {
 
   const fsSource = `
     varying lowp vec4 vColor;
+    precision lowp float;
     void main(void) {
+
+      vec4 col = vColor;
       if(length(gl_PointCoord-vec2(0.5)) > 0.5)
         discard;
-      gl_FragColor = vColor;
+
+      col = col/(length(gl_PointCoord-vec2(0.3))+0.5);
+
+      
+      gl_FragColor = col;
     }
   `;
 
