@@ -1,6 +1,4 @@
-import { Camera } from "./camera.js";
 import { SingletonFactory } from "./singleton.js";
-import { models } from "./models.js";
 
 const singleton = SingletonFactory.getInstance();
 var screen = [100,100];
