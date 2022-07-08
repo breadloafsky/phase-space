@@ -186,10 +186,6 @@ GL.prototype.drawScene = function ()  {
 
 
 
-  const sets = singleton.sets;
-  const size = singleton.pointSize;
-
-
   const buffers = this.buffers;
 
   const gl = this.gl;
