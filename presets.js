@@ -18,7 +18,7 @@ export const presets = [
     camYaw:0.6,
     setNum: 50,
     setLength: 100,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness:100,
   },
   {
@@ -36,7 +36,7 @@ export const presets = [
     camYaw:0.6,
     setNum: 150,
     setLength: 100,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness: 15,
   },
   
@@ -56,7 +56,7 @@ export const presets = [
     camYaw:-1,
     setNum: 50,
     setLength: 100,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness:10,
   },  
   {
@@ -74,7 +74,7 @@ export const presets = [
     camYaw: 0.7,
     setNum: 1,
     setLength: 10000,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness:100,
   },
   {
@@ -92,7 +92,7 @@ export const presets = [
     camYaw:-1,
     setNum: 1,
     setLength: 10000,
-    pointStart:[1,1,1],
+    pointStart:[1,1,1,0],
     startRandomness:0,
   },
   {
@@ -110,7 +110,7 @@ export const presets = [
     camYaw:-2.4,
     setNum: 100,
     setLength: 100,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness:10,
   },  
   {
@@ -128,7 +128,7 @@ export const presets = [
     camYaw:0.6,
     setNum: 10000,
     setLength: 1,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness: 100,
   },
   {
@@ -146,7 +146,7 @@ export const presets = [
     camYaw:-0.17,
     setNum: 30,
     setLength: 300,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness: 100,
     respawnRate: 100,
   },
@@ -166,7 +166,7 @@ export const presets = [
     camYaw: 0.6,
     setNum: 10,
     setLength: 1000,
-    pointStart:[0,0,0],
+    pointStart:[0,0,0,0],
     startRandomness: 100,
     respawnRate: 40,
   },

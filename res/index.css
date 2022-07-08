@@ -129,6 +129,7 @@ textarea:focus {
 }
 .controls-info > div{
     margin-inline: 10px;
+    
 }
 
 .keyboard {
@@ -176,7 +177,10 @@ textarea:focus {
     top: 0;
     left: 0;
     height: 92vh;
+    
 }
+
+
 
 .controls-right[data-pinned="true"],
 .controls-right:hover {

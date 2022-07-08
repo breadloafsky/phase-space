@@ -126,11 +126,19 @@ startZ.addEventListener("input", (e) =>{
     singleton.startZ = e.target.valueAsNumber;
 });
 
-function setStart([x,y,z])
+/** @type {HTMLInputElement} */
+const startA = document.querySelector("#sa")
+startA.addEventListener("input", (e) =>{
+    singleton.startA = e.target.valueAsNumber;
+});
+
+
+function setStart([x,y,z,a])
 {
   startX.valueAsNumber = x;
   startY.valueAsNumber = y;
   startZ.valueAsNumber = z;
+  startA.valueAsNumber = a;
 }
 
 /** @type {HTMLInputElement} */
@@ -163,6 +171,26 @@ function setIterationStep(v)
   singleton.iterationStep = v;
 }
 
+const dimensions = document.querySelectorAll(".dimension");
+dimensions.forEach((e,i) => {
+  e.addEventListener("input", (l) =>{
+    setDimension(i, l.target.value);
+  });
+});
+
+//  ToDo
+function setDimension(i,l)
+{
+  singleton.dimensions.forEach((d,j) =>{
+    if (singleton.dimensions[j] == dimensions[i].value && d==l)
+      singleton.dimensions[j] = "a";
+      
+  });
+  singleton.dimensions[i] = l;
+  dimensions.forEach((d,j) =>{
+    d.value = singleton.dimensions[j];
+  });
+}
 
 document.querySelector("#closeInfo").addEventListener("click", (e) => {e.target.parentNode.remove();});
 
@@ -226,21 +254,23 @@ function setEquationFromString() {
   document.querySelectorAll(".variable").forEach(input =>{
     const varName = input.dataset.var;
     //onEdit(input);
+
+    var val = input.value;
     input.style.outlineStyle = "solid";
     if (["undefined", undefined, "", null].includes(input.value)) {
-      input.value = "";
+      val = "0";
       input.parentElement.querySelector("div").style.color = "gray";
     } 
     else 
       input.parentElement.querySelector("div").style.color = null;
 
-    const eq= new Function("x,y,z,v", "return " + parse(input.value) );
+    const eq= new Function("x,y,z,a,v", "return " + parse(val) );
 
 
     try {
       if(typeof eq === 'function')
       {
-        if(eq(1, 1, 1, 1));
+        if(eq(1, 1, 1, 1, 1));
         {
           singleton.equation[varName] = eq;
           input.style.outlineStyle = null;
@@ -262,7 +292,7 @@ function setPreset() {
   document.querySelector("#preset").innerHTML =
     presetCurrent + "/" + presets.length;
   document.querySelector("#presetName").innerHTML = preset.name;
-  document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var]);
+  document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var] ? preset[e.dataset.var]:"");
   
 
   vMin.valueAsNumber = Math.floor(preset.v);
@@ -298,6 +328,11 @@ function setPreset() {
   }
   setPointSize(preset.pointSize);
   setSizeRatio(preset.sizeRatio);
+
+
+  ["x","y","z","a"].forEach((a,i) => setDimension(i,a));
+  
+  
 
 
   singleton.sets = [];

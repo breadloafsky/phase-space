@@ -5,7 +5,7 @@
     <title>Phase Space</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/res/index.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
         integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
         crossorigin="anonymous" defer>
@@ -107,14 +107,17 @@
                                     <input style="width: 5em;" type="number" id="sy" step="10" value="0">
                                 </label>
                                 <label>
-                                    <div class="font-italic" style="font-style: italic;">z</div>
+                                    <div class="font-italic" style="font-style: italic;">z:</div>
                                     <input style="width: 5em;" type="number" id="sz" step="10" value="0">
+                                </label>
+                                <label>
+                                    <div class="font-italic" style="font-style: italic;">a:</div>
+                                    <input style="width: 5em;" type="number" id="sa" step="10" value="0">
                                 </label>
                                 <label>
                                     Randomness ±:
                                     <input style="width: 5em;" type="number" id="srnd" min="0" step="10" value="1">
                                 </label>
-
                             </div>
 
                             <label>
@@ -180,6 +183,54 @@
 
                         <textarea data-var="z" class="variable" rows="1" cols="40" id="variableZ"></textarea>
                     </label>
+                </div>
+                <br />
+                <div>
+                    <label for="variableA" style="display: flex;">
+                        <div class="font-italic" style="font-style: italic;">ȧ =</div>
+                        <textarea data-var="a" class="variable" rows="1" cols="40" id="variableA"></textarea>
+                    </label>
+                </div>
+
+                <div style="margin-top: 20px;" class="controls-section" hidden>
+
+                    <div class="title">Dimension Mapping</div>
+
+                    <div>
+                        x:
+                        <select class="dimension" data-var="x">
+                            <option style="color: red;" value="x">→</option>
+                            <option style="color: green;" value="y">↑</option>
+                            <option style="color: blue;" value="z">↙</option>
+                        </select>
+                    </div>
+
+
+                    <div>
+                        y:
+                        <select class="dimension" data-var="y">
+                            <option style="color: red;" value="x">→</option>
+                            <option style="color: green;" value="y">↑</option>
+                            <option style="color: blue;" value="z">↙</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        z:
+                        <select class="dimension" data-var="z">
+                            <option style="color: red;" value="x">→</option>
+                            <option style="color: green;" value="y">↑</option>
+                            <option style="color: blue;" value="z">↙</option>
+                        </select>
+                    </div>
+                    <div>
+                        a:
+                        <select class="dimension" data-var="a">
+                            <option style="color: red;" value="x">→</option>
+                            <option style="color: green;" value="y">↑</option>
+                            <option style="color: blue;" value="z">↙</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div data-pinned="true" class="controls-info">

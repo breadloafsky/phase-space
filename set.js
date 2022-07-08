@@ -9,6 +9,7 @@ export function PointSet(){
     this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX,
     this.y = (Math.random()*sRnd-sRnd/2) + this.singleton.startY, 
     this.z = (Math.random()*sRnd-sRnd/2) + this.singleton.startZ,
+    this.a = (Math.random()*sRnd-sRnd/2) + this.singleton.startA,
     this.points = [];
     this.lastIter = 0;
 
@@ -36,6 +37,7 @@ PointSet.prototype.update = function(){
     var x = this.x;
     var y = this.y;
     var z = this.z;
+    var a = this.a;
     const v = this.singleton.v;
     const equation = this.singleton.equation;
     const length = this.singleton.setLength;
@@ -65,17 +67,20 @@ PointSet.prototype.update = function(){
             x: x,
             y: y,
             z: z,
+            a: a,
         });
 
-        x += equation.x(x, y, z, v);
-        y += equation.y(x, y, z, v);
-        z += equation.z(x, y, z, v);
+        x += equation.x(x, y, z, a, v);
+        y += equation.y(x, y, z, a, v);
+        z += equation.z(x, y, z, a, v);
+        a += equation.a(x, y, z, a, v);
     }
 
 
-    x += equation.x(x, y, z, v);
-    y += equation.y(x, y, z, v);
-    z += equation.z(x, y, z, v);
+    x += equation.x(x, y, z, a, v);
+    y += equation.y(x, y, z, a, v);
+    z += equation.z(x, y, z, a, v);
+    a += equation.a(x, y, z, a, v);
     this.lastVector = [x,y,z];
     
   
@@ -93,16 +98,20 @@ PointSet.prototype.update = function(){
             x = this.points[length-1].x;
             y = this.points[length-1].y;
             z = this.points[length-1].z;
+            a = this.points[length-1].a;
 
             for(let i = 0; i < iterationStep-length+1; i++)
             {
-                x += equation.x(x, y, z, v);
-                y += equation.y(x, y, z, v);
-                z += equation.z(x, y, z, v);
+                x += equation.x(x, y, z, a, v);
+                y += equation.y(x, y, z, a, v);
+                z += equation.z(x, y, z, a, v);
+                a += equation.a(x, y, z, a, v);
+
             }
             this.x = x;
             this.y = y;
             this.z = z;
+            this.a = a;
             
         }
         

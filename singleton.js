@@ -33,17 +33,17 @@ class Singleton
     startX = 0.;
     startY = 0.;
     startZ = 0.;
+    startA = 0.;
     startRnd = 100.;
     sizeRatio = true;
 
+    dimensions = ["x", "y", "z","a"];
+    
  
-
     pointSize = 0.1;
     showVectors = false;
 
     v = 0.5;
-    
-    
 
     constructor() {
 

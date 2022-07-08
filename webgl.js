@@ -56,6 +56,8 @@ export function GL(canvas) {
       col = mix(col,vec3(1.,0.,0.), aColorVector.x); 
       gl_Position = uProjection * uView  * vec4(aPoint, 1.);
       gl_PointSize = aSize * 1000. / gl_Position.z; 
+
+     
       vPos = aPoint;
       vColor = vec4(col,0.9);
     }
@@ -126,14 +128,16 @@ GL.prototype.initPointsBuffers = function()  {
   var colorVectors = [];
   
   singleton.sets.forEach((s,k) => {
-    const points = s.points;
+    
+    const points = s.points.map(p=>{return {...p, x:p.x, y:p.y, z:p.z, a:p.a}});
+
     points.forEach((point, i) => {
 
       positions.push(point.x, point.y, point.z);
-      //camPos.push(...singleton.camera.position);
-
+      
+      
       const next = i >= points.length-1 ? s.lastVector :[points[i+1].x,points[i+1].y,points[i+1].z];
-      //const distance = vec3.distance( [point.x,point.y,point.z],previous);
+      const distance = vec3.distance( [point.x, point.y, point.z], next);
       const normal = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z],next) :vec3.subtract([],next, [point.x,point.y,point.z]) 
       );
@@ -143,10 +147,13 @@ GL.prototype.initPointsBuffers = function()  {
       );
       
       sizeFactors.push(singleton.pointSize * (singleton.sizeRatio ? (i+1) / points.length : 1) / (singleton.respawn ? s.lifeMax()/(s.lifeMax()-s.life) : 1));
-      colorVectors.push(Math.abs(vec3.dot(normalCam,normal))/1.2,
-        (Math.sin((s.lifeRand*100+i*15)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
-
-
+      
+      
+  
+        colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
+          (Math.sin((s.lifeRand*100+i*15)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
+      
+        
 
     });
   });
@@ -233,16 +240,7 @@ GL.prototype.drawScene = function ()  {
   const normalize = false;
   const stride = 0;
   const offset = 0;
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.position);
-  gl.vertexAttribPointer(
-    programInfo.attribLocations.point,
-    numComponents,
-    type,
-    normalize,
-    stride,
-    offset
-  );
-  gl.enableVertexAttribArray(programInfo.attribLocations.point);
+  
 
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.camPos);
   gl.vertexAttribPointer(
@@ -255,8 +253,6 @@ GL.prototype.drawScene = function ()  {
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.camPos);
 
-
-  
   gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.sizeFactor);
   gl.vertexAttribPointer(
     programInfo.attribLocations.size,
@@ -279,7 +275,16 @@ GL.prototype.drawScene = function ()  {
   );
   gl.enableVertexAttribArray(programInfo.attribLocations.colorVector);
 
-
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffers.points.position);
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.point,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset
+  );
+  gl.enableVertexAttribArray(programInfo.attribLocations.point);
   gl.drawArrays(gl.POINTS, 0, num); 
 
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
