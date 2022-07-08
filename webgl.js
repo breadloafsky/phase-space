@@ -285,66 +285,6 @@ GL.prototype.drawScene = function ()  {
 
 
   
-  //  points
-  /* sets.forEach((s,k) => {
-    const points = s.points;
-    points.forEach((point, i) => {
-
-      var modelMatrix = mat4.create();
-
-      mat4.translate(modelMatrix, modelMatrix, [point.x, point.y, point.z]);
-      const next = i >= points.length-1 ? s.lastVector :[points[i+1].x,points[i+1].y,points[i+1].z];
-      //const distance = vec3.distance( [point.x,point.y,point.z],previous);
-
-      const normal = vec3.normalize([],
-        i == 0 ? vec3.subtract([], [point.x,point.y,point.z],next) :vec3.subtract([],next, [point.x,point.y,point.z]) 
-      );
-
-      const normalCam = vec3.normalize([],
-        i == 0 ? vec3.subtract([], [point.x,point.y,point.z],camera.position) :vec3.subtract([],camera.position, [point.x,point.y,point.z]) 
-      );
-
-
-      const target = mat4.targetTo([],[0,0,0],normal,[1,0,0]);
-      mat4.multiply(modelMatrix, modelMatrix, target);
-      
-      const rotationZ = Math.PI*Math.sin((k+i*3)/points.length); 
-      mat4.rotate(modelMatrix, modelMatrix, rotationZ , [0,0,1]);
-      
-      const sizeFactor =  size * (singleton.sizeRatio ? (i+1) / points.length : 1) / (singleton.respawn ? s.lifeMax()/(s.lifeMax()-s.life) : 1);
-
-      
-      const modelColorVector = [Math.abs(vec3.dot(normalCam,normal))/1.5, Math.abs(Math.sin((s.lifeRand*1000+i*1)/points.length)), 1]; // Get the colour of the point based on the camera position + point rotation.
-      
-
-
-
-      gl.uniform1f(
-        programInfo.uniformLocations.size,
-        2222*sizeFactor/(vec3.distance(camera.position, [point.x,point.y,point.z])),
-      );
-
-      
-
-      gl.uniform3fv(
-        programInfo.uniformLocations.coords,
-        [point.x, point.y, point.z]
-      )
-      
-      gl.uniform3fv(
-        programInfo.uniformLocations.modelColorVector,
-        modelColorVector
-      );
-
-      gl.drawArrays(gl.POINTS, 0, 1); 
-    
-    });
-    
-  }); */
-
-
-  
-  
 }
 
 
