@@ -126,8 +126,15 @@ GL.prototype.initPointsBuffers = function()  {
   var camPos = [];
   var sizeFactors = [];
   var colorVectors = [];
-
   const dimensions = singleton.dimensions;
+
+
+  //
+
+
+  ///
+
+
   
   singleton.sets.forEach((s,k) => {
     
