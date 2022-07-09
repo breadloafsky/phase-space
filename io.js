@@ -131,8 +131,6 @@ const startA = document.querySelector("#sa")
 startA.addEventListener("input", (e) =>{
     singleton.startA = e.target.valueAsNumber;
 });
-
-
 function setStart([x,y,z,a])
 {
   startX.valueAsNumber = x;
@@ -140,6 +138,8 @@ function setStart([x,y,z,a])
   startZ.valueAsNumber = z;
   startA.valueAsNumber = a;
 }
+
+
 
 /** @type {HTMLInputElement} */
 const startRnd = document.querySelector("#srnd")
@@ -152,8 +152,8 @@ function setStartRnd(v)
   singleton.startRnd = v;
 }
 
-
-document.querySelector("#btnIterate").addEventListener("click", (e) =>{
+const btnIterate = document.querySelector("#btnIterate");
+btnIterate.addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
   e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
   e.target.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
@@ -223,7 +223,9 @@ document.querySelectorAll("input").forEach((e) => {
   e.addEventListener("change", () => update());
 });
 
-document.querySelectorAll(".variable").forEach((e) => {
+const equationEditor =  document.querySelectorAll(".variable");
+
+equationEditor.forEach((e) => {
   e.style.height = e.scrollHeight + "px";
   e.addEventListener("input", (e)  => {e.inputType.length > 0 && onEdit(e.target);});
   e.addEventListener("blur", (e)   => setEquationFromString());
@@ -232,8 +234,14 @@ document.querySelectorAll(".variable").forEach((e) => {
 
 function onEdit(input){
     input.style.color = "#ffd000"
-    input.style.height = "auto";
-    input.style.height = input.scrollHeight + "px";
+    resizeEquations();
+}
+
+function resizeEquations(){
+  equationEditor.forEach((e) => {
+    e.style.height = "auto";
+    e.style.height = e.scrollHeight + "px";
+  });
 }
 
 
@@ -338,8 +346,7 @@ function setPreset() {
   singleton.sets = [];
   singleton.updateSetsLength();
   setEquationFromString();
-
-  singleton.d = 0;
+  resizeEquations();
 }
 
 function update(){

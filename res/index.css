@@ -1,3 +1,7 @@
+
+input[type='checkbox']{
+    resize: none;
+}
 .source{
     position: absolute; 
     top: 0; 
@@ -75,6 +79,9 @@ input {
     outline-width: 1px;
     resize: vertical;
     line-height: 1.4em;
+}
+textarea{
+    resize: none ;
 }
 
 textarea:focus {
@@ -216,9 +223,10 @@ textarea:focus {
 }
 
 .dimensions > div{
-    padding: 2px;
+    padding-block: 2px;
+    padding-inline:40px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 

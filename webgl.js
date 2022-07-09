@@ -129,10 +129,7 @@ GL.prototype.initPointsBuffers = function()  {
   const dimensions = singleton.dimensions;
 
 
-  //
-
-
-  ///
+ 
 
 
   

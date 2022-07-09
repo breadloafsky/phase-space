@@ -9,6 +9,9 @@ import { SingletonFactory } from "./singleton.js";
 
 
 
+
+
+
 const singleton = SingletonFactory.getInstance();
 const gl = new GL(document.querySelector("#canvas"));
 
