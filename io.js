@@ -14,6 +14,11 @@ export const slider = document.querySelector("#slider");  // defines the value o
 slider.addEventListener("input", e =>{
     singleton.v = e.target.valueAsNumber;
 });
+function setV(s){
+  singleton.v = s;
+  slider.valueAsNumber = s;
+}
+
 
 
 /** @type {HTMLInputElement} */
@@ -300,9 +305,8 @@ function setPreset() {
   slider.min = vMin.valueAsNumber;
   slider.max = preset.max;
 
-  slider.valueAsNumber = preset.v;
+  setV(preset.v);
   step.valueAsNumber = preset.step;
-
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
   
 
@@ -318,7 +322,8 @@ function setPreset() {
   
   setSetNum(preset.setNum);
   setIterationStep(1);
-  
+  setPointSize(preset.pointSize);
+  setSizeRatio(preset.sizeRatio);
 
   if(preset.respawnRate)
   {
@@ -329,14 +334,11 @@ function setPreset() {
     setRespawn(false)
     setRespawnRate(100);
   }
-  setPointSize(preset.pointSize);
-  setSizeRatio(preset.sizeRatio);
+  
 
 
   ["x","y","z","a"].forEach((a,i) => setDimension(i,a));
   
-  
-
 
   singleton.sets = [];
   singleton.updateSetsLength();

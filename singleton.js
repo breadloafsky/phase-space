@@ -33,13 +33,9 @@ class Singleton
     startPoints = [0,0,0,0];
     startRnd = [0,0,0,0];
     sizeRatio = true;
-
     dimensions = ["x", "y", "z","a"];
-    
- 
     pointSize = 0.1;
     showVectors = false;
-
     v = 0.5;
 
     constructor() {

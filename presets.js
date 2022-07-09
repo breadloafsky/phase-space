@@ -19,7 +19,7 @@ export const presets = [
     setNum: 50,
     setLength: 100,
     pointStart: [0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
   },
   {
     name:"Chen-Lee",
@@ -37,7 +37,7 @@ export const presets = [
     setNum: 150,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
   },
   
   
@@ -57,7 +57,7 @@ export const presets = [
     setNum: 50,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
   },  
   {
     name:"Lorenz (bifurcation)",
@@ -75,7 +75,7 @@ export const presets = [
     setNum: 1,
     setLength: 10000,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
   },
   {
     name:"Rössler (bifurcation)",
@@ -93,7 +93,7 @@ export const presets = [
     setNum: 1,
     setLength: 10000,
     pointStart:[1,1,1,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [0,0,0,0],
   },
   {
     name:"Thomas",
@@ -111,7 +111,7 @@ export const presets = [
     setNum: 100,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness: [10,10,10,10],
+    startRandomness: [10,10,10,0],
   },  
   {
     name:"\"Particles\"",
@@ -129,7 +129,7 @@ export const presets = [
     setNum: 10000,
     setLength: 1,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
   },
   {
     name:"???",
@@ -147,9 +147,10 @@ export const presets = [
     setNum: 30,
     setLength: 300,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
+    startRandomness: [100,100,100,0],
     respawnRate: 100,
   },
+
   
   {
     name:"???2",
@@ -157,7 +158,7 @@ export const presets = [
     y: `(x*0.01-0.4*y-z*x/v)*0.001`,
     z: `(-z-x*y)*0.001`,
     v: 0.5,
-    step: 14.5,
+    step: 0.0,
     max: 1,
     pointSize: 0.8,
     sizeRatio:false,
@@ -167,8 +168,8 @@ export const presets = [
     setNum: 10,
     setLength: 1000,
     pointStart:[0,0,0,0],
-    startRandomness: [100,100,100,100],
-    respawnRate: 40,
+    startRandomness: [100,100,100,0],
+    respawnRate: 60,
   },
   
 ];
