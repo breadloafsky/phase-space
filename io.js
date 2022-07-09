@@ -156,7 +156,7 @@ function setStartRnd(v)
 document.querySelector("#btnIterate").addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
   e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
-  e.target.innerHTML = singleton.iterate ? "⏸︎" : "⏵︎";
+  e.target.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
 });
 
 
