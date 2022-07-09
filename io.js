@@ -191,7 +191,6 @@ function setDimension(i,l)
     d.value = singleton.dimensions[j];
   });
 
-  document.querySelector("#debug").innerHTML = singleton.dimensions;
 }
 
 document.querySelector("#closeInfo").addEventListener("click", (e) => {e.target.parentNode.remove();});
