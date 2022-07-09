@@ -132,13 +132,15 @@ GL.prototype.initPointsBuffers = function()  {
   singleton.sets.forEach((s,k) => {
     
     const points = s.points.map(p=>{return {...p, x:p[dimensions[0]], y:p[dimensions[1]], z:p[dimensions[2]], a:p[dimensions[3]]}});
+    const lastVector = {x:s.lastVector[dimensions[0]], y:s.lastVector[dimensions[1]], 
+      z:s.lastVector[dimensions[2]], a:s.lastVector[dimensions[3]] };
 
     points.forEach((point, i) => {
 
       positions.push(point.x, point.y, point.z);
       
       
-      const next = i >= points.length-1 ? s.lastVector :[points[i+1].x,points[i+1].y,points[i+1].z];
+      const next = i >= points.length-1 ? [lastVector.x,lastVector.y,lastVector.z] :[points[i+1].x,points[i+1].y,points[i+1].z];
       const distance = vec3.distance( [point.x, point.y, point.z], next);
       const normal = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z],next) :vec3.subtract([],next, [point.x,point.y,point.z]) 

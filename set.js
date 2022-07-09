@@ -16,7 +16,7 @@ export function PointSet(){
     this.life = 0;
     this.lifeRand = Math.random();  // random factor
 
-    this.lastVector = [];
+    this.lastVector = {};
 
 
 }
@@ -81,8 +81,8 @@ PointSet.prototype.update = function(){
     y += equation.y(x, y, z, a, v);
     z += equation.z(x, y, z, a, v);
     a += equation.a(x, y, z, a, v);
-    this.lastVector = [x,y,z];
-    
+
+    this.lastVector = {x,y,z,a};
   
     if(this.singleton.iterate)
     {
