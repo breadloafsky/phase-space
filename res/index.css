@@ -80,7 +80,7 @@ input {
     outline: rgb(255, 0, 0);
     outline-style: none;
     outline-width: 1px;
-    resize: vertical;
+
     line-height: 1.4em;
 }
 textarea{

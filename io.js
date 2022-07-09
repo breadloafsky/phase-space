@@ -1,6 +1,6 @@
 import { presets } from "./presets.js";
 import { SingletonFactory } from "./singleton.js";
-import { parse } from "./parser.js";
+import { parse } from "./utils.js";
 
 const singleton = SingletonFactory.getInstance();
 
