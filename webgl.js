@@ -126,10 +126,12 @@ GL.prototype.initPointsBuffers = function()  {
   var camPos = [];
   var sizeFactors = [];
   var colorVectors = [];
+
+  const dimensions = singleton.dimensions;
   
   singleton.sets.forEach((s,k) => {
     
-    const points = s.points.map(p=>{return {...p, x:p.x, y:p.y, z:p.z, a:p.a}});
+    const points = s.points.map(p=>{return {...p, x:p[dimensions[0]], y:p[dimensions[1]], z:p[dimensions[2]], a:p[dimensions[3]]}});
 
     points.forEach((point, i) => {
 

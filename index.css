@@ -211,6 +211,15 @@ textarea:focus {
     padding-bottom: 10px;
 }
 
+.dimension {
+    margin-left: 10px;
+}
+
+.dimensions > div{
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+}
 
 
 #setTabs {

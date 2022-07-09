@@ -183,13 +183,15 @@ function setDimension(i,l)
 {
   singleton.dimensions.forEach((d,j) =>{
     if (singleton.dimensions[j] == dimensions[i].value && d==l)
-      singleton.dimensions[j] = "a";
+      singleton.dimensions[j] = singleton.dimensions[i];
       
   });
   singleton.dimensions[i] = l;
   dimensions.forEach((d,j) =>{
     d.value = singleton.dimensions[j];
   });
+
+  document.querySelector("#debug").innerHTML = singleton.dimensions;
 }
 
 document.querySelector("#closeInfo").addEventListener("click", (e) => {e.target.parentNode.remove();});
