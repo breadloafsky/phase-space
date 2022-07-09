@@ -85,7 +85,7 @@ export function GL(canvas) {
 
       col = col/(r+0.5);
 
-      
+   
       gl_FragColor = col;
     }
   `;

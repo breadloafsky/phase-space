@@ -188,7 +188,9 @@ function setDimension(i,l)
   });
   singleton.dimensions[i] = l;
   dimensions.forEach((d,j) =>{
-    d.value = singleton.dimensions[j];
+    const val = singleton.dimensions[j];
+    d.value = val;
+    d.style.color = val == "x"? "red":val=="y"?"green":val=="z"?"blue":"black";
   });
 
 }
@@ -256,7 +258,6 @@ step.oninput = () => {
 };
 
 const vVal = document.querySelector("#vVal");
-
 
 function setEquationFromString() {
   singleton.equation = {};

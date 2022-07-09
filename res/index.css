@@ -46,6 +46,7 @@ div[data-pinned="true"] path {
 .font-italic {
     font-family: "Nimbus Roman No9 L", "Times New Roman", Times, serif;
     font-size: 118%;
+    font-style: italic;
 }
 
 
@@ -156,6 +157,8 @@ textarea:focus {
     border-style: solid;
 }
 
+
+
 .controls-bottom[data-pinned="true"],
 .controls-bottom:hover {
     transform: translateY(0%);
@@ -208,23 +211,40 @@ textarea:focus {
 }
 
 .controls-section>label {
-    padding-top: 10px;
+    
     display: flex;
     justify-content: space-between;
+}
+.controls-section>* {
+    padding-top: 10px;
 }
 
 .controls-section>.title {
     font-size: larger;
     padding-bottom: 10px;
+    
 }
 
 .dimension {
-    margin-left: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgba(0, 0, 0, 0.301);
+   
+    min-width: 2rem;
+    text-align: center;
+    outline-style: none;
+    font-size: x-large;
+    text-overflow: '';
+    border-style: solid;
+    border-color: #424242;
 }
 
-.dimensions > div{
-    padding-block: 2px;
+
+
+.dimensions > .font-italic{
+    padding-block: 5px;
     padding-inline:40px;
+
     display: flex;
     justify-content: space-around;
 }
