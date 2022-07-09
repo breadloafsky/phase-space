@@ -18,8 +18,8 @@ export const presets = [
     camYaw:0.6,
     setNum: 50,
     setLength: 100,
-    pointStart:[0,0,0,0],
-    startRandomness:100,
+    pointStart: [0,0,0,0],
+    startRandomness: [100,100,100,100],
   },
   {
     name:"Chen-Lee",
@@ -37,7 +37,7 @@ export const presets = [
     setNum: 150,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness: 15,
+    startRandomness: [100,100,100,100],
   },
   
   
@@ -57,7 +57,7 @@ export const presets = [
     setNum: 50,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness:10,
+    startRandomness: [100,100,100,100],
   },  
   {
     name:"Lorenz (bifurcation)",
@@ -75,7 +75,7 @@ export const presets = [
     setNum: 1,
     setLength: 10000,
     pointStart:[0,0,0,0],
-    startRandomness:100,
+    startRandomness: [100,100,100,100],
   },
   {
     name:"Rössler (bifurcation)",
@@ -93,7 +93,7 @@ export const presets = [
     setNum: 1,
     setLength: 10000,
     pointStart:[1,1,1,0],
-    startRandomness:0,
+    startRandomness: [100,100,100,100],
   },
   {
     name:"Thomas",
@@ -111,7 +111,7 @@ export const presets = [
     setNum: 100,
     setLength: 100,
     pointStart:[0,0,0,0],
-    startRandomness:10,
+    startRandomness: [10,10,10,10],
   },  
   {
     name:"\"Particles\"",
@@ -129,7 +129,7 @@ export const presets = [
     setNum: 10000,
     setLength: 1,
     pointStart:[0,0,0,0],
-    startRandomness: 100,
+    startRandomness: [100,100,100,100],
   },
   {
     name:"???",
@@ -147,7 +147,7 @@ export const presets = [
     setNum: 30,
     setLength: 300,
     pointStart:[0,0,0,0],
-    startRandomness: 100,
+    startRandomness: [100,100,100,100],
     respawnRate: 100,
   },
   
@@ -167,7 +167,7 @@ export const presets = [
     setNum: 10,
     setLength: 1000,
     pointStart:[0,0,0,0],
-    startRandomness: 100,
+    startRandomness: [100,100,100,100],
     respawnRate: 40,
   },
   

@@ -30,11 +30,8 @@ class Singleton
     respawnRate = 100;
     presetCurrent = 2;
     step = 0;
-    startX = 0.;
-    startY = 0.;
-    startZ = 0.;
-    startA = 0.;
-    startRnd = 100.;
+    startPoints = [0,0,0,0];
+    startRnd = [0,0,0,0];
     sizeRatio = true;
 
     dimensions = ["x", "y", "z","a"];

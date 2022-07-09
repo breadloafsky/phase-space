@@ -110,47 +110,38 @@ function setRespawnRate(v)
 }
 
 
-/** @type {HTMLInputElement} */
-const startX = document.querySelector("#sx")
-startX.addEventListener("input", (e) =>{
-    singleton.startX = e.target.valueAsNumber;
-});
-/** @type {HTMLInputElement} */
-const startY = document.querySelector("#sy")
-startY.addEventListener("input", (e) =>{
-    singleton.startY = e.target.valueAsNumber;
-});
-/** @type {HTMLInputElement} */
-const startZ = document.querySelector("#sz")
-startZ.addEventListener("input", (e) =>{
-    singleton.startZ = e.target.valueAsNumber;
+
+const startPoints = document.querySelectorAll(".start-position");
+const startRandomness = document.querySelectorAll(".start-randomness");
+
+
+startPoints.forEach((s,i)=>{
+  s.addEventListener("input", (e) =>{
+    singleton.startPoints[i] = e.target.valueAsNumber;
+  });
 });
 
-/** @type {HTMLInputElement} */
-const startA = document.querySelector("#sa")
-startA.addEventListener("input", (e) =>{
-    singleton.startA = e.target.valueAsNumber;
+startRandomness.forEach((s,i)=>{
+  s.addEventListener("input", (e) =>{
+    singleton.startRnd[i] = e.target.valueAsNumber;
+  });
 });
-function setStart([x,y,z,a])
+
+function setStart(s)
 {
-  startX.valueAsNumber = x;
-  startY.valueAsNumber = y;
-  startZ.valueAsNumber = z;
-  startA.valueAsNumber = a;
+  startPoints.forEach((p,i) => p.valueAsNumber=s[i]);
+  singleton.startPoints.forEach((p,i) => singleton.startPoints[i]=s[i]);
 }
-
-
-
-/** @type {HTMLInputElement} */
-const startRnd = document.querySelector("#srnd")
-startRnd.addEventListener("input", (e) =>{
-    singleton.startRnd = e.target.valueAsNumber;
-});
-function setStartRnd(v)
+function setStartRnd(s)
 {
-  startRnd.valueAsNumber = v;
-  singleton.startRnd = v;
+  startRandomness.forEach((p,i) => p.valueAsNumber=s[i]);
+  singleton.startRnd.forEach((p,i) => singleton.startRnd[i]=s[i]);
 }
+ 
+
+
+
+
 
 const btnIterate = document.querySelector("#btnIterate");
 btnIterate.addEventListener("click", (e) =>{
@@ -316,6 +307,7 @@ function setPreset() {
   
 
   setStart(preset.pointStart);
+  setStartRnd(preset.startRandomness);
 
   singleton.camera.position = preset.camPos;
   singleton.camera.pitch = preset.camPitch;
@@ -323,9 +315,11 @@ function setPreset() {
   singleton.camera.updateVectors();
 
   setSetLength(preset.setLength);
+  
   setSetNum(preset.setNum);
   setIterationStep(1);
-  setStartRnd(preset.startRandomness);
+  
+
   if(preset.respawnRate)
   {
     setRespawn(true)

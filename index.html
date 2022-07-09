@@ -39,9 +39,9 @@
                     v max:
                     <input style="width: 3em;" type="number" id="vMax" min="0" value="1">
                 </div>
-                <div style="padding-right: 30px; ">
+                <!-- <div style="padding-right: 30px; ">
                     <button>A</button>
-                </div>
+                </div> -->
                 <div>
                     <label style="display: flex; padding-right: 10px; justify-content: space-around; " for="step">
                         v "Speed"&nbsp;
@@ -100,28 +100,40 @@
                                 <input style="width: 5em;" type="number" id="respawnRate" step="1" min="0" value="100">
                             </label>
                             <br />
-                            <div class="controls-section">
+                            <div class="controls-section start-points">
                                 Spawn Point:
-                                <label>
+                                <div>
                                     <div class="font-italic" style="font-style: italic;">x:</div>
-                                    <input style="width: 5em;" type="number" id="sx" step="10" value="0">
-                                </label>
-                                <label>
+
+                                    <input class="start-position" data-var="x" style="width: 4em;" type="number"
+                                        step="10" value="0">±
+                                    <input class="start-randomness" data-var="x" style="width: 4em;" type="number"
+                                        step="10" value="0">
+                                </div>
+                                <div>
                                     <div class="font-italic" style="font-style: italic;">y:</div>
-                                    <input style="width: 5em;" type="number" id="sy" step="10" value="0">
-                                </label>
-                                <label>
+                                    <input class="start-position" data-var="y" style="width: 4em;" type="number"
+                                        step="10" value="0">±
+                                    <input class="start-randomness" data-var="y" style="width: 4em;" type="number"
+                                        step="10" value="0">
+                                </div>
+                                <div>
                                     <div class="font-italic" style="font-style: italic;">z:</div>
-                                    <input style="width: 5em;" type="number" id="sz" step="10" value="0">
-                                </label>
-                                <label>
+                                    <input class="start-position" data-var="z" style="width: 4em;" type="number"
+                                        step="10" value="0">±
+                                    <input class="start-randomness" data-var="z" style="width: 4em;" type="number"
+                                        step="10" value="0">
+                                </div>
+                                <div>
                                     <div class="font-italic" style="font-style: italic;">a:</div>
-                                    <input style="width: 5em;" type="number" id="sa" step="10" value="0">
-                                </label>
-                                <label>
-                                    Randomness ±:
-                                    <input style="width: 5em;" type="number" id="srnd" min="0" step="10" value="1">
-                                </label>
+                                    <input class="start-position" data-var="a" style="width: 4em;" type="number"
+                                        step="10" value="0">±
+                                    <input class="start-randomness" data-var="a" style="width: 4em;" type="number"
+                                        step="10" value="0">
+                                    <!-- <input class="start-randomness" data-var="a" style="width: 4em;" type="number"
+                                        step="10" value="0"> -->
+                                </div>
+
                             </div>
 
                             <label>

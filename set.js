@@ -6,10 +6,11 @@ export function PointSet(){
     
     this.singleton = SingletonFactory.getInstance();
     const sRnd = this.singleton.startRnd;
-    this.x = (Math.random()*sRnd-sRnd/2) + this.singleton.startX,
-    this.y = (Math.random()*sRnd-sRnd/2) + this.singleton.startY, 
-    this.z = (Math.random()*sRnd-sRnd/2) + this.singleton.startZ,
-    this.a = (Math.random()*sRnd-sRnd/2) + this.singleton.startA,
+    const sPos = this.singleton.startPoints;
+    this.x = (Math.random()*sRnd[0]-sRnd[0]/2) + sPos[0],
+    this.y = (Math.random()*sRnd[1]-sRnd[1]/2) + sPos[1], 
+    this.z = (Math.random()*sRnd[2]-sRnd[2]/2) + sPos[2],
+    this.a = (Math.random()*sRnd[3]-sRnd[3]/2) + sPos[3],
     this.points = [];
     this.lastIter = 0;
 
