@@ -74,9 +74,21 @@ export function GL(canvas) {
     }
   };
 
-  
+  const params = {
+    //alpha: false,
+    premultipliedAlpha: false, 
+    antialias: true,
+    depth:true,
+  };
+
   this.gl =
-    canvas.getContext("webgl",{premultipliedAlpha: false}) || canvas.getContext("experimental-webgl",{premultipliedAlpha: false});
+    canvas.getContext("webgl",params) || canvas.getContext("experimental-webgl",params);
+
+  this.ext = (
+    this.gl.getExtension('EXT_texture_filter_anisotropic') ||
+    this.gl.getExtension('MOZ_EXT_texture_filter_anisotropic') ||
+    this.gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic')
+  );
 
   const resize = () =>{
     screen = [
@@ -95,7 +107,9 @@ export function GL(canvas) {
   window.addEventListener("resize",() => resize());
   resize();
 
- 
+  /* this.gl.enable(this.gl.SAMPLE_COVERAGE);
+  this.gl.enable(this.gl.SAMPLE_ALPHA_TO_COVERAGE);
+  this.gl.sampleCoverage(0.2,false); */
 
 
   if (!this.gl) {
@@ -111,12 +125,8 @@ export function GL(canvas) {
       extractFromFile(`res/shaders/${shaderName}.vs`), 
       extractFromFile(`res/shaders/${shaderName}.fs`)
     );
-
-    
-
     for(let attributeName in shader.attributes){
       shader.attributes[attributeName].location = this.gl.getAttribLocation(shader.program, attributeName);
-    
     }
     for(let uniformName in shader.uniforms){
       shader.uniforms[uniformName].location = this.gl.getUniformLocation(shader.program, uniformName);
@@ -124,6 +134,12 @@ export function GL(canvas) {
   }
 
   this.initPlaneBuffer();
+  this.initFBO();
+
+  return this;
+}
+
+GL.prototype.initFBO = function(){
   this.initFBO();
 
   return this;
@@ -142,13 +158,21 @@ GL.prototype.initFBO = function(){
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, texWidth, texHeight, 0,  gl.RGBA, gl.UNSIGNED_BYTE, null);
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,gl.LINEAR);
   
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+
+
+  /* const max = gl.getParameter(this.ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+  gl.texParameterf(gl.TEXTURE_2D, this.ext.TEXTURE_MAX_ANISOTROPY_EXT,max); */
+  
+
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
 
   gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+
+  
 
   //
   const depthBuffer = gl.createRenderbuffer();
@@ -325,7 +349,7 @@ GL.prototype.drawPoints = function(projectionMatrix, viewMatrix){
   gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
   
 
-  //  Draw Points                             
+  //  Draw Points                         
   gl.drawArrays(gl.POINTS, 0, num); 
 }
 
@@ -385,7 +409,6 @@ GL.prototype.drawPoints = function(projectionMatrix, viewMatrix){
   );
   gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
   
-
   //  Draw Points                             
   gl.drawArrays(gl.POINTS, 0, num); 
 }
@@ -457,13 +480,21 @@ GL.prototype.drawScene = function ()  {
 
   gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
 
+
+
+
+
+  // draaw points & the grid
   this.drawPoints(projectionMatrix, viewMatrix);
 
-  /* gl.disable(gl.CULL_FACE);
-  this.drawPlane(projectionMatrix, viewMatrix);
-  gl.enable(gl.CULL_FACE); */
 
-
+  if(singleton.coordPlane)
+  {
+    gl.disable(gl.CULL_FACE);
+    this.drawPlane(projectionMatrix, viewMatrix);
+    gl.enable(gl.CULL_FACE);
+  }
+  
 
 
 

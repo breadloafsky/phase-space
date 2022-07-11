@@ -8,13 +8,15 @@ attribute vec4 aVertexPosition;
   
   void main(void) {
     gl_Position = uProjection * uView  * uModel * aVertexPosition;
-    vec3 col = vec3(0.5,0.3,1.0);
+
+    
+    vec3 col = vec3(0.5,0.5,0.5);
 
 
 
     vPos = uModel*aVertexPosition;
 
-    col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);
+    //col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);
 
     col = col-(gl_Position.z/400.);
       

@@ -92,6 +92,18 @@ function setSizeRatio(v)
 
 
 /** @type {HTMLInputElement} */
+const coordPlane = document.querySelector("#coordPlane"); 
+coordPlane.addEventListener("input", () =>{
+    singleton.coordPlane = coordPlane.checked;
+});
+function setCoordPlane(v)
+{
+    coordPlane.checked = v;
+    singleton.coordPlane = v;
+}
+
+
+/** @type {HTMLInputElement} */
 const respawn = document.querySelector("#respawn"); 
 respawn.addEventListener("input", () =>{
     singleton.respawn = respawn.checked;
@@ -338,6 +350,8 @@ function setPreset() {
 
 
   ["x","y","z","a"].forEach((a,i) => setDimension(i,a));
+
+  setCoordPlane(false);
   
 
   singleton.sets = [];

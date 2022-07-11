@@ -35,7 +35,7 @@ class Singleton
     sizeRatio = true;
     dimensions = ["x", "y", "z","a"];
     pointSize = 0.1;
-    showVectors = false;
+    coordPlane = false;
     v = 0.5;
 
     constructor() {
