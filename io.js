@@ -158,15 +158,13 @@ function setStartRnd(s)
 
 
 
-
-
+/** @type {HTMLInputElement} */
 const btnIterate = document.querySelector("#btnIterate");
 btnIterate.addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
   e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
   e.target.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
 });
-
 
 /** @type {HTMLInputElement} */
 const iterationStep = document.querySelector("#iterStep")
@@ -421,5 +419,5 @@ canvas.addEventListener("mousedown", (e) => {
     window.removeEventListener("load", init);
     setPreset();
  
-
+    btnIterate.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
   });
