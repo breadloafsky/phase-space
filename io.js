@@ -308,12 +308,11 @@ function setPreset() {
     presetCurrent + "/" + presets.length;
   document.querySelector("#presetName").innerHTML = preset.name;
   document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var] ? preset[e.dataset.var]:"");
-  
 
-  vMin.valueAsNumber = Math.floor(preset.v);
-  vMax.valueAsNumber = preset.max;
+  vMin.valueAsNumber = preset.vMin ? preset.vMin: Math.floor(preset.v);
+  vMax.valueAsNumber = preset.vMax;
   slider.min = vMin.valueAsNumber;
-  slider.max = preset.max;
+  slider.max = preset.vMax;
 
   setV(preset.v);
   step.valueAsNumber = preset.step;
