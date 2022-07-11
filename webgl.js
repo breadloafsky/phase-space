@@ -416,6 +416,8 @@ GL.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 GL.prototype.drawPlane = function(projectionMatrix, viewMatrix){
 
   const planeShader = this.shaders.plane;
+
+  const pos = singleton.camera.position;
   const gl = this.gl;
   gl.useProgram(planeShader.program);
   gl.uniformMatrix4fv(
@@ -437,12 +439,13 @@ GL.prototype.drawPlane = function(projectionMatrix, viewMatrix){
   );
   gl.enableVertexAttribArray(planeShader.attributes.aVertexPosition.location);
 
- 
+  
+  
   var modelMatrix = mat4.create();
-  mat4.translate(modelMatrix, modelMatrix, [0,0,0]);
+  mat4.translate(modelMatrix, modelMatrix, [pos[0],0,pos[2]]);
   mat4.scale(modelMatrix, modelMatrix, [
     200,
-    2,
+    0,
     200,
   ]);
   gl.uniformMatrix4fv(
