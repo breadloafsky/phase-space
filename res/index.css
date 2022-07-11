@@ -50,7 +50,21 @@ div[data-pinned="true"] path {
 * {
     scrollbar-color: #ffffff42 rgba(150, 150, 150, 0.199);
 }
+::-webkit-scrollbar {
+    height: 12px;
+    width: 18px;
+    background: rgba(150, 150, 150, 0.199);
+}
 
+::-webkit-scrollbar-thumb {
+    background: #ffffff42;
+
+  
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}
 
 button {
     background-color: black;
