@@ -1,20 +1,82 @@
 import { SingletonFactory } from "./singleton.js";
+
 import { extractFromFile } from "./utils.js";
+
 const singleton = SingletonFactory.getInstance();
 var screen = [100,100];
 
 
+const screenData ={
+  coords:[
 
+
+   -1.0, -1.0, 
+    1.0, -1.0,
+    1.0, 1.0, 
+    -1.0, -1.0, 
+    1.0, 1.0,
+    -1.0, 1.0,
+  ],
+  texCoords:[
+
+    0.0, 0.0, 
+    1.0, 0.0,
+    1.0, 1.0, 
+    0.0, 0.0, 
+    1.0, 1.0,
+    0.0, 1.0,
+  ]
+}
 
 
 
 
 export function GL(canvas) {
 
-  this.buffers = {};
-  const attribs = {"alpha":true,"antialias":true,"depth":true,"failIfMajorPerformanceCaveat":false,"powerPreference":"default","premultipliedAlpha":true,"preserveDrawingBuffer":false,"stencil":false};
+  this.fbo = {
+    framebuffer : {},
+    texture:{},
+    depthBuffer:{},
+  };
+  this.shaders ={
+    point:{
+      program: {},//pointsShader,
+      attributes: {
+        aPoint: {location:null},
+        aColorVector: {location:null},
+        aSize: {location:null},
+      },
+      uniforms: {
+        uProjection: {location:null},
+        uView: {location:null},
+      },
+    },
+    plane:{
+      program: {},//planeShader,
+      attributes: {
+        aVertexPosition: {location:null},
+      },
+      uniforms: {
+        uProjection:{location:null},
+        uView: {location:null},
+        uModel: {location:null},
+      },
+    },
+    frame:{
+      program: {},
+      attributes: {
+        aTexcoord: {value:null},
+        aPos: {value:null},
+      },
+      uniforms: {
+        uTexture: {value:null},
+      },
+    }
+  };
+
+  
   this.gl =
-    canvas.getContext("webgl",attribs) || canvas.getContext("experimental-webgl",attribs);
+    canvas.getContext("webgl",{premultipliedAlpha: false}) || canvas.getContext("experimental-webgl",{premultipliedAlpha: false});
 
   const resize = () =>{
     screen = [
@@ -23,8 +85,11 @@ export function GL(canvas) {
     ];
     canvas.setAttribute("width", screen[0]);
     canvas.setAttribute("height", screen[1]);
-
+    
+    this.initFBO();
     this.gl.viewport( 0, 0, screen[0], screen[1] );
+
+    
   }
 
   window.addEventListener("resize",() => resize());
@@ -33,137 +98,11 @@ export function GL(canvas) {
  
 
 
-
   if (!this.gl) {
     alert("WebGL ERROR.");
     return;
   }
-
   
-  const pointsVS = `
-    //attribute vec4 aVertexPosition;
-    uniform mat4 uView;
-    uniform mat4 uProjection;   
-    attribute vec3 aPoint;
-    attribute float aSize;
-    attribute vec3 aColorVector;
-     
-    varying lowp vec4 vColor;
-    varying lowp vec3 vPos;
-
-    void main(void) {
-      vec3 col = mix(vec3(0.,1.,0.)/1.2,vec3(0.,0.,1.)*2., aColorVector.y);
-      col = mix(col,vec3(1.,0.,0.), aColorVector.x); 
-      gl_Position = uProjection * uView  * vec4(aPoint, 1.);
-      gl_PointSize = aSize * 1000. / gl_Position.z; 
-
-      vPos = aPoint;
-      vColor = vec4(col,0.9);
-    }
-  `;
-  const pointsFS = `
-    varying lowp vec4 vColor;
-    varying lowp vec3 vPos; 
-    precision lowp float;
-    void main(void) {
-      vec4 col = vColor;
-      float r = length(gl_PointCoord-vec2(0.5));
-      if(r > 0.5)
-        discard;
-      //col = col/(sin(r*50.)/10.+1.);
-      col = col/(r+0.5);
-      gl_FragColor = col;
-    }
-  `;
-
-
-
-
-  const planeVS = `
-  attribute vec4 aVertexPosition;
-  uniform mat4 uView;
-  uniform mat4 uProjection;   
-  uniform mat4 uModel;
-   
-  varying lowp vec4 vColor;
-  varying lowp vec4 vPos;
-  
-  void main(void) {
-    gl_Position = uProjection * uView  * uModel * aVertexPosition;
-    vec3 col = vec3(0.5,0.3,1.0);
-
-    /* if(aVertexPosition.x+aVertexPosition.z > -1. && aVertexPosition.x+aVertexPosition.z < 1.)
-      col = col/33.; */
-
-    vPos = uModel*aVertexPosition;
-
-    //col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);
-
-    col = col-(gl_Position.z/400.);
-      
-    vColor = vec4(col,0.9);
-
-
-    
-    
-  }
-`;
-  const planeFS = `
-    varying lowp vec4 vColor;
-    varying lowp vec4 vPos; 
-    precision lowp float;
-
-    float modI(float a,float b) {
-      float m=a-floor((a+0.5)/b)*b;
-      return floor(m+0.5);
-    }
-
-    void main(void) {
-      if(modI(abs(vPos.x*10.),100.) > 1.)
-        discard;
-
-      vec4 col = vColor;
-      gl_FragColor = col;
-    }
-
-    
-  `;
-
-
-  //const planeShader = this.initShaderProgram( planeVS, planeFS);
-
-  this.shaders ={
-    
-    point:{
-      program: {},
-      attrbutes: {
-        aPoint: {value:null},
-        aColorVector: {value:null},
-        aSize: {value:null},
-      },
-      uniforms: {
-        uProjection: {value:null},
-        uView: {value:null},
-      },
-      vs: "res/shaders/point.vs",
-      fs: "res/shaders/point.fs",
-    },
-
-
-    plane:{
-      program: {},
-      attrbutes: {
-        aVertexPosition: {value:null},
-      },
-      uniforms: {
-        uProjection: {value:null},
-        uView: {value:null},
-        uModel: {value:null},
-      },
-      vs: "res/shaders/plane.vs",
-      fs: "res/shaders/plane.fs",
-    }
-  };
 
   for (let shaderName in this.shaders)
   {
@@ -171,42 +110,102 @@ export function GL(canvas) {
     shader.program = this.initShaderProgram( 
       extractFromFile(`res/shaders/${shaderName}.vs`), 
       extractFromFile(`res/shaders/${shaderName}.fs`)
-      );
-      
-    for(let attributeName in shader.attrbutes){
-      shader.attrbutes[attributeName].location = this.gl.getAttribLocation(shader.program, attributeName);
+    );
+
+    
+
+    for(let attributeName in shader.attributes){
+      shader.attributes[attributeName].location = this.gl.getAttribLocation(shader.program, attributeName);
+    
     }
     for(let uniformName in shader.uniforms){
       shader.uniforms[uniformName].location = this.gl.getUniformLocation(shader.program, uniformName);
     }
   }
 
-
   this.initPlaneBuffer();
-
+  this.initFBO();
 
   return this;
 }
 
+GL.prototype.initFBO = function(){
+  const gl = this.gl;
+
+
+  const texWidth =  gl.canvas.width;
+  const texHeight = gl.canvas.height;
+  
+  const framebuffer =  gl.createFramebuffer();
+  gl.bindFramebuffer(gl.FRAMEBUFFER,framebuffer);
+
+  const texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, texWidth, texHeight, 0,  gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+  
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+
+  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+
+  //
+  const depthBuffer = gl.createRenderbuffer();
+  gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
+
+  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, texWidth, texHeight);
+  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
+
+
+
+  gl.bindTexture(gl.TEXTURE_2D, null);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  gl.bindRenderbuffer(gl.RENDERBUFFER, null);
+
+  
+  this.fbo.framebuffer.value = framebuffer;
+  this.fbo.texture.value = texture;
+  this.fbo.depthBuffer.value = depthBuffer;
+
+
+  /////////////////////
+
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(screenData.coords), gl.DYNAMIC_DRAW);
+  
+  const textCoordBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, textCoordBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(screenData.texCoords), gl.DYNAMIC_DRAW);
+  gl.bindBuffer(gl.ARRAY_BUFFER, null);
+  
+  this.shaders.frame.attributes.aPos.value = positionBuffer;
+  this.shaders.frame.attributes.aTexcoord.value = textCoordBuffer;
+
+}
 
 GL.prototype.initPlaneBuffer = function(){
   const gl = this.gl;
   var positions = [-1.0, 0.0, -1.0, 
-    -1.0, 0.0, 1.0, 
-    1.0, 0.0, 1.0, 
-    -1.0, 0.0, -1.0, 
-    1.0, 0.0, 1.0, 
-    1.0, 0.0, -1.0];
+                  -1.0, 0.0, 1.0, 
+                  1.0, 0.0, 1.0, 
+                  -1.0, 0.0, -1.0, 
+                  1.0, 0.0, 1.0, 
+                  1.0, 0.0, -1.0];
     const positionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW);
 
-    this.shaders.plane.attrbutes.aVertexPosition.value = positionBuffer;
+    this.shaders.plane.attributes.aVertexPosition.value = positionBuffer;
+
 }
 
 
 GL.prototype.initPointsBuffers = function()  {
 
+
+  
   const gl = this.gl;
   
   var positions = [];
@@ -261,56 +260,27 @@ GL.prototype.initPointsBuffers = function()  {
 
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
 
-
-  this.shaders.point.attrbutes.aPoint.value = positionBuffer;
-  this.shaders.point.attrbutes.aSize.value = sizeFactorBuffer;
-  this.shaders.point.attrbutes.aColorVector.value = colorVectorBuffer;
-  
+  this.shaders.point.attributes.aColorVector.value = colorVectorBuffer;
+  this.shaders.point.attributes.aPoint.value = positionBuffer;
+  this.shaders.point.attributes.aSize.value = sizeFactorBuffer;
 
   return positions.length/3;
 
 }
 
 
+GL.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 
-
-//  draw
-GL.prototype.drawScene = function ()  {
-
-
-
-  const buffers = this.buffers;
-
-  const gl = this.gl;
   const pointShader = this.shaders.point;
-  const planeShader = this.shaders.plane;
+  const gl = this.gl;
 
-  const camera = singleton.camera;
-  camera.move();
+  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
 
+  gl.useProgram(pointShader.program); 
 
-  gl.enable(gl.CULL_FACE);
-  gl.enable(gl.DEPTH_TEST);
-  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
-  gl.clearColor(0.0, 0.0, 0.0, 0.0);
+  gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
   gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-  const projectionMatrix = camera.getProjectionMatrix(screen[0] / screen[1]);
-  const viewMatrix = camera.getViewMatrix();
- 
-
-
-/*   gl.vertexAttribPointer(
-    programInfo.attribLocations.camPos,
-    numComponents,
-    type,
-    normalize,
-    stride,
-    offset
-  ); */
-
-  gl.useProgram(pointShader.program);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
   
   gl.uniformMatrix4fv(
     pointShader.uniforms.uView.location,
@@ -325,43 +295,108 @@ GL.prototype.drawScene = function ()  {
   
 
   const num = this.initPointsBuffers();
-
   const type = gl.FLOAT;
 
+
+
   //  Size multiplier
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attrbutes.aSize.value);
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aSize.value);
   gl.vertexAttribPointer(
-    pointShader.attrbutes.aSize.location,
+    pointShader.attributes.aSize.location,
     1,type,false,0,0
   );
-  gl.enableVertexAttribArray(pointShader.attrbutes.aSize.location);
-
+  gl.enableVertexAttribArray(pointShader.attributes.aSize.location);
+  
 
   //  Colour definition
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attrbutes.aColorVector.value);
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aColorVector.value);
   gl.vertexAttribPointer(
-    pointShader.attrbutes.aColorVector.location,
+    pointShader.attributes.aColorVector.location,
     3,type,false,0,0
   );
-  gl.enableVertexAttribArray(pointShader.attrbutes.aColorVector.location);
-
+  gl.enableVertexAttribArray(pointShader.attributes.aColorVector.location);
+  
   //  Point positions
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attrbutes.aPoint.value);
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aPoint.value);
   gl.vertexAttribPointer(
-    pointShader.attrbutes.aPoint.location,
+    pointShader.attributes.aPoint.location,
     3,type,false,0,0
   );
-  gl.enableVertexAttribArray(pointShader.attrbutes.aPoint.location);
-
+  gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
+  
 
   //  Draw Points                             
   gl.drawArrays(gl.POINTS, 0, num); 
+}
 
 
-  //                                                  Set Plane                                                 */
+GL.prototype.drawPoints = function(projectionMatrix, viewMatrix){
+
+  const pointShader = this.shaders.point;
+  const gl = this.gl;
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
+
+  gl.useProgram(pointShader.program); 
+
+  gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
+  gl.clearDepth(1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
+  
+  gl.uniformMatrix4fv(
+    pointShader.uniforms.uView.location,
+    false,
+    viewMatrix
+  );
+  gl.uniformMatrix4fv(
+    pointShader.uniforms.uProjection.location,
+    false,
+    projectionMatrix
+  );
+  
+
+  const num = this.initPointsBuffers();
+  const type = gl.FLOAT;
+
+
+
+  //  Size multiplier
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aSize.value);
+  gl.vertexAttribPointer(
+    pointShader.attributes.aSize.location,
+    1,type,false,0,0
+  );
+  gl.enableVertexAttribArray(pointShader.attributes.aSize.location);
+  
+
+  //  Colour definition
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aColorVector.value);
+  gl.vertexAttribPointer(
+    pointShader.attributes.aColorVector.location,
+    3,type,false,0,0
+  );
+  gl.enableVertexAttribArray(pointShader.attributes.aColorVector.location);
+  
+  //  Point positions
+  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aPoint.value);
+  gl.vertexAttribPointer(
+    pointShader.attributes.aPoint.location,
+    3,type,false,0,0
+  );
+  gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
+  
+
+  //  Draw Points                             
+  gl.drawArrays(gl.POINTS, 0, num); 
+}
+
+GL.prototype.drawPlane = function(projectionMatrix, viewMatrix){
+
+  const planeShader = this.shaders.plane;
+  const gl = this.gl;
   gl.useProgram(planeShader.program);
   gl.uniformMatrix4fv(
-    planeShader.uniforms.uModel.location,
+    planeShader.uniforms.uView.location,
     false,
     viewMatrix
   );
@@ -372,19 +407,19 @@ GL.prototype.drawScene = function ()  {
     projectionMatrix
   );
 
-  gl.bindBuffer(gl.ARRAY_BUFFER, planeShader.attrbutes.aVertexPosition.value);
+  gl.bindBuffer(gl.ARRAY_BUFFER, planeShader.attributes.aVertexPosition.value);
   gl.vertexAttribPointer(
-    planeShader.attrbutes.aVertexPosition.location,
-    3,type,false,0,0
+    planeShader.attributes.aVertexPosition.location,
+    3,gl.FLOAT,false,0,0
   );
-  gl.enableVertexAttribArray(planeShader.attrbutes.aVertexPosition.location);
+  gl.enableVertexAttribArray(planeShader.attributes.aVertexPosition.location);
 
-  
+ 
   var modelMatrix = mat4.create();
   mat4.translate(modelMatrix, modelMatrix, [0,0,0]);
   mat4.scale(modelMatrix, modelMatrix, [
     200,
-    0,
+    2,
     200,
   ]);
   gl.uniformMatrix4fv(
@@ -394,16 +429,89 @@ GL.prototype.drawScene = function ()  {
   );
 
   gl.drawArrays(gl.TRIANGLES, 0, 6);
+ 
+}
 
 
 
+//  draw
+GL.prototype.drawScene = function ()  {
+
+
+  const gl = this.gl;
+  const pointShader = this.shaders.point;
+  const planeShader = this.shaders.plane;
+
+  const camera = singleton.camera;
+  camera.move();
+
+
+  gl.enable(gl.CULL_FACE);
+  gl.enable(gl.DEPTH_TEST);
+  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+
+  const projectionMatrix = camera.getProjectionMatrix(screen[0] / screen[1]);
+  const viewMatrix = camera.getViewMatrix();
+ 
+
+  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
+
+  this.drawPoints(projectionMatrix, viewMatrix);
+
+  /* gl.disable(gl.CULL_FACE);
+  this.drawPlane(projectionMatrix, viewMatrix);
+  gl.enable(gl.CULL_FACE); */
+
+
+
+
+
+
+
+  // render the frame
+  gl.useProgram(this.shaders.frame.program);
   
+  
+  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+  gl.bindTexture(gl.TEXTURE_2D, this.fbo.texture.value);
+  
+  gl.clearColor(0.0, 0.0, 0.0, 0.0);
+  gl.clearDepth(1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aPos.value);
+  gl.vertexAttribPointer(
+    this.shaders.frame.attributes.aPos.location,
+    2,gl.FLOAT,false,0,0
+  );
+  //gl.enableVertexAttribArray(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aPos.location); // error?
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aTexcoord.value);
+  gl.vertexAttribPointer(
+    this.shaders.frame.attributes.aTexcoord.location,
+    2,gl.FLOAT,false,0,0
+  );
+  gl.enableVertexAttribArray(this.shaders.frame.attributes.aTexcoord.location);
+
+ 
+  
+  
+
+  //gl.uniform1i(this.fbo.texture.location, 0);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
 
 
   //  Clean Up
+  
+  gl.bindTexture(gl.TEXTURE_2D, null);
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
-  gl.disableVertexAttribArray(pointShader.attrbutes.aPoint.location);
+  gl.disableVertexAttribArray(pointShader.attributes.aPoint.location);
   gl.useProgram(null);
+
+  
 }
 
 

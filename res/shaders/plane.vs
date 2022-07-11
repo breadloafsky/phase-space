@@ -10,14 +10,14 @@ attribute vec4 aVertexPosition;
     gl_Position = uProjection * uView  * uModel * aVertexPosition;
     vec3 col = vec3(0.5,0.3,1.0);
 
-    /* if(aVertexPosition.x+aVertexPosition.z > -1. && aVertexPosition.x+aVertexPosition.z < 1.)
-      col = col/33.; */
+
 
     vPos = uModel*aVertexPosition;
 
-    //col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);
+    col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);
 
     col = col-(gl_Position.z/400.);
       
     vColor = vec4(col,0.9);    
   }
+  
