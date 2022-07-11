@@ -59,7 +59,10 @@ PointSet.prototype.update = function(){
         }
     }
     
-    
+    var _x = x;
+    var _y = y;
+    var _z = z;
+    var _a = a;
    
   
     this.points = [];
@@ -70,13 +73,22 @@ PointSet.prototype.update = function(){
             z: z,
             a: a,
         });
+        
+        _x = x;
+        _y = y;
+        _z = z;
+        _a = a;
 
-        x += equation.x(x, y, z, a, v);
-        y += equation.y(x, y, z, a, v);
-        z += equation.z(x, y, z, a, v);
-        a += equation.a(x, y, z, a, v);
+        x += equation.x(_x, _y, _z, _a, v);
+        y += equation.y(_x, _y, _z, _a, v);
+        z += equation.z(_x, _y, _z, _a, v);
+        a += equation.a(_x, _y, _z, _a, v);
     }
 
+    _x = x;
+    _y = y;
+    _z = z;
+    _a = a;
 
     x += equation.x(x, y, z, a, v);
     y += equation.y(x, y, z, a, v);
@@ -103,10 +115,17 @@ PointSet.prototype.update = function(){
 
             for(let i = 0; i < iterationStep-length+1; i++)
             {
-                x += equation.x(x, y, z, a, v);
-                y += equation.y(x, y, z, a, v);
-                z += equation.z(x, y, z, a, v);
-                a += equation.a(x, y, z, a, v);
+
+                _x = x;
+                _y = y;
+                _z = z;
+                _a = a;
+
+                x += equation.x(_x, _y, _z, _a, v);
+                y += equation.y(_x, _y, _z, _a, v);
+                z += equation.z(_x, _y, _z, _a, v);
+                a += equation.a(_x, _y, _z, _a, v);
+    
 
             }
             this.x = x;
@@ -133,68 +152,3 @@ PointSet.prototype.update = function(){
 
 
 
-
-
-
-/* function setUp(pointSet, sets){
-    const id = sets.length;
-    const tablist = document.querySelector("#setTabs");
-    const paramList = document.querySelector("#setParams");
-
-    const ui= document.createElement('div');
-    const tab = document.createElement('div');
-    ui.appendChild(document.querySelector("#template").content.cloneNode(true))
-    tab.appendChild(document.createTextNode(id+1));
-    ui.dataset.set = id;
-    tab.dataset.set = id;
-    
-
-    ui.querySelector(".btn-delete").addEventListener("click", () =>{
-        deleteSet(sets,id);
-    });
-
-
-    ui.querySelector(".pointNumber").addEventListener("input", (e) =>{
-        pointSet.pointNumber = e.target.value;
-    });
-
-    ui.querySelector(".size").addEventListener("input", (e) =>{
-        pointSet.size = e.target.value;
-    });
-    
-    tab.addEventListener("click", () => {
-       select();
-    });
-
-    function deleteSet(sets,id)
-    {
-        document.querySelectorAll(`[data-set='${id}']`).forEach(e =>{
-            e.remove();
-        });
-        sets.splice(id, 1); 
-        if(tablist.children.length > 0)
-        {
-            tablist.children[tablist.children.length-1].dataset.selected = "true";
-            paramList.children[tablist.children.length-1].hidden = false;
-        }
-        
-
-    }
-
-
-    function select()
-    {
-        [...tablist.children].forEach(c => c.dataset.selected ="false");
-        tab.dataset.selected ="true";
-        [...paramList.children].forEach(c => c.hidden =true);
-        ui.hidden = false;
-    }
-   
-
-    paramList.appendChild(ui);
-    tablist.appendChild(tab);
-
-    
-    select();
-    sets.push(pointSet);
-} */

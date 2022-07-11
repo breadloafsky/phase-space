@@ -21,12 +21,13 @@ void main(void) {
     else{
         if(vPos.x*100. <= 10. && vPos.x*100. >= -10.)
         {
-            col.x = col.x*2.;
+             col.z = col.z*2.;
         }
 
         if(vPos.z*100. <= 10. && vPos.z*100. >= -10.)
         {
-            col.z = col.z*2.;
+           
+            col.x = col.x*2.;
         }
     }
 
