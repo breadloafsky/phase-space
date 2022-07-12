@@ -177,7 +177,7 @@ const btnIterate = document.querySelector("#btnIterate");
 btnIterate.addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
   //e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
-  e.target.style.backgroundImage = singleton.iterate ? "url('/res/img/pause.png')" : "url('/res/img/play.png')";
+  e.target.style.backgroundImage = singleton.iterate ? "url('res/img/pause.png')" : "url('res/img/play.png')";
   //e.target.innerHTML = singleton.iterate ? "pause" : "start";
 });
 
