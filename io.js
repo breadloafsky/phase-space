@@ -128,6 +128,20 @@ function setRespawnRate(v)
 
 
 
+/** @type {HTMLInputElement} */
+const dt = document.querySelector("#dtVal")
+dt.addEventListener("input", (e) =>{
+    singleton.dt = e.target.valueAsNumber;
+});
+function setDT(v)
+{
+    dt.valueAsNumber = v;
+    singleton.dt = v;
+}
+
+
+
+
 const startPoints = document.querySelectorAll(".start-position");
 const startRandomness = document.querySelectorAll(".start-randomness");
 
@@ -162,8 +176,9 @@ function setStartRnd(s)
 const btnIterate = document.querySelector("#btnIterate");
 btnIterate.addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
-  e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
-  e.target.innerHTML = singleton.iterate ? "pause" : "start";
+  //e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
+  e.target.style.backgroundImage = singleton.iterate ? "url('/res/img/pause.png')" : "url('/res/img/play.png')";
+  //e.target.innerHTML = singleton.iterate ? "pause" : "start";
 });
 
 /** @type {HTMLInputElement} */
@@ -231,7 +246,7 @@ document.querySelectorAll("input").forEach((e) => {
   e.addEventListener("change", () => update());
 });
 
-const equationEditor =  document.querySelectorAll(".variable");
+const equationEditor =  document.querySelectorAll(".equation");
 
 equationEditor.forEach((e) => {
   e.style.height = e.scrollHeight + "px";
@@ -267,7 +282,7 @@ const vVal = document.querySelector("#vVal");
 
 function setEquationFromString() {
   singleton.equation = {};
-  document.querySelectorAll(".variable").forEach(input =>{
+  document.querySelectorAll(".equation").forEach(input =>{
     const varName = input.dataset.var;
     //onEdit(input);
 
@@ -307,7 +322,7 @@ function setPreset() {
   document.querySelector("#preset").innerHTML =
     presetCurrent + "/" + presets.length;
   document.querySelector("#presetName").innerHTML = preset.name;
-  document.querySelectorAll('.variable').forEach(e => e .value = preset[e.dataset.var] ? preset[e.dataset.var]:"");
+  document.querySelectorAll('.equation').forEach(e => e .value = preset[e.dataset.var] ? preset[e.dataset.var]:"");
 
   vMin.valueAsNumber = preset.vMin ? preset.vMin: Math.floor(preset.v);
   vMax.valueAsNumber = preset.vMax;
@@ -315,6 +330,7 @@ function setPreset() {
   slider.max = preset.vMax;
 
   setV(preset.v);
+  setDT(preset.dt);
   step.valueAsNumber = preset.step;
   slider.step = Math.pow(2, step.valueAsNumber) / 100000000;
   

@@ -20,7 +20,6 @@
         <canvas oncontextmenu="return false" id="canvas"
             style="z-index: 50; cursor:crosshair; width: 100%; height: 100%; ">
         </canvas>
-
         <div class="controls">
 
             <div data-pinned="true" class="controls-bottom">
@@ -100,7 +99,7 @@
                             <div class="controls-section start-points">
                                 Spawn Point:
                                 <div>
-                                    <div class="font-italic" style="font-style: italic;">x:</div>
+                                    <div class="font-italic">x:</div>
 
                                     <input class="start-position" data-var="x" style="width: 4em;" type="number"
                                         step="10" value="0">±
@@ -108,21 +107,21 @@
                                         step="10" value="0">
                                 </div>
                                 <div>
-                                    <div class="font-italic" style="font-style: italic;">y:</div>
+                                    <div class="font-italic">y:</div>
                                     <input class="start-position" data-var="y" style="width: 4em;" type="number"
                                         step="10" value="0">±
                                     <input class="start-randomness" data-var="y" style="width: 4em;" type="number"
                                         step="10" value="0">
                                 </div>
                                 <div>
-                                    <div class="font-italic" style="font-style: italic;">z:</div>
+                                    <div class="font-italic">z:</div>
                                     <input class="start-position" data-var="z" style="width: 4em;" type="number"
                                         step="10" value="0">±
                                     <input class="start-randomness" data-var="z" style="width: 4em;" type="number"
                                         step="10" value="0">
                                 </div>
                                 <div>
-                                    <div class="font-italic" style="font-style: italic;">a:</div>
+                                    <div class="font-italic">a:</div>
                                     <input class="start-position" data-var="a" style="width: 4em;" type="number"
                                         step="10" value="0">±
                                     <input class="start-randomness" data-var="a" style="width: 4em;" type="number"
@@ -133,19 +132,19 @@
 
                             </div>
 
-                            <label>
+                            <div class="param">
                                 Change step:
                                 <input style="width: 5em;" type="number" id="iterStep" min="1" step="1" value="1">
-                            </label>
+                            </div>
 
-                            <label>
+                            <div class="param">
                                 Starting point change:
-                                <button id="btnIterate" style="background-color: red; font-family:monospace;">
-                                    pause
+                                <button id="btnIterate" class="stop-button">
+
                                 </button>
 
 
-                            </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -185,19 +184,26 @@
                             id="vVal"></output>
                     </div>
                 </div>
+                <div>
+                    <div class="font-italic" style="font-style: italic; padding-bottom: 10px;">dt =
+                        <input id="dtVal" type="number" step="0.00001" step="0.00001">
+                    </div>
+                </div>
                 <div style="margin-top: 20px;" class="controls-section ">
                     <div class="title">Equations</div>
                     <div>
                         <label for="variableX" style="display: flex;">
                             <div class="font-italic">ẋ =</div>
-                            <textarea data-var="x" class="variable" rows="1" cols="30" id="variableX"></textarea>
+                            <textarea data-var="x" class="equation" spellcheck="false" rows="1" cols="30"
+                                id="variableX"></textarea>
                         </label>
                     </div>
                     <br />
                     <div>
                         <label for="variableY" style="display: flex;">
                             <div class="font-italic">ẏ =</div>
-                            <textarea data-var="y" class="variable" rows="1" cols="30" id="variableY"></textarea>
+                            <textarea data-var="y" class="equation" spellcheck="false" rows="1" cols="30"
+                                id="variableY"></textarea>
                         </label>
 
                     </div>
@@ -206,14 +212,16 @@
                         <label for="variableZ" style="display: flex;">
                             <div class="font-italic">ż =</div>
 
-                            <textarea data-var="z" class="variable" rows="1" cols="30" id="variableZ"></textarea>
+                            <textarea data-var="z" class="equation" spellcheck="false" rows="1" cols="30"
+                                id="variableZ"></textarea>
                         </label>
                     </div>
                     <br />
                     <div>
                         <label for="variableA" style="display: flex;">
                             <div class="font-italic">ȧ =</div>
-                            <textarea data-var="a" class="variable" rows="1" cols="30" id="variableA"></textarea>
+                            <textarea data-var="a" class="equation" spellcheck="false" rows="1" cols="30"
+                                id="variableA"></textarea>
                         </label>
                     </div>
                 </div>

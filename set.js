@@ -39,6 +39,7 @@ PointSet.prototype.update = function(){
     var y = this.y;
     var z = this.z;
     var a = this.a;
+    const dt = this.singleton.dt;
     const v = this.singleton.v;
     const equation = this.singleton.equation;
     const length = this.singleton.setLength;
@@ -79,10 +80,10 @@ PointSet.prototype.update = function(){
         _z = z;
         _a = a;
 
-        x += equation.x(_x, _y, _z, _a, v);
-        y += equation.y(_x, _y, _z, _a, v);
-        z += equation.z(_x, _y, _z, _a, v);
-        a += equation.a(_x, _y, _z, _a, v);
+        x += equation.x(_x, _y, _z, _a, v)*dt;
+        y += equation.y(_x, _y, _z, _a, v)*dt;
+        z += equation.z(_x, _y, _z, _a, v)*dt;
+        a += equation.a(_x, _y, _z, _a, v)*dt;
     }
 
     _x = x;
@@ -90,10 +91,10 @@ PointSet.prototype.update = function(){
     _z = z;
     _a = a;
 
-    x += equation.x(x, y, z, a, v);
-    y += equation.y(x, y, z, a, v);
-    z += equation.z(x, y, z, a, v);
-    a += equation.a(x, y, z, a, v);
+    x += equation.x(x, y, z, a, v)*dt;
+    y += equation.y(x, y, z, a, v)*dt;
+    z += equation.z(x, y, z, a, v)*dt;
+    a += equation.a(x, y, z, a, v)*dt;
 
     this.lastVector = {x,y,z,a};
   
@@ -121,10 +122,10 @@ PointSet.prototype.update = function(){
                 _z = z;
                 _a = a;
 
-                x += equation.x(_x, _y, _z, _a, v);
-                y += equation.y(_x, _y, _z, _a, v);
-                z += equation.z(_x, _y, _z, _a, v);
-                a += equation.a(_x, _y, _z, _a, v);
+                x += equation.x(_x, _y, _z, _a, v)*dt;
+                y += equation.y(_x, _y, _z, _a, v)*dt;
+                z += equation.z(_x, _y, _z, _a, v)*dt;
+                a += equation.a(_x, _y, _z, _a, v)*dt;
     
 
             }

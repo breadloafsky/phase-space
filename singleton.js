@@ -37,6 +37,7 @@ class Singleton
     pointSize = 0.1;
     coordPlane = false;
     v = 0.5;
+    dt = 0.00001;
 
     constructor() {
 

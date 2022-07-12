@@ -1,4 +1,19 @@
 
+.stop-button{
+
+    width: 24px; 
+    height: 24px;
+    background-repeat: no-repeat; 
+    background-size: auto; 
+    background-position: center;
+    background-image: url('/res/img/pause.png');
+    
+}
+
+.stop-button:hover{
+    border-color: grey;
+}
+
 .source{
     position: absolute; 
     top: 0; 
@@ -227,6 +242,11 @@ textarea:focus {
 }
 
 .controls-section>label {
+    
+    display: flex;
+    justify-content: space-between;
+}
+.controls-section .param {
     
     display: flex;
     justify-content: space-between;
