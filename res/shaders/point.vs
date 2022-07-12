@@ -8,7 +8,7 @@ varying lowp vec4 vColor;
 varying lowp vec3 vPos;
 
 void main(void) {
-    vec3 col = mix(vec3(0.,1.,0.)/1.2,vec3(0.,0.,1.)*2., aColorVector.y);
+    vec3 col = mix(vec3(0.,1.,0.)/1.8,vec3(0.,0.,1.)*2., aColorVector.y);
     col = mix(col,vec3(1.,0.,0.), aColorVector.x); 
     gl_Position = uProjection * uView  * vec4(aPoint, 1.);
     gl_PointSize = aSize * 1000. / gl_Position.z; 

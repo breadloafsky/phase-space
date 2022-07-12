@@ -163,7 +163,7 @@ const btnIterate = document.querySelector("#btnIterate");
 btnIterate.addEventListener("click", (e) =>{
   singleton.iterate = !singleton.iterate;
   e.target.style.backgroundColor = singleton.iterate ? "red" : "green";
-  e.target.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
+  e.target.innerHTML = singleton.iterate ? "pause" : "start";
 });
 
 /** @type {HTMLInputElement} */
@@ -417,6 +417,4 @@ canvas.addEventListener("mousedown", (e) => {
   window.addEventListener("load", function init(e) {
     window.removeEventListener("load", init);
     setPreset();
- 
-    btnIterate.innerHTML = singleton.iterate ? "⏸︎&#xFE0E;" : "⏵︎&#xFE0E;";
   });
