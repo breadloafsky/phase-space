@@ -12,12 +12,17 @@ https://ilgo6991.github.io/phase-space
 
 The system of differential equations can be defined on the left sidebar.
 
-There are 3 variables ( x, y, z ) for the phase space.\
+There are 4 variables ( x, y, z, a) for the phase space. 3 of them can be mapped on 3D space\
 Variable "v" can be used to add change with time.
 The controls for "v" are on the bottom bar.
 
+
+
 Each space variable has its corresponding differential equation.\
 The equations can be edited on the left sidebar.
+
+"dt" is the change of the "time" of the equation. very small, negative or very large number of "dt" can "break" the equation.
+
 
 The sets of points are defined on the right side.
 
