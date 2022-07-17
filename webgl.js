@@ -92,8 +92,8 @@ export function GL(canvas) {
 
   const resize = () =>{
     screen = [
-      canvas.parentElement.offsetWidth/1.3,
-      canvas.parentElement.offsetHeight/1.3,
+      canvas.parentElement.offsetWidth/1.1,
+      canvas.parentElement.offsetHeight/1.1,
     ];
     canvas.setAttribute("width", screen[0]);
     canvas.setAttribute("height", screen[1]);
