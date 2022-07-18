@@ -60,11 +60,7 @@ PointSet.prototype.update = function(){
         }
     }
     
-    var _x = x;
-    var _y = y;
-    var _z = z;
-    var _a = a;
-   
+
   
     this.points = [];
     for (let i = 0; i < length; i++) {
@@ -74,27 +70,10 @@ PointSet.prototype.update = function(){
             z: z,
             a: a,
         });
-        
-        _x = x;
-        _y = y;
-        _z = z;
-        _a = a;
-
-        x += equation.x(_x, _y, _z, _a, v)*dt;
-        y += equation.y(_x, _y, _z, _a, v)*dt;
-        z += equation.z(_x, _y, _z, _a, v)*dt;
-        a += equation.a(_x, _y, _z, _a, v)*dt;
+        [x,y,z,a] = euler(x,y,z,a,v,dt, equation);
     }
 
-    _x = x;
-    _y = y;
-    _z = z;
-    _a = a;
-
-    x += equation.x(x, y, z, a, v)*dt;
-    y += equation.y(x, y, z, a, v)*dt;
-    z += equation.z(x, y, z, a, v)*dt;
-    a += equation.a(x, y, z, a, v)*dt;
+    [x,y,z,a] = euler(x,y,z,a,v,dt, equation);
 
     this.lastVector = {x,y,z,a};
   
@@ -117,15 +96,7 @@ PointSet.prototype.update = function(){
             for(let i = 0; i < iterationStep-length+1; i++)
             {
 
-                _x = x;
-                _y = y;
-                _z = z;
-                _a = a;
-
-                x += equation.x(_x, _y, _z, _a, v)*dt;
-                y += equation.y(_x, _y, _z, _a, v)*dt;
-                z += equation.z(_x, _y, _z, _a, v)*dt;
-                a += equation.a(_x, _y, _z, _a, v)*dt;
+                [x,y,z,a] = euler(x,y,z,a,v,dt, equation);
     
 
             }
@@ -137,13 +108,20 @@ PointSet.prototype.update = function(){
         }
         
     }
-        
-  
-        
-    
+}
 
+function euler(x,y,z,a,v,dt, equation)
+{
+    const _x = x;
+    const _y = y;
+    const _z = z;
+    const _a = a;
+    x += equation.x(_x, _y, _z, _a, v)*dt;
+    y += equation.y(_x, _y, _z, _a, v)*dt;
+    z += equation.z(_x, _y, _z, _a, v)*dt;
+    a += equation.a(_x, _y, _z, _a, v)*dt;
 
-
+    return ([x,y,z,a]);
 }
 
 

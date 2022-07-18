@@ -5,7 +5,7 @@ This application shows 3-dimensional phase portraits in phase space defined by t
 ## Demo
 https://ilgo6991.github.io/phase-space
 
-(epilepsy warning
+(epilepsy warning   
 & the application can crash your browser)
 
 ## Usage
@@ -17,11 +17,10 @@ Variable "v" can be used to add change with time.
 The controls for "v" are on the bottom bar.
 
 
-
 Each space variable has its corresponding differential equation.\
 The equations can be edited on the left sidebar.
 
-"dt" is the change of the "time" of the equation. very small, negative or very large number of "dt" can "break" the equation.
+"dt" is the change of the "time" of the equation. very large value of "dt" can "break" the prediction.
 
 
 The sets of points are defined on the right side.
