@@ -1,0 +1,127 @@
+[
+
+	{
+		"name":"Lorenz attractor",
+		"equation":{
+			"x": "10*(y-x)",
+			"y": "x*(28-z)-y",
+			"z": "x*y-(8/3)*z"
+		},
+		"cameraTarget":[ 3.66, -2.28, 29.55 ],
+		"cameraDistance":52,
+		"cameraYaw":0.13,
+		"cameraPitch":-0.36,
+		"setNum" : 150,
+		"setLength" : 100,
+		"iterate" : true,
+		"step" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [50,50,50],
+		"pointSize" : 0.2,
+		"sizeRatio" : true,
+		"respawn" : false,
+		"respawnRate" : 100,
+		"v" : 0.5,
+		"dt": 0.005
+	},
+	{
+		"name":"Chen-Lee attractor",
+		"equation":{
+		  "x": "5*x-y*z",
+		  "y": "-10*y+x*z",
+		  "z": "-0.38*z+x*(y/3)"
+		},
+		"cameraTarget":[ 0, 0, 0 ],
+		"cameraDistance":40,
+		"cameraYaw":0.38,
+		"cameraPitch":-0.4,
+		"setNum" : 150,
+		"setLength" : 100,
+		"iterate" : true,
+		"step" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.5,
+		"sizeRatio" : true,
+		"respawn" : false,
+		"respawnRate" : 100,
+		"v" : 0.5,
+		"dt": 0.01
+	  },
+	  {
+		"name":"Rössler attractor",
+		"equation":{
+		  "x": "-(y+z)",
+		  "y": "x+0.2*y",
+		  "z": "0.2+z*(x-5.7)"
+		},
+		"cameraTarget":[ 0, 0, 0 ],
+		"cameraDistance":40,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6,
+		"setNum" : 150,
+		"setLength" : 100,
+		"iterate" : true,
+		"step" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.2,
+		"sizeRatio" : true,	
+		"respawn" : false,
+		"respawnRate" : 100,
+		"v" : 0.5,
+		"dt": 0.035
+	  },
+	  {
+		"name":"Rössler attractor (bifurcation)",
+		"equation":{
+		  "x": "-(y+z)",
+		  "y": "x+v*y",
+		  "z": "0.2+z*(x-5.7)"
+		},
+		"cameraTarget":[ 0, 0, 0 ],
+		"cameraDistance":40,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6,
+		"setNum" : 1,
+		"setLength" : 10000,
+		"iterate" : true,
+		"step" : 1,
+		"startPos" : [1,1,1],
+		"startRnd" : [0,0,0],
+		"pointSize" : 0.2,
+		"sizeRatio" : true,	
+		"respawn" : false,
+		"respawnRate" : 100,
+		"v" : 0.06,
+		"vStep" : 0.001,
+		"vRange" : [0.06, 0.4],
+		"dt": 0.035
+	  },
+	  {
+		"name":"Thomas attractor",
+		"equation":{
+		  "x": "sin(y/2)-0.043*x",
+		  "y": "sin(z/2)-0.043*y",
+		  "z": "sin(x/2)-0.043*z"
+		},
+		"cameraTarget":[ 0, 0, 0 ],
+		"cameraDistance":22,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6,
+		"setNum" : 100,
+		"setLength" : 200,
+		"iterate" : true,
+		"step" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [1,1,1],
+		"pointSize" : 0.1,
+		"sizeRatio" : true,	
+		"respawn" : false,
+		"respawnRate" : 100,
+		"v" : 0,
+		"dt": 0.1
+	  }
+  
+	
+  ]
