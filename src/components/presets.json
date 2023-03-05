@@ -7,22 +7,14 @@
 			"y": "x*(28-z)-y",
 			"z": "x*y-(8/3)*z"
 		},
+		"dt": 0.005,
+		"pointSize" : 0.2,
 		"cameraTarget":[ 3.66, -2.28, 29.55 ],
 		"cameraDistance":52,
 		"cameraYaw":0.13,
 		"cameraPitch":-0.36,
-		"setNum" : 150,
-		"setLength" : 100,
-		"iterate" : true,
-		"step" : 1,
-		"startPos" : [0,0,0],
-		"startRnd" : [50,50,50],
-		"pointSize" : 0.2,
-		"sizeRatio" : true,
-		"respawn" : false,
-		"respawnRate" : 100,
-		"v" : 0.5,
-		"dt": 0.005
+		"startRnd" : [50,50,50]
+		
 	},
 	{
 		"name":"Chen-Lee attractor",
@@ -31,22 +23,11 @@
 		  "y": "-10*y+x*z",
 		  "z": "-0.38*z+x*(y/3)"
 		},
-		"cameraTarget":[ 0, 0, 0 ],
+		"dt": 0.01,
+		"pointSize" : 0.2,
 		"cameraDistance":40,
 		"cameraYaw":0.38,
-		"cameraPitch":-0.4,
-		"setNum" : 150,
-		"setLength" : 100,
-		"iterate" : true,
-		"step" : 1,
-		"startPos" : [0,0,0],
-		"startRnd" : [10,10,10],
-		"pointSize" : 0.5,
-		"sizeRatio" : true,
-		"respawn" : false,
-		"respawnRate" : 100,
-		"v" : 0.5,
-		"dt": 0.01
+		"cameraPitch":-0.4
 	  },
 	  {
 		"name":"Rössler attractor",
@@ -55,22 +36,14 @@
 		  "y": "x+0.2*y",
 		  "z": "0.2+z*(x-5.7)"
 		},
-		"cameraTarget":[ 0, 0, 0 ],
-		"cameraDistance":40,
-		"cameraYaw":2.17,
-		"cameraPitch":-0.6,
+		"dt": 0.035,
+		"pointSize" : 0.2,
 		"setNum" : 150,
 		"setLength" : 100,
-		"iterate" : true,
-		"step" : 1,
-		"startPos" : [0,0,0],
-		"startRnd" : [10,10,10],
-		"pointSize" : 0.2,
-		"sizeRatio" : true,	
-		"respawn" : false,
-		"respawnRate" : 100,
-		"v" : 0.5,
-		"dt": 0.035
+		"cameraDistance":30,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6
+		
 	  },
 	  {
 		"name":"Rössler attractor (bifurcation)",
@@ -79,24 +52,18 @@
 		  "y": "x+v*y",
 		  "z": "0.2+z*(x-5.7)"
 		},
-		"cameraTarget":[ 0, 0, 0 ],
-		"cameraDistance":40,
-		"cameraYaw":2.17,
-		"cameraPitch":-0.6,
-		"setNum" : 1,
-		"setLength" : 10000,
-		"iterate" : true,
-		"step" : 1,
-		"startPos" : [1,1,1],
-		"startRnd" : [0,0,0],
-		"pointSize" : 0.2,
-		"sizeRatio" : true,	
-		"respawn" : false,
-		"respawnRate" : 100,
+		"dt": 0.035,
 		"v" : 0.06,
 		"vStep" : 0.001,
 		"vRange" : [0.06, 0.4],
-		"dt": 0.035
+		"setNum" : 1,
+		"setLength" : 10000,
+		"startPos" : [1,1,1],
+		"startRnd" : [0,0,0],
+		"cameraDistance":30,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6,
+		"pointSize" : 0.2
 	  },
 	  {
 		"name":"Thomas attractor",
@@ -105,22 +72,72 @@
 		  "y": "sin(z/2)-0.043*y",
 		  "z": "sin(x/2)-0.043*z"
 		},
-		"cameraTarget":[ 0, 0, 0 ],
-		"cameraDistance":22,
-		"cameraYaw":3.9,
-		"cameraPitch":-0.6,
+		"dt": 0.1,
 		"setNum" : 100,
 		"setLength" : 200,
-		"iterate" : true,
-		"step" : 1,
 		"startPos" : [0,0,0],
 		"startRnd" : [1,1,1],
 		"pointSize" : 0.1,
-		"sizeRatio" : true,	
-		"respawn" : false,
-		"respawnRate" : 100,
-		"v" : 0,
-		"dt": 0.1
+		"cameraDistance":22,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Dadras attractor",
+		"equation":{
+		  "x": "y-3*x+2.7*y*z",
+		  "y": "1.7*y-x*z+z",
+		  "z": "2*x*y-9*z"
+		},
+		"dt": 0.005,
+		"setNum" : 500,
+		"setLength" : 50,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.15,
+		"cameraDistance":22,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Nose - Hoover attractor",
+		"equation":{
+		  "x": "y",
+		  "y": "-x+y*z",
+		  "z": "1.5-pow(y,2)"
+		},
+		"dt": 0.02,
+		"setNum" : 100,
+		"setLength" : 100,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.06,
+		"cameraDistance":10,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Untitled",
+		"equation":{
+		  "x": "x*0.13+y*z*3",
+		  "y": "x*0.01-0.4*y-z*x/v",
+		  "z": "-z-x*y"
+		},
+		"dt": 0.0005,
+		"vRange":[-2,2],
+		"v":-2,
+		"vStep":0.01,
+		"setNum" : 10,
+		"setLength" : 1000,
+		"startPos" : [0,0,0],
+		"startRnd" : [100,100,100],
+		"respawn":true,
+		"respawnRate":60,
+		"sizeRatio" : false,
+		"pointSize" : 1,
+		"cameraDistance":150,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
 	  }
   
 	

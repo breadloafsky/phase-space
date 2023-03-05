@@ -12,9 +12,12 @@
 
 
 	function mouseDown(e:MouseEvent){
-		IsMouseDown = true;
-		document.addEventListener("mousemove", mouseMove);
-		document.addEventListener("mouseup", cleanUp);
+		if(!disabled)
+		{
+			IsMouseDown = true;
+			document.addEventListener("mousemove", mouseMove);
+			document.addEventListener("mouseup", cleanUp);
+		}
 	}
 
 	// remove event listeners
@@ -44,7 +47,7 @@
 			val = range[0];
 			progress = 0;
 		}
-		progress = (val/(Math.abs(range[0]-range[1])+range[0]))*100;
+		progress = ((val-range[0])/(Math.abs(range[0]-range[1])))*100;
 	}
 
 </script>

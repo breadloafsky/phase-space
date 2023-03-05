@@ -2,6 +2,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Range from "./ui/Range.svelte";
+	import{ ProgramParams, MetaParams } from "../types/Params";
 	import { programParams, metaParams } from "../stores.js";
 	import Select from "./ui/Select.svelte";
 	import NumberPicker from "./ui/NumberPicker.svelte";
@@ -13,11 +14,13 @@
     
 	
 	let mouseDown:number|boolean = false;
-	let presetIndex = 1;
+	let presetIndex = 0;
+
 	onMount(() => {
 		setPreset(0);
 	});
 
+	// update the camera
 	function mouseMove(e:MouseEvent){
 		const moveStep = window.innerHeight < window.innerWidth ? window.innerWidth : window.innerHeight;
 		if(mouseDown !== false)
@@ -57,10 +60,9 @@
 	function setPreset(n:number)
 	{
 		presetIndex = n;
-		//	reset the sets
-		metaParams.update(n => { return{...n, needsUpdate:true}});
-		//	set the preset
-		programParams.update(e => {return{...e, ...presets[presetIndex]}});
+		//	reset the parameters
+		metaParams.update(n => new MetaParams());
+		programParams.update(e => {return{...new ProgramParams(), ...presets[presetIndex]}});
 	}
 
 
@@ -426,17 +428,17 @@
 
 .controls-bar{
 	padding: 20px;
-	min-width: 10vw;
-	transition: all 0.2s;
+	transition: all 0.1s;
 	display: flex;
 	opacity: 0;
 }
 .top > .controls-bar{
 	overflow-y: auto;
 	flex-direction: column;
+	min-width: 10vw;
 }
-.controls-bar[data-pinned="true"] , .controls-bar:hover {
-	min-width: 18vw;
+.top .controls-bar[data-pinned="true"] , .controls-bar:hover {
+	min-width: 300px;
 	opacity: 1;
 }
 
@@ -449,8 +451,6 @@
 	min-height: 60px;
 	opacity: 1;
 }
-
-
 .controls-bar:hover{
 	background-color: rgba(20, 20, 20);
 }

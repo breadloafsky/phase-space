@@ -1,34 +1,7 @@
 import { Camera } from "../camera";
 import { PointSet } from "./Set";
+import type{ ProgramParams, MetaParams } from "./Params";
 
-export interface MetaParams {
-    needsUpdate:boolean;
-	dimMap:(string|any)[];
-	showGrid:boolean;
-}
-
-export interface ProgramParams{
-    cameraTarget:number[];
-    cameraDistance:number;
-    cameraYaw:number;
-    cameraPitch:number;
-    equation : {x:string, y:string, z:string},
-    iterate:boolean,
-    iterationStep:number,
-    setNum:number,
-    setLength:number,
-    respawn:boolean,
-    respawnRate:number,
-    presetCurrent:number,
-    startPos:number[],
-    startRnd:number[],
-    sizeRatio:boolean,
-    pointSize:number,
-    v:number,
-    vRange:number[],
-    vStep:number,
-    dt:number
-}
 
 
 export class ODE {
