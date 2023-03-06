@@ -4,6 +4,7 @@
 	import Range from "./ui/Range.svelte";
 	import{ ProgramParams, MetaParams } from "../types/Params";
 	import { programParams, metaParams } from "../stores.js";
+	import Icon from "./ui/Icon.svelte";
 	import Select from "./ui/Select.svelte";
 	import NumberPicker from "./ui/NumberPicker.svelte";
 	import Switch from "./ui/Switch.svelte";
@@ -63,7 +64,6 @@
 		//	reset the parameters
 		metaParams.update(n => new MetaParams());
 		programParams.update(e => {return{...new ProgramParams(), ...structuredClone(presets[presetIndex])}});
-		console.log(presets[presetIndex]);
 	}
 
 
@@ -147,7 +147,7 @@
 				</Collapse>
 				<Collapse label="Dimension Mapping" collapsed={false}>
 					<div class="flex justify-center py-1">
-						<label class="parameter-label w-4 h-4" for="dim0"><div class="icon bg-white" style="--icon:{`url(/ui/dim-arrow0.svg)`}"/></label>
+						<label class="parameter-label w-4 h-4" for="dim0"><Icon name="dim-arrow0" color="white"/></label>
 						<div class="w-12">
 							<Select
 							id={"dim0"}
@@ -158,7 +158,7 @@
 						</div>
 					</div>
 					<div class="flex justify-center py-1">
-						<label class="parameter-label w-4 h-4" for="dim1"><div class="icon bg-white" style="--icon:{`url(/ui/dim-arrow1.svg)`}"/></label>
+						<label class="parameter-label w-4 h-4" for="dim1"><Icon name="dim-arrow1" color="white"/></label>
 						<div class="w-12">
 							<Select
 							id={"dim1"}
@@ -169,7 +169,7 @@
 						</div>
 					</div>
 					<div class="flex justify-center py-1">
-						<label class="parameter-label w-4 h-4" for="dim2"><div class="icon bg-white" style="--icon:{`url(/ui/dim-arrow2.svg)`}"/></label>
+						<label class="parameter-label w-4 h-4" for="dim2"><Icon name="dim-arrow2" color="white"/></label>
 						<div class="w-12">
 							<Select
 							id={"dim2"}
@@ -180,7 +180,7 @@
 						</div>
 					</div>
 					<div class="parameter-field">
-						<label class="parameter-label" for="showGrid">The Coordinates Plane</label>
+						<label class="parameter-label" for="showGrid">Show the coordinates plane</label>
 						<div class="w-20">
 							<Switch
 							id={"showGrid"}

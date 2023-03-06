@@ -35,11 +35,12 @@
 }
 .switch{
 	height: 20px;
-	width: 60%;
+	width: 38px;
 	display: flex;
 	position: relative;
 	background-color: rgb(97, 97, 97);
 	border-radius: 4px;
+
 }
 .switch > div {
 	align-self: center;

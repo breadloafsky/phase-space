@@ -294,7 +294,6 @@ Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
   gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
   gl.clearDepth(1.0);
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
-  
   gl.uniformMatrix4fv(
     pointShader.uniforms.uView.location,
     false,
@@ -309,8 +308,6 @@ Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 
   const num = this.initPointsBuffers();
   const type = gl.FLOAT;
-
-
 
   //  Size multiplier
   gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aSize.value);

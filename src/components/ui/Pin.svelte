@@ -1,6 +1,7 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
+	import Icon from "./Icon.svelte";
 	let pin:HTMLButtonElement;
 	let parent:HTMLElement;
 
@@ -14,23 +15,24 @@
   	});
 
 
- 
 </script>
 
-<button on:click={toggle} bind:this={pin} class="pin"><div class="icon" style="--icon:{`url(/ui/pin.svg)`}; background-color:dimgray;"/></button>
+<button on:click={toggle} bind:this={pin} class="pin"><Icon name="pin"/></button>
 
 <style>
 
-:global(.controls-bar[data-pinned="true"]) .pin > .icon { 
+:global(.controls-bar) .pin > :global(.icon) { 
+	transition:all 0.1s;
+}
+
+:global(.controls-bar[data-pinned="true"]) .pin > :global(.icon) { 
 	transform:   rotate(-45deg) ;
+	
 }
 .pin {
 	width: 24px;
 	height: 24px;
 	clip-path: circle(50%);	/* to remove svg rotation artifacts */
-}
-.pin > .icon{ 
-	transition:all 0.1s;
 }
 
 </style>

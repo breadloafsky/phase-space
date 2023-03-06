@@ -1,7 +1,9 @@
 
 <script lang="ts">
+	
 	import { createEventDispatcher } from 'svelte';
 	import { onMount } from "svelte";
+	import Icon from './Icon.svelte';
 	export let id:string;
 	export let val:number;
 	export let step:number = 1;
@@ -58,8 +60,8 @@
 <div class="input-container">
 	<input bind:value={val} type="number" class="input" id={id} />
 	<div class="btn-container ">
-		<button class="btn" on:mousedown={() =>{mouseDown=true; increment();}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><div class="icon bg-neutral-500" style="--icon:{`url(/ui/arrow-up.svg)`}"/></button>
-		<button class="btn" on:mousedown={() =>{mouseDown=true; increment(false);}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><div class="icon bg-neutral-500" style="--icon:{`url(/ui/arrow-down.svg)`}"/></button>
+		<button class="btn" on:mousedown={() =>{mouseDown=true; increment();}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><Icon name="arrow-up"/></button>
+		<button class="btn" on:mousedown={() =>{mouseDown=true; increment(false);}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><Icon name="arrow-down"/></button>
 	</div>
 </div>
 
@@ -77,11 +79,7 @@
 	max-height: 2em;
 	background-color: rgb(38 38 38);
 }
-.icon {
-	max-height: 1em;
-	width: 100%;
-	height: 10px;
-}
+
 
 .btn-container{
 	display: flex;
