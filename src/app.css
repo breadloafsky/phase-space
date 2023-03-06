@@ -6,7 +6,6 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-
 ::-moz-selection, ::selection {
     color: rgb(0, 0, 0);
     background: rgb(168, 168, 168);
@@ -30,14 +29,12 @@ body {
 }
 
 .btn {
-    /* border-radius: 10%; */
     background-color: #3c3c3c96;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #ffffffad;
     line-height: 10px;
     padding-inline: 2px;
     transition: "background-color" 0.2s;
-    /* border: rgb(182, 182, 182) 1px solid; */
 }
 
 .btn:hover {

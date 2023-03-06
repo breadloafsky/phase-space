@@ -235,7 +235,6 @@ Scene.prototype.initPointsBuffers = function()  {
       z:s.lastDir[dimensions[2]], a:s.lastDir[dimensions[3]] };
 
     points.forEach((point, i) => {
-
       
       const next = i >= points.length-1 ? [lastDir.x,lastDir.y,lastDir.z] :[points[i+1].x,points[i+1].y,points[i+1].z];
       const distance = vec3.distance( [point.x, point.y, point.z], next);
