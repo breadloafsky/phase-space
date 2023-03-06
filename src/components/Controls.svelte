@@ -62,7 +62,8 @@
 		presetIndex = n;
 		//	reset the parameters
 		metaParams.update(n => new MetaParams());
-		programParams.update(e => {return{...new ProgramParams(), ...presets[presetIndex]}});
+		programParams.update(e => {return{...new ProgramParams(), ...structuredClone(presets[presetIndex])}});
+		console.log(presets[presetIndex]);
 	}
 
 
@@ -72,7 +73,7 @@
 		on:mousemove={mouseMove} 
 		on:mouseup={() => mouseDown = false} 
 		on:mouseleave={() => mouseDown = false} 
-		on:contextmenu={(e) => e.preventDefault()}>
+		>
 		<div class="top">
 			<div class="controls-bar" data-pinned="true">
 				<div class="flex flex-row-reverse"><Pin/></div>
@@ -121,7 +122,7 @@
 						
 					</div>
 					<div class="parameter-field">
-						<label class="parameter-label" for="diffStep">Step</label>
+						<label class="parameter-label" for="diffStep">Steps</label>
 						<div class="w-32">
 							<NumberPicker 
 							id={"diffStep"}
@@ -189,7 +190,7 @@
 					</div>
 				</Collapse>
 			</div>
-			<div on:mousedown={(e) => {mouseDown = e.button;}} on:wheel={wheel} class="scene"/>
+			<div on:contextmenu={(e) => e.preventDefault()} on:mousedown={(e) => {mouseDown = e.button;}} on:wheel={wheel} class="scene"/>
 			<div class="controls-bar"  data-pinned="true">
 				<div><Pin/></div>
 				<!-- set properties -->

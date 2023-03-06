@@ -9,6 +9,8 @@
 		},
 		"dt": 0.005,
 		"pointSize" : 0.2,
+		"setNum" : 40,
+		"setLength" : 400,
 		"cameraTarget":[ 3.66, -2.28, 29.55 ],
 		"cameraDistance":52,
 		"cameraYaw":0.13,
@@ -90,8 +92,8 @@
 		  "z": "2*x*y-9*z"
 		},
 		"dt": 0.005,
-		"setNum" : 500,
-		"setLength" : 50,
+		"setNum" : 10,
+		"setLength" : 1000,
 		"startPos" : [0,0,0],
 		"startRnd" : [10,10,10],
 		"pointSize" : 0.15,
@@ -119,9 +121,9 @@
 	  {
 		"name":"Untitled",
 		"equation":{
-		  "x": "x*0.13+y*z*3",
-		  "y": "x*0.01-0.4*y-z*x/v",
-		  "z": "-z-x*y"
+		  "x": "y*z*3",
+		  "y": "y-z*x/v",
+		  "z": "-x*y"
 		},
 		"dt": 0.0005,
 		"vRange":[-2,2],
@@ -133,6 +135,29 @@
 		"startRnd" : [100,100,100],
 		"respawn":true,
 		"respawnRate":60,
+		"sizeRatio" : false,
+		"pointSize" : 1,
+		"cameraDistance":150,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Untitled2",
+		"equation":{
+		  "x": "sin(y*cos(v*PI/4))*200",
+		  "y": "cos(x*cos(v*PI/4))*200",
+		  "z": "1"
+		},
+		"dt": 0.001,
+		"vRange":[-2,2],
+		"v":-2,
+		"vStep":0.01,
+		"setNum" : 60,
+		"setLength" : 200,
+		"startPos" : [0,0,0],
+		"startRnd" : [140,140,140],
+		"respawn":true,
+		"respawnRate":100,
 		"sizeRatio" : false,
 		"pointSize" : 1,
 		"cameraDistance":150,

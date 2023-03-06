@@ -1,34 +1,14 @@
 import { Camera } from "../camera";
 import { PointSet } from "./Set";
-import type{ ProgramParams, MetaParams } from "./Params";
+import { ProgramParams, MetaParams } from "./Params";
 
 
 
 export class ODE {
 	sets:PointSet[] = [];
     camera:Camera;
-    params:ProgramParams = {
-        cameraTarget:[0,0,0],
-        cameraDistance:10,
-        cameraYaw:2,
-        cameraPitch:0,
-        equation : {x:"",y:"",z:""},
-        iterate : true,
-        iterationStep : 1,
-        setNum : 150,
-        setLength : 100,
-        respawn : false,
-        respawnRate : 100,
-        presetCurrent : 2,
-        startPos : [0,0,0],
-        startRnd : [0,0,0],
-        sizeRatio : true,
-        pointSize : 1,
-        v : 0.5,
-        vRange:[0,0],
-        vStep:1,
-        dt : 0.01,//0.01,
-    }
+    params:ProgramParams = new ProgramParams();
+
 
    
     constructor(){
