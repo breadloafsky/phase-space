@@ -253,7 +253,7 @@
 						</div>
 					</div>
 					<div class="parameter-field">
-						<label class="parameter-label" for="respawnRate">Respawn Rate</label>
+						<label class="parameter-label" for="respawnRate">Respawn Interval</label>
 						<div class="w-24">
 							<NumberPicker 
 							id={"respawnRate"}

@@ -46,7 +46,6 @@ export class PointSet {
 						return eq;
 					}	
 				}
-				
 		} catch (e) {
 			console.log("Equation Error");
 		}
