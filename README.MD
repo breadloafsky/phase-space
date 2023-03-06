@@ -1,4 +1,4 @@
-![alt text](https://github.com/Ilgo6991/phase-space/blob/master/docs/1.PNG?raw=true)
+![alt text](https://github.com/Ilgo1/phase-space/blob/master/docs/1.PNG?raw=true)
 # Phase Space
 This application shows 3-dimensional phase portraits in phase space defined by the system of ordinary differential equations.
 
