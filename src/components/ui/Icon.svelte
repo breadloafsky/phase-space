@@ -9,10 +9,9 @@
 		
   	});
 
-
 </script>
 
-<div class="icon" style={`--icon: url(${path}/ui/${name}.svg); background-color:${color};`}/>
+<div class="icon" style={`--icon: url(ui/${name}.svg); background-color:${color};`}/>
 
 <style>
 
