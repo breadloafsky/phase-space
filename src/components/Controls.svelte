@@ -179,8 +179,8 @@
 							/>
 						</div>
 					</div>
-					<div class="parameter-field">
-						<label class="parameter-label" for="showGrid">Show the coordinates plane</label>
+					<div class="parameter-field mt-8">
+						<label class="parameter-label" for="showGrid"><pre>{"Show the \ncoordinates plane"}</pre></label>
 						<div class="w-20">
 							<Switch
 							id={"showGrid"}
@@ -351,10 +351,11 @@
 				</div>
 			</div>
 			<div class="parameter-field w-full">
-				<label class="w-8" for="vInput">v:</label>
+				<label class="parameter-label pr-2" for="vInput">v:</label>
 				<div class="w-full">
 					<Range
 						id={"vInput"} 
+						color="rgb(240, 185, 80)"
 						bind:val={$programParams.v}
 						range={$programParams.vRange}
 					/>
@@ -372,16 +373,14 @@
 					/>
 				</div>
 			</div>
-			<div class="parameter-field">
-				<label class="w-20" for="vStep">v change</label>
-				<div class="w-24">
-					<NumberPicker 
-						id={"vStep"}
+			<div class="parameter-field w-11/12" style="max-width: 20%;">
+				<label class="parameter-label pr-5" for="vChange">change</label>
+				<div class="w-full">
+					<Range
+						color="#bf71ff"
+						id={"vChange"} 
 						bind:val={$programParams.vStep} 
-						step={0.0001} 
-						round={10000}
-						incrementGrowth={1.05}
-						range={[0,false]}
+						range={[0,1]}
 					/>
 				</div>
 			</div>
@@ -402,6 +401,7 @@
 .parameter-label{
 	min-width: 4rem;
 	align-self: center;
+	min-width: fit-content;
 }
 
 

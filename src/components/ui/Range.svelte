@@ -5,10 +5,12 @@
 	export let id:string;
 	export let val:number;
 	export let range:number[];
-	let progress = 40;
+	export let color = "rgb(0, 219, 219)"
+	let progress = 0;
 	let component:HTMLDivElement;
 	let IsMouseDown:boolean = false;
 	let disabled = false;
+	
 
 
 	function mouseDown(e:MouseEvent){
@@ -40,8 +42,9 @@
 
 	$:{
 		if(val < range[0] || val > range[1])
-			val = range[0];
+		val = range[0];
 		disabled = range[0] >= range[1];
+		
 		if(disabled)
 		{
 			val = range[0];
@@ -52,10 +55,10 @@
 
 </script>
 
-
-<div bind:this={component} on:mousedown={mouseDown} class={`range-container ${disabled && "disabled"}`} style={`--progress:${progress}%;`}>
+<div bind:this={component} on:mousedown={mouseDown} class={`range-container ${disabled && "disabled"} ${range[0] == val  && "start"}`} style={`--progress:${progress}%; --color:${color};`}>
 	<div class="relative flex w-full">
 		<button class="knob"/>
+		<div class="label">{val}</div>
 	</div>
 	<div class="range">
 		<div/>
@@ -88,7 +91,8 @@
 
 .range > div {
 	display: flex;
-	background-color: rgb(0, 170, 170);
+	background-color: var(--color);;
+	filter: brightness(0.7);
 	width: var(--progress);
 	border-radius: 4px;
 }
@@ -96,7 +100,7 @@
 
 
 .range-container .knob{
-	background-color: rgb(0, 219, 219);
+	background-color: var(--color);
 	z-index: 1;
 	border-radius: 4px;
 	width: 20px;
@@ -106,9 +110,33 @@
 	top: -5px;
 	left: calc(var(--progress) - 10px);
 }
+.range-container .label {
+	background-color: transparent;
+  	background-image: linear-gradient(to right, var(--color) 35% , transparent, transparent);
+	background-size: 200px;
+	background-repeat: no-repeat;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent; 
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	font-size: 1.4em;
+	position: absolute;
+	top: -50px;
+	left:  calc(var(--progress) - 20px);
+	opacity: 0;
+	transition: opacity 1s;
+	user-select: none;
+}
+
+.range-container:hover .label {
+	opacity: 1;	
+}
+
+.range-container.disabled .knob, .range-container.start .knob {
+	background-color: rgb(53, 53, 53);
+}
 
 .range-container.disabled .knob {
-	background-color: rgb(53, 53, 53);
 	cursor:not-allowed;
 }
 

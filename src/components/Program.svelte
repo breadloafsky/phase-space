@@ -5,6 +5,7 @@
  	import { onMount } from "svelte";
 	import { Scene } from "../scene.js";
 	import { ODE } from "../types/ODE.js";
+    import Range from "./ui/Range.svelte";
 	
     let canvas:HTMLCanvasElement;
 	let ode:ODE;
@@ -20,10 +21,14 @@
 	function update(){
 		requestAnimationFrame(update);
 
-		if($programParams.vRange[0] < $programParams.vRange[1] && $programParams.vStep > 0)
+		let range = $programParams.vRange;
+		let step = $programParams.vStep;
+		let v = $programParams.v;
+
+		if(range[0] < range[1] && step > 0)
         {
-            let s = $programParams.v + $programParams.vStep;
-			$programParams.v = (s <= $programParams.vRange[1]) ? s : $programParams.vRange[0];
+            let s = $programParams.v + $programParams.vStep * Math.abs(range[1] - range[0]) / 100;
+			$programParams.v = (s <= range[1]) ? s : range[0];
         }
 
 		if($metaParams.needsUpdate)

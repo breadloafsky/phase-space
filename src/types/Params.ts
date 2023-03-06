@@ -23,6 +23,6 @@ export class ProgramParams{
     pointSize:number = 0.2;
     v:number = 0;
     vRange:number[] = [0,0];
-    vStep:number = 0.0001;
+    vStep:number = 0;
     dt:number = 0.01;
 }
