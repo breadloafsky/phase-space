@@ -4,7 +4,7 @@
 	export let color = "dimgray";
 	export let name = "";
 
-	let path = ".."; 
+	let path = "/phase-space"; 
 	onMount(() => {
 		
   	});

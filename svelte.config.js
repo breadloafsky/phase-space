@@ -8,7 +8,8 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		paths: {
-			base: dev ? '' : '/phase-space',
+			// base: dev ? '' : '/phase-space',
+			base: '/phase-space',
 		}
 	}
 };
