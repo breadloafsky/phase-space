@@ -9,7 +9,6 @@ export function Camera(programParams) {
 	this.right = [1, 0, 0];
 	// The field of view of the camera (radians)
 	this.fov = 1;
-
   }
   
   Camera.prototype.setFov = function (v) {

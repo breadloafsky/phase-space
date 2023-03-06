@@ -14,12 +14,11 @@ export class PointSet {
 	z=0;
 	points:Point[] = [];
 	lifeCount = 0;
-	lifeRand = 0;
+	lifeRand = 0;	// lifetime randomizer
 	lastDir = {};
 	ode:ODE;
 	equation:any = {};
 	equationString = {x:"",y:"",z:""};
-
     constructor(ode:ODE){
 		this.ode = ode;
 		const sPos = ode.params.startPos;
@@ -55,16 +54,14 @@ export class PointSet {
 	
 
     update(){
-
-		
 		var x = this.x;
 		var y = this.y;
 		var z = this.z;
 		const dt = this.ode.params.dt;
 		const v = this.ode.params.v;
 
-	
 		let resetEquation = false;
+
 		//	check if the equation changed
 		["x","y","z"].forEach(e => {
 			if((this.ode.params.equation as any)[e] != (this.equationString as any)[e])
@@ -80,19 +77,14 @@ export class PointSet {
 			this.equationString = {...this.ode.params.equation};
 		}
 		
-		
 		const equation = this.equation;
 		const length = this.ode.params.setLength;
 		const respawn = this.ode.params.respawn;
-		
-
-
 		const iterationStep =  this.ode.params.iterationStep;
-
 		
 		if(respawn)
 		{
-			
+			// set respawn
 			if(this.lifeCount >= this.lifeMax())
 			{
 				this.ode.sets.splice(this.ode.sets.indexOf(this), 1);
@@ -100,7 +92,6 @@ export class PointSet {
 			}
 			this.lifeCount++;
 		}
-
 		this.points = [];
 
     for (let i = 0; i < length; i++) {
@@ -124,9 +115,7 @@ export class PointSet {
 				this.y = this.points[iterationStep].y;
 				this.z = this.points[iterationStep].z;
 			}
-			else if(iterationStep >= length){
-
-				
+			else if(iterationStep >= length){	
 				x = this.points[length-1].x;
 				y = this.points[length-1].y;
 				z = this.points[length-1].z;
@@ -147,10 +136,10 @@ function parse(str:string){
 	str = str.replace(/([A-z])\w+/g, 'Math.$&');
 	return str;
 }
+
+//	Euler method for differentiation
 function euler(x:number,y:number,z:number,v:number,dt:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null)
 {
-	
-	
 	if(equation && equation.x instanceof Function)
 	{
 		const _x = x;

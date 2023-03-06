@@ -80,9 +80,9 @@
 				<!-- preset -->
 				<Collapse label="Preset" collapsed={false}>
 					<div class="flex justify-center">
-						<button class="btn" on:click={() => setPreset((presetIndex+presets.length-1)%presets.length)}>{"<"}</button>
+						<button class="btn w-5" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+presets.length-1)%presets.length)}>{"<"}</button>
 						<div class="px-4">{presetIndex+1}/{presets.length}</div>
-						<button class="btn" on:click={() => setPreset((presetIndex+1)%presets.length)}>{">"}</button>
+						<button class="btn w-5" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+1)%presets.length)}>{">"}</button>
 					</div>
 					<!-- <div class="flex justify-center"><Select/></div> -->
 					<div class="text-center py-2">{presets[presetIndex].name}</div>
@@ -266,7 +266,7 @@
 						</div>
 					</div>
 				</Collapse>
-				<Collapse label="Starting Positions" collapsed={false}>
+				<Collapse label="Set Spawn Positions" collapsed={false}>
 					<!-- svelte-ignore a11y-label-has-associated-control -->
 					<div class="parameter-field">
 						<label class="parameter-label" for="startX">x</label>

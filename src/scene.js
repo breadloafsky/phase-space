@@ -5,6 +5,8 @@ import { metaParams } from "./stores.ts";
 
 var screen = [100,100];
 
+
+// plane vertices
 const screenData ={
 	coords:[
 		-1.0,-1.0, 
@@ -15,7 +17,6 @@ const screenData ={
 		-1.0, 1.0,
 	],
 	texCoords:[
-
 		0.0, 0.0, 
 		1.0, 0.0,
 		1.0, 1.0, 
@@ -72,7 +73,6 @@ export function Scene(canvas, _ode) {
 	};
 
 	const params = {
-		//alpha: false,
 		premultipliedAlpha: false, 
 		antialias: true,
 		depth:true,
