@@ -29,7 +29,6 @@
 	width: 100%;
 }
 .input{
-
 	@apply  py-0.5 px-2;
 	width: 100%;
 	max-height: 2em;

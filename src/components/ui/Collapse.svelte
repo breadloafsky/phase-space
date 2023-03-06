@@ -13,8 +13,9 @@
 .collapsible { 
 	transition:all 0.1s;
 	margin-block: 10px;
-
 	height: fit-content;
+	border-radius: 4px;
+	box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.479);
 }
 .collapsible > .header{
 	width: 100%;
@@ -30,12 +31,10 @@
   	font-weight: bolder;
 }
 
-
-
 .collapsible > .body {
 	background-color: #2424248c;
-	transition: all 0.1s;
 }
+
 .collapsible > .body > div{
 	padding-block:  10px;
 	padding-inline: 8px;

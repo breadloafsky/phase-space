@@ -2,7 +2,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from "svelte";
-	let element:HTMLDivElement|any;
+	let element:HTMLTextAreaElement;
 	export let val:string = "";
 	export let id:string;
 
@@ -42,23 +42,29 @@
 		return str;
 	}
 
+	function resize()
+	{
+		element.style.height="auto";
+		element.style.height = element.scrollHeight + "px";
+	}
+
 </script>
 
 <div class="flex-grow">
-	<input id={id} bind:this={element} bind:value={val} type="text" style={`${error && "color:red"}`} class="equation " on:blur={update} />
+	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  style={`${error && "color:red"}`} class="equation" on:input={resize} on:blur={update} />
 </div>
 
 
 <style>
 .equation{
-	@apply  py-0.5 px-2;
 	min-height: 2em;
 	width: 100%;
-	background-color: rgb(38 38 38);
+	padding: 0px;
+	padding-left:4px ;
 }
 
 .equation:focus{
-	color: yellow;
+	
 }
 
 </style>

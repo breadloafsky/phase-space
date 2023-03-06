@@ -12,7 +12,7 @@ body {
 }
 
 * {
-    scrollbar-color: #ffffff42 rgba(150, 150, 150, 0.199);
+    scrollbar-color: #75757542#42424242 ;
 }
 ::-webkit-scrollbar {
     height: 12px;
@@ -47,6 +47,29 @@ body {
 
 h3{
     font-size: larger;
+}
+
+textarea, input, select, button {
+    background-color: rgba(100, 100, 100, 0.11);
+    color: white;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(126, 126, 126, 0.356);
+    outline-style: none !important;
+    outline-width: 1px !important;
+    line-height: 1.4em;
+}
+textarea:focus, input:focus, select:focus{
+    outline-style: inset !important;
+    /* border: 2px rgba(179, 179, 179, 0.623) solid; */
+}
+textarea{
+    resize: none ;
+}
+
+textarea:focus {
+    background-color: black;
 }
 
 

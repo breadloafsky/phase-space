@@ -40,7 +40,11 @@
 	position: relative;
 	background-color: rgb(97, 97, 97);
 	border-radius: 4px;
+	box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.479);
+}
 
+.switch.off {
+	box-shadow: 0px 0px 0px transparent;
 }
 .switch > div {
 	align-self: center;

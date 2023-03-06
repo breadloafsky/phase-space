@@ -112,7 +112,7 @@
 }
 .range-container .label {
 	background-color: transparent;
-  	background-image: linear-gradient(to right, var(--color) 35% , transparent, transparent);
+  	background-image: linear-gradient(to right, var(--color) 20% , transparent 35%);
 	background-size: 200px;
 	background-repeat: no-repeat;
 	-webkit-background-clip: text;
@@ -122,7 +122,7 @@
 	font-size: 1.4em;
 	position: absolute;
 	top: -50px;
-	left:  calc(var(--progress) - 20px);
+	left:  calc(var(--progress) - 19px);
 	opacity: 0;
 	transition: opacity 1s;
 	user-select: none;
