@@ -5,6 +5,7 @@
 	export let name = "";
 
 	let path = "/phase-space"; 
+	
 	let src = ""
 	onMount(() => {
 		src = 	`ui/${name}.svg`;
