@@ -12,7 +12,7 @@
 
 </script>
 
-<div class="icon" style={`--icon: url("/ui/s.svg"); background-color:${color};`}/>
+<div class="icon" style={`--icon: url("/phase-space/ui/${name}.svg"); background-color:${color};`}/>
 
 <style>
 
