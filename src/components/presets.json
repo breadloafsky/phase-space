@@ -1,0 +1,171 @@
+[
+
+	{
+		"name":"Lorenz attractor",
+		"equation":{
+			"x": "10*(y-x)",
+			"y": "x*(28-z)-y",
+			"z": "x*y-(8/3)*z"
+		},
+		"dt": 0.002,
+		"iterationStep":2,
+		"pointSize" : 0.2,
+		"sizeRatio":false,
+		"setNum" : 100,
+		"setLength" : 100,
+		"cameraTarget":[ 3.66, -2.28, 29.55 ],
+		"cameraDistance":52,
+		"cameraYaw":0.13,
+		"cameraPitch":-0.36,
+		"startRnd" : [50,50,50]
+	},
+	{
+		"name":"Chen-Lee attractor",
+		"equation":{
+		  "x": "5*x-y*z",
+		  "y": "-10*y+x*z",
+		  "z": "-0.38*z+x*(y/3)"
+		},
+		"dt": 0.01,
+		"pointSize" : 0.2,
+		"cameraDistance":40,
+		"cameraYaw":0.38,
+		"cameraPitch":-0.4
+	  },
+	  {
+		"name":"Rössler attractor",
+		"equation":{
+		  "x": "-(y+z)",
+		  "y": "x+0.2*y",
+		  "z": "0.2+z*(x-5.7)"
+		},
+		"dt": 0.035,
+		"pointSize" : 0.2,
+		"setNum" : 150,
+		"setLength" : 100,
+		"cameraDistance":30,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6
+		
+	  },
+	  {
+		"name":"Rössler attractor (bifurcation)",
+		"equation":{
+		  "x": "-(y+z)",
+		  "y": "x+v*y",
+		  "z": "0.2+z*(x-5.7)"
+		},
+		"dt": 0.04,
+		"iterationStep":100,
+		"v" : 0,
+		"vStep" : 0.0005,
+		"vRange" : [0.05, 0.3],
+		"setNum" : 3,
+		"setLength" : 5000,
+		"startPos" : [1,1,1],
+		"startRnd" : [0,0,0],
+		"cameraDistance":30,
+		"cameraYaw":2.17,
+		"cameraPitch":-0.6,
+		"pointSize" : 0.2
+	  },
+	  {
+		"name":"Thomas attractor",
+		"equation":{
+		  "x": "sin(y/2)-0.043*x",
+		  "y": "sin(z/2)-0.043*y",
+		  "z": "sin(x/2)-0.043*z"
+		},
+		"dt": 0.1,
+		"setNum" : 100,
+		"setLength" : 200,
+		"startPos" : [0,0,0],
+		"startRnd" : [1,1,1],
+		"pointSize" : 0.1,
+		"cameraDistance":22,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Dadras attractor",
+		"equation":{
+		  "x": "y-3*x+2.7*y*z",
+		  "y": "1.7*y-x*z+z",
+		  "z": "2*x*y-9*z"
+		},
+		"dt": 0.001,
+		"iterationStep":40,
+		"setNum" : 10,
+		"setLength" : 1000,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.15,
+		"cameraDistance":22,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Nose - Hoover attractor",
+		"equation":{
+		  "x": "y",
+		  "y": "-x+y*z",
+		  "z": "1.5-pow(y,2)"
+		},
+		"dt": 0.005,
+		"iterationStep":40,
+		"setNum" : 10,
+		"setLength" : 1000,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.06,
+		"cameraDistance":10,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Untitled",
+		"equation":{
+		  "x": "y*z*3",
+		  "y": "y-z*x/v",
+		  "z": "-x*y"
+		},
+		"dt": 0.0005,
+		"vRange":[-2,2],
+		"v":-2,
+		"vStep":0.01,
+		"setNum" : 10,
+		"setLength" : 1000,
+		"startPos" : [0,0,0],
+		"startRnd" : [100,100,100],
+		"respawn":true,
+		"respawnRate":40,
+		"sizeRatio" : false,
+		"pointSize" : 1,
+		"cameraDistance":150,
+		"cameraYaw":3.14,
+		"cameraPitch":0
+	  },
+	  {
+		"name":"Untitled2",
+		"equation":{
+		  "x": "sin(y*cos(v*PI/4))*200",
+		  "y": "cos(x*cos(v*PI/4))*200",
+		  "z": "1"
+		},
+		"dt": 0.001,
+		"vRange":[-2,2],
+		"v":-2,
+		"vStep":0.01,
+		"setNum" : 60,
+		"setLength" : 200,
+		"startPos" : [0,0,0],
+		"startRnd" : [140,140,140],
+		"respawn":true,
+		"respawnRate":100,
+		"sizeRatio" : false,
+		"pointSize" : 1,
+		"cameraDistance":150,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  }
+  ]

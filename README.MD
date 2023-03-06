@@ -4,29 +4,35 @@ This application shows 3-dimensional phase portraits in phase space defined by t
 
 ## Demo
 https://ilgo1.github.io/phase-space
+(epilepsy warning)
 
-(epilepsy warning   
-& the application can crash your browser)
+the application can crash your browser when the number of points is too big
 
 ## Usage
 
-The system of differential equations can be defined on the left sidebar.
-
-There are 4 variables ( x, y, z, a) for the phase space. 3 of them can be mapped on 3D space\
-Variable "v" can be used to add change with time.
-The controls for "v" are on the bottom bar.
-
-
-Each space variable has its corresponding differential equation.\
-The equations can be edited on the left sidebar.
-
-"dt" is the change of the "time" of the equation. very large value of "dt" can "break" the prediction.
 
 
 The sets of points are defined on the right side.
 
 Each set has its length (number of points in the set), size of the point, and the spawn point ( the initial state of the set ).
 
+Each point has variables (x, y, z) that represent its position of the point in the 3D space: 
+
+Each space variable has its corresponding differential equation:
+
+![equations](http://latex.codecogs.com/gif.latex?f%27%28x%29%2C%20%0Af%27%28y%29%2C%0Af%27%28z%29)
+
+The equations can be edited on the left sidebar.
+
+
+"Δt" is the differentiation step. very large value of "Δt" can "break" the prediction.
+
+The global variable "v" can be used to add change with time.\
+The controls for "v" are on the bottom bar.
+
+
+
 #### Controls
-WASD - to move the camera,\
-Hold LMB to rotate the camera.
+
+Hold LMB to rotate the camera.\
+RMB to move the view target.
