@@ -23,7 +23,6 @@
 		if($programParams.vRange[0] < $programParams.vRange[1] && $programParams.vStep > 0)
         {
             let s = $programParams.v + $programParams.vStep;
-
 			$programParams.v = (s <= $programParams.vRange[1]) ? s : $programParams.vRange[0];
         }
 
@@ -35,17 +34,9 @@
 		ode.update();
 		scene.drawScene();
 	}
-
-
-	
-
-	
-
-
  
 </script>
 
-   
 <div class="canvas-container">
 	<canvas
 		aria-hidden="true"
