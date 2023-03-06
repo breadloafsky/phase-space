@@ -130,7 +130,7 @@
 							on:change={(e) => programParams.update(p => {return{...p, iterationStep:e.detail.val}})}  
 							step={1} 
 							round={1}
-							range={[1,10]}
+							range={[1,100]}
 							/>
 						</div>
 					</div>
