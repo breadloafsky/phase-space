@@ -229,7 +229,7 @@ Scene.prototype.initPointsBuffers = function()  {
   const dimensions = get(metaParams).dimMap; 
 
   this.ode.sets.forEach((s,k) => {
-    
+
     const points = s.points.map(p=>{return {...p, x:p[dimensions[0]], y:p[dimensions[1]], z:p[dimensions[2]]}});  //remap dimensions
     const lastDir = {x:s.lastDir[dimensions[0]], y:s.lastDir[dimensions[1]],  
       z:s.lastDir[dimensions[2]], a:s.lastDir[dimensions[3]] };
@@ -247,7 +247,9 @@ Scene.prototype.initPointsBuffers = function()  {
 
       positions.push(point.x, point.y, point.z);
       sizeFactors.push(this.ode.params.pointSize * (this.ode.params.sizeRatio ? (i+1) / points.length : 1) / (this.ode.params.respawn ? s.lifeMax()/(s.lifeMax()-s.lifeCount) : 1));
-      
+
+      let colVec = vec3.add([],normalCam, normal);
+      colVec = vec3.normalize([],colVec.map(e => Math.abs(e)));
       colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
           (Math.sin((s.lifeRand*100+i*15)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
       
@@ -305,7 +307,6 @@ Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
     projectionMatrix
   );
   
-
   const num = this.initPointsBuffers();
   const type = gl.FLOAT;
 
@@ -367,8 +368,6 @@ Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 
   const num = this.initPointsBuffers();
   const type = gl.FLOAT;
-
-
 
   //  Size multiplier
   gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aSize.value);

@@ -40,7 +40,7 @@ export function Camera(programParams) {
 	this.front[0] = Math.cos(this.params.cameraPitch) * Math.cos(this.params.cameraYaw);
 	this.front[1] = Math.sin(this.params.cameraPitch);
 	this.front[2] = Math.cos(this.params.cameraPitch) * Math.sin(this.params.cameraYaw);
-  
+	
 	this.front = vec3.normalize([], this.front);
   
 	this.right = vec3.normalize(
@@ -52,5 +52,4 @@ export function Camera(programParams) {
 	  vec3.cross(vec3.create(), this.right, this.front)
 	);
   };
-  
   

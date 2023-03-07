@@ -14,6 +14,8 @@ export const shaders = {
 		void main(void) {
 			vec3 col = mix(vec3(0.,1.,0.)/1.8,vec3(0.,0.,1.)*2., aColorVector.y);
 			col = mix(col,vec3(1.,0.,0.), aColorVector.x); 
+
+			col = normalize(col);
 			gl_Position = uProjection * uView  * vec4(aPoint, 1.);
 			gl_PointSize = aSize * 1000. / gl_Position.z; 
 			vPos = aPoint;
@@ -84,7 +86,7 @@ planeVs:`
 			else{
 				if(vPos.x*100. <= 10. && vPos.x*100. >= -10.)
 				{
-					col.z = col.z*2.;
+					col.z = col.z*3.;
 				}
 
 				if(vPos.z*100. <= 10. && vPos.z*100. >= -10.)

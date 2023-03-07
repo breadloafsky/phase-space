@@ -1,19 +1,17 @@
 
 <script lang="ts">
 	
-	import { createEventDispatcher } from 'svelte';
 	import { onMount } from "svelte";
 	import Icon from './Icon.svelte';
 	export let id:string;
 	export let val:number;
-	export let step:number = 1;
-	export let round:number = 1;
-	export let range:(number|boolean)[] = [false,false];	//	max and min
+	export let step:number = 1;	//	buttons increment step
+	export let round:number = 1;	// round factor
+	export let range:(number|boolean)[] = [false,false];	//	max and min value
+	export let incrementGrowth = 1;	// the buttons hold increment speed increase factor
 	let mouseDown:number|boolean = false;
 	var timer:number|any = 0;
-	export let incrementGrowth = 1;
 	var incrementModifyer = 1;
-	const dispatch = createEventDispatcher<{change:{val:number}}>();
 	onMount(() => {
 		update();
 	});
@@ -45,7 +43,6 @@
 			val = range[1] as number;
 		if (!(range[0] !== false ? (val >= range[0]) : true))
 			val = range[0] as number;
-		dispatch('change', {val:val});
 	}
 	$:{
 		if(val)

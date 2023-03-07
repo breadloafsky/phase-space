@@ -16,7 +16,6 @@ export class ProgramParams{
     setLength:number = 150;
     respawn:boolean = false;
     respawnRate:number = 100;
-    presetCurrent:number = 0;
     startPos:number[] = [0,0,0];
     startRnd:number[] = [10,10,10];
     sizeRatio:boolean = true;

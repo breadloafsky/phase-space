@@ -28,7 +28,7 @@ export class ODE {
     update()
     {
         this.updateSetsLength();
-        this.sets.forEach(s =>{
+        this.sets.forEach((s,i) =>{
 			s.update();
 		});
     }

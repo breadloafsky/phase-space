@@ -79,7 +79,7 @@ export class PointSet {
 		const equation = this.equation;
 		const length = this.ode.params.setLength;
 		const respawn = this.ode.params.respawn;
-		const iterationStep =  this.ode.params.iterationStep;
+		const diffSub =  this.ode.params.iterationStep;
 		
 		if(respawn)
 		{
@@ -88,6 +88,7 @@ export class PointSet {
 			{
 				this.ode.sets.splice(this.ode.sets.indexOf(this), 1);
 				this.ode.sets.push(new PointSet(this.ode));
+				return;
 			}
 			this.lifeCount++;
 		}
@@ -108,18 +109,18 @@ export class PointSet {
   
 		if(this.ode.params.iterate)
 		{
-			if(iterationStep < length)
+			if(diffSub < length)
 			{
-				this.x = this.points[iterationStep].x;
-				this.y = this.points[iterationStep].y;
-				this.z = this.points[iterationStep].z;
+				this.x = this.points[diffSub].x;
+				this.y = this.points[diffSub].y;
+				this.z = this.points[diffSub].z;
 			}
-			else if(iterationStep >= length){	
+			else if(diffSub >= length){	
 				x = this.points[length-1].x;
 				y = this.points[length-1].y;
 				z = this.points[length-1].z;
 
-				for(let i = 0; i < iterationStep-length+1; i++)
+				for(let i = 0; i < diffSub-length+1; i++)
 				{
 					[x,y,z] = euler(x,y,z,v,dt, equation);
 				}
@@ -137,6 +138,7 @@ function parse(str:string){
 }
 
 //	Euler method for differentiation
+//	ToDo: replace with Runge-Kutta method
 function euler(x:number,y:number,z:number,v:number,dt:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null)
 {
 	if(equation && equation.x instanceof Function)
@@ -147,7 +149,6 @@ function euler(x:number,y:number,z:number,v:number,dt:number, equation : { [key:
 		x += equation.x(_x, _y, _z, v)*dt;
 		y += equation.y(_x, _y, _z, v)*dt;
 		z += equation.z(_x, _y, _z, v)*dt;
-		
 	}
 	
     return ([x,y,z]);

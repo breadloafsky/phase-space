@@ -11,9 +11,8 @@
 	import Pin from "./ui/Pin.svelte";
 	import Collapse from "./ui/Collapse.svelte";
 	import EquationField from "./ui/EquationField.svelte";
-	import presets from "./presets.json";
+	import presets from "../presets.json";
     
-	
 	let mouseDown:number|boolean = false;
 	let presetIndex = 0;
 
@@ -111,12 +110,11 @@
 						</div>
 					</Collapse>
 					<Collapse label="Differentiation" collapsed={false}>
-						<div class="parameter-field"><label class="parameter-label italic" for="dt">Δt=</label>
+						<div class="parameter-field"><label class="parameter-label italic" for="dt">Δt</label>
 							<div class="w-32">
 								<NumberPicker 
 								id="dt" 
 								bind:val={$programParams.dt} 
-								on:change={(e) => programParams.update(p => {return{...p, dt:e.detail.val}})}  
 								step={0.00001} 
 								round={100000}
 								incrementGrowth={1.1} />
@@ -124,12 +122,11 @@
 							
 						</div>
 						<div class="parameter-field">
-							<label class="parameter-label" for="diffStep">Steps</label>
+							<label class="parameter-label" for="diffStep"><span class=" italic">Δt</span> multiplier</label>
 							<div class="w-32">
 								<NumberPicker 
 								id={"diffStep"}
 								bind:val={$programParams.iterationStep} 
-								on:change={(e) => programParams.update(p => {return{...p, iterationStep:e.detail.val}})}  
 								step={1} 
 								round={1}
 								range={[1,100]}
@@ -274,7 +271,7 @@
 							</div>
 						</div>
 					</Collapse>
-					<Collapse label="Set Spawn Positions" collapsed={false}>
+					<Collapse label="Sets Spawn Positions" collapsed={false}>
 						<!-- svelte-ignore a11y-label-has-associated-control -->
 						<div class="parameter-field">
 							<label class="parameter-label" for="startX">x</label>
@@ -349,7 +346,7 @@
 		</div>
 		<div class="controls-bar bottom"  data-pinned="true">
 			<div class="parameter-field">
-				<label class="w-14" for="vMin">v min</label>
+				<label class="parameter-label  w-14" for="vMin">v min</label>
 				<div class="w-24">
 					<NumberPicker 
 						id={"vMin"}
@@ -372,7 +369,7 @@
 				</div>
 			</div>
 			<div class="parameter-field">
-				<label class="w-14" for="vMax">v max</label>
+				<label class="parameter-label w-14" for="vMax">v max</label>
 				<div class="w-24">
 					<NumberPicker 
 						id={"vMax"}
@@ -384,7 +381,7 @@
 				</div>
 			</div>
 			<div class="parameter-field w-11/12" style="max-width: 20%;">
-				<label class="parameter-label pr-5" for="vChange">change</label>
+				<label class="parameter-label pr-5" for="vChange">slider</label>
 				<div class="w-full">
 					<Range
 						color="#bf71ff"
@@ -410,6 +407,7 @@
 }
 .parameter-label{
 	min-width: 4rem;
+	height: max-content;
 	align-self: center;
 	min-width: fit-content;
 }
