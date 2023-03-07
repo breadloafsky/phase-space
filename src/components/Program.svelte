@@ -5,7 +5,6 @@
  	import { onMount } from "svelte";
 	import { Scene } from "../scene.js";
 	import { ODE } from "../types/ODE.js";
-    import Range from "./ui/Range.svelte";
 	
     let canvas:HTMLCanvasElement;
 	let ode:ODE;

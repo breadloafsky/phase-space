@@ -248,10 +248,8 @@ Scene.prototype.initPointsBuffers = function()  {
       positions.push(point.x, point.y, point.z);
       sizeFactors.push(this.ode.params.pointSize * (this.ode.params.sizeRatio ? (i+1) / points.length : 1) / (this.ode.params.respawn ? s.lifeMax()/(s.lifeMax()-s.lifeCount) : 1));
 
-      let colVec = vec3.add([],normalCam, normal);
-      colVec = vec3.normalize([],colVec.map(e => Math.abs(e)));
       colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
-          (Math.sin((s.lifeRand*100+i*15)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
+          (Math.sin((i*10)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
       
         
 

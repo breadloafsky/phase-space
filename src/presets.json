@@ -26,7 +26,8 @@
 		  "y": "-10*y+x*z",
 		  "z": "-0.38*z+x*(y/3)"
 		},
-		"dt": 0.01,
+		"dt": 0.002,
+		"iterationStep":10,
 		"pointSize" : 0.2,
 		"cameraDistance":40,
 		"cameraYaw":0.38,

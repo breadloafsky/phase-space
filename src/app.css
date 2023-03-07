@@ -63,13 +63,10 @@ textarea, input, select, button {
 textarea:focus, input:focus, select:focus{
     outline-style: inset !important;
     /* border: 2px rgba(179, 179, 179, 0.623) solid; */
+    background-color: rgb(22, 22, 22) !important;
 }
 textarea{
     resize: none ;
-}
-
-textarea:focus {
-    background-color: black;
 }
 
 

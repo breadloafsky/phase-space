@@ -77,7 +77,6 @@
 			<div class="controls-bar" data-pinned="true">
 				<div class="flex flex-row-reverse"><Pin/></div>
 				<div>
-					
 					<!-- preset -->
 					<Collapse label="Preset" collapsed={false}>
 						<div class="flex justify-center">
@@ -145,13 +144,13 @@
 						</div>
 					</Collapse>
 					<Collapse label="Dimension Mapping" collapsed={false}>
-						<div class="flex flex-col justify-center py-1">
-							<div class="flex justify-around">
-								<label class="parameter-label w-6 h-6" for="dim0"><Icon name="dim-arrow0" color="white"/></label>
-								<label class="parameter-label w-6 h-6" for="dim1"><Icon name="dim-arrow1" color="white"/></label>
-								<label class="parameter-label w-6 h-6" for="dim2"><Icon name="dim-arrow2" color="white"/></label>
+						<div class="flex flex-col justify-center ">
+							<div class="flex justify-around h-10 pt-2">
+								<label class=" w-6 h-6" for="dim0"><Icon name="dim-arrow0" color="white"/></label>
+								<label class=" w-6 h-6" for="dim1"><Icon name="dim-arrow1" color="white"/></label>
+								<label class=" w-6 h-6" for="dim2"><Icon name="dim-arrow2" color="white"/></label>
 							</div>
-							<div class="flex justify-around py-2">
+							<div class="flex justify-around py-1">
 								<div class="w-1/4">
 									<Select
 									id={"dim0"}
@@ -181,7 +180,7 @@
 								
 							</div>
 						</div>
-					
+						
 						<div class="parameter-field mt-8">
 							<label class="parameter-label" for="showGrid"><pre>{"Show the \ncoordinates plane"}</pre></label>
 							<div class="w-20">
@@ -198,7 +197,7 @@
 			<div class="controls-bar"  data-pinned="true">
 				<Pin/>
 				<div>
-<!-- set properties -->
+					<!-- set properties -->
 					<Collapse label="Sets Properties" collapsed={false}>
 						<!-- svelte-ignore a11y-label-has-associated-control -->
 						<div class="parameter-field">
@@ -346,7 +345,7 @@
 		</div>
 		<div class="controls-bar bottom"  data-pinned="true">
 			<div class="parameter-field">
-				<label class="parameter-label  w-14" for="vMin">v min</label>
+				<label class="parameter-label  w-14" for="vMin">v min:</label>
 				<div class="w-24">
 					<NumberPicker 
 						id={"vMin"}
@@ -369,7 +368,7 @@
 				</div>
 			</div>
 			<div class="parameter-field">
-				<label class="parameter-label w-14" for="vMax">v max</label>
+				<label class="parameter-label w-14" for="vMax">v max:</label>
 				<div class="w-24">
 					<NumberPicker 
 						id={"vMax"}
@@ -381,7 +380,7 @@
 				</div>
 			</div>
 			<div class="parameter-field w-11/12" style="max-width: 20%;">
-				<label class="parameter-label pr-5" for="vChange">slider</label>
+				<label class="parameter-label pr-5" for="vChange">slider animation:</label>
 				<div class="w-full">
 					<Range
 						color="#bf71ff"
