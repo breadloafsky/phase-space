@@ -8,13 +8,29 @@ export class ODE {
 	sets:PointSet[] = [];
     camera:Camera;
     params:ProgramParams = new ProgramParams();
-
-
+	equationString = {x:"",y:"",z:""};
+	equation:any = {};
    
     constructor(){
         this.camera = new Camera(this.params);
 		this.update();
     }
+
+	getEquationFunction(val:string)
+	{
+		try {
+				let eq = new Function("x,y,z,v", "return " + parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
+				if(typeof eq === 'function')
+				{
+					if(typeof eq(1, 1, 1, 1) == "number" && eq(1, 1, 1, 1) == eq(1, 1, 1, 1))	// check sample output
+					{
+						return eq;
+					}	
+				}
+		} catch (e) {
+			console.log("Equation Error");
+		}
+	}
 
     pointsCount() {
         let count = 0;
@@ -27,6 +43,21 @@ export class ODE {
 
     update()
     {
+		let resetEquation = false;
+		//	check if the equation changed
+		["x","y","z"].forEach(e => {
+			if((this.params.equation as any)[e] != (this.equationString as any)[e])
+				resetEquation = true;
+		});
+		
+		if(resetEquation)	//	update equation function
+		{
+			Object.entries(this.params.equation).forEach(([key,val]) => {
+				this.equation[key] =	this.getEquationFunction((this.params.equation as any)[key]);
+			});
+			this.equationString = {...this.params.equation};
+		}
+
         this.updateSetsLength();
         this.sets.forEach((s,i) =>{
 			s.update();
@@ -51,6 +82,9 @@ export class ODE {
 		}
 	}
 }
-export function generateTree() {
-	return new Set();
+function parse(str:string){
+	str = str.replace(/([A-z])\w+/g, 'Math.$&');
+	return str;
 }
+
+

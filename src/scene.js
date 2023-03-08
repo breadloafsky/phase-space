@@ -249,7 +249,7 @@ Scene.prototype.initPointsBuffers = function()  {
       sizeFactors.push(this.ode.params.pointSize * (this.ode.params.sizeRatio ? (i+1) / points.length : 1) / (this.ode.params.respawn ? s.lifeMax()/(s.lifeMax()-s.lifeCount) : 1));
 
       colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
-          (Math.sin((i*10)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
+          (Math.sin(s.lifeRand + (i*10)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
       
         
 

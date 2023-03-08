@@ -17,8 +17,8 @@ export class PointSet {
 	lifeRand = 0;	// lifetime randomizer
 	lastDir = {};
 	ode:ODE;
-	equation:any = {};
-	equationString = {x:"",y:"",z:""};
+	
+	
     constructor(ode:ODE){
 		this.ode = ode;
 		const sPos = ode.params.startPos;
@@ -35,107 +35,81 @@ export class PointSet {
 	lifeMax() {
 		return this.ode.params.respawnRate +this.ode.params.respawnRate*this.lifeRand/2;
 	}
-	getEquationFunction(val:string)
-	{
-		try {
-				let eq = new Function("x,y,z,v", "return " + parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
-				if(typeof eq === 'function')
-				{
-					if(typeof eq(1, 1, 1, 1) == "number" && eq(1, 1, 1, 1) == eq(1, 1, 1, 1))	// check sample output
-					{
-						return eq;
-					}	
-				}
-		} catch (e) {
-			console.log("Equation Error");
-		}
-	}
+	
 	
 
     update(){
-		var x = this.x;
-		var y = this.y;
-		var z = this.z;
-		const dt = this.ode.params.dt;
-		const v = this.ode.params.v;
-
-		let resetEquation = false;
-
-		//	check if the equation changed
-		["x","y","z"].forEach(e => {
-			if((this.ode.params.equation as any)[e] != (this.equationString as any)[e])
-				resetEquation = true;
-		});
-		
-		
-		if(resetEquation)	//	update equation function
-		{
-			Object.entries(this.ode.params.equation).forEach(([key,val]) => {
-				this.equation[key] = this.getEquationFunction((this.ode.params.equation as any)[key]);
-			});
-			this.equationString = {...this.ode.params.equation};
-		}
-		
-		const equation = this.equation;
-		const length = this.ode.params.setLength;
-		const respawn = this.ode.params.respawn;
-		const diffSub =  this.ode.params.iterationStep;
-		
-		if(respawn)
-		{
-			// set respawn
-			if(this.lifeCount >= this.lifeMax())
-			{
-				this.ode.sets.splice(this.ode.sets.indexOf(this), 1);
-				this.ode.sets.push(new PointSet(this.ode));
-				return;
-			}
-			this.lifeCount++;
-		}
-		this.points = [];
-
-    for (let i = 0; i < length; i++) {
-        this.points.push({
-            x: x,
-            y: y,
-            z: z,
-        });
-        [x,y,z] = euler(x,y,z,v,dt, equation);
-    }
-
-    [x,y,z] = euler(x,y,z,v,dt, equation);
-
-    this.lastDir = {x,y,z};
-  
-		if(this.ode.params.iterate)
-		{
-			if(diffSub < length)
-			{
-				this.x = this.points[diffSub].x;
-				this.y = this.points[diffSub].y;
-				this.z = this.points[diffSub].z;
-			}
-			else if(diffSub >= length){	
-				x = this.points[length-1].x;
-				y = this.points[length-1].y;
-				z = this.points[length-1].z;
-
-				for(let i = 0; i < diffSub-length+1; i++)
-				{
-					[x,y,z] = euler(x,y,z,v,dt, equation);
-				}
-				this.x = x;
-				this.y = y;
-				this.z = z;
-			}
-			
-		}
+		update(this);
     }
 }
-function parse(str:string){
-	str = str.replace(/([A-z])\w+/g, 'Math.$&');
-	return str;
+function update(set:PointSet){
+	var x = set.x;
+	var y = set.y;
+	var z = set.z;
+	const dt = set.ode.params.dt;
+	const v = set.ode.params.v;
+
+	
+	
+	const equation = set.ode.equation;
+	const length = set.ode.params.setLength;
+	const respawn = set.ode.params.respawn;
+	const diffSub =  set.ode.params.iterationStep;
+	
+	if(respawn)
+	{
+		// set respawn
+		if(set.lifeCount >= set.lifeMax())
+		{
+			set.ode.sets.splice(set.ode.sets.indexOf(set), 1);
+			set.ode.sets.push(new PointSet(set.ode));
+			return;
+		}
+		set.lifeCount++;
+	}
+	set.points = [];
+
+for (let i = 0; i < length; i++) {
+	set.points.push({
+		x: x,
+		y: y,
+		z: z,
+	});
+	[x,y,z] = euler(x,y,z,v,dt, equation);
 }
+
+[x,y,z] = euler(x,y,z,v,dt, equation);
+
+set.lastDir = {x,y,z};
+
+	if(set.ode.params.iterate)
+	{
+		if(diffSub < length)
+		{
+			set.x = set.points[diffSub].x;
+			set.y = set.points[diffSub].y;
+			set.z = set.points[diffSub].z;
+		}
+		else if(diffSub >= length){	
+			x = set.points[length-1].x;
+			y = set.points[length-1].y;
+			z = set.points[length-1].z;
+
+			for(let i = 0; i < diffSub-length+1; i++)
+			{
+				[x,y,z] = euler(x,y,z,v,dt, equation);
+			}
+			set.x = x;
+			set.y = y;
+			set.z = z;
+		}
+		
+	}
+}
+
+
+
+
 
 //	Euler method for differentiation
 //	ToDo: replace with Runge-Kutta method
