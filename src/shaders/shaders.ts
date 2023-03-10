@@ -100,6 +100,35 @@ planeVs:`
 			gl_FragColor = col;
 		}`
 
+,
+frameVs:`
+attribute vec2 aTexcoord;
+attribute vec2 aPos;
+varying lowp vec2 vTexcoord;
+
+void main(void) {
+	gl_Position = vec4(aPos.x,aPos.y, 0.0, 1.0);
+	vTexcoord = aTexcoord;
+}`
+,
+
+frameFs:`
+varying lowp vec2 vTexcoord;
+uniform sampler2D uTexture;
+precision lowp float;
+
+float modI(float a,float b) {
+float m=a-floor((a+0.5)/b)*b;
+return floor(m+0.5);
+}
+
+void main(void) {
+
+	vec3 color = vec3(texture2D(uTexture, vTexcoord));
+	gl_FragColor = vec4(color,1.);
+
+}
+`
 }
 
 

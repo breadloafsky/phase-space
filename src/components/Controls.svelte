@@ -121,7 +121,7 @@
 							
 						</div>
 						<div class="parameter-field">
-							<label class="parameter-label" for="diffStep"><span class=" italic">Δt</span> multiplier</label>
+							<label class="parameter-label" for="diffStep"><span class=" italic">Δt</span> per frame</label>
 							<div class="w-32">
 								<NumberPicker 
 								id={"diffStep"}
