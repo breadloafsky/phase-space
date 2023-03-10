@@ -26,16 +26,8 @@ const screenData ={
 	]
 }
 
-
-
-
 export function Scene(canvas, _ode) {
 	this.ode = _ode;
-	this.fbo = {
-		framebuffer : {},
-		texture:{},
-		depthBuffer:{},
-	};
 	this.shaders ={
 		point:{
 		program: {},//pointsShader,
@@ -60,16 +52,6 @@ export function Scene(canvas, _ode) {
 			uModel: {location:null},
 		},
 		},
-		frame:{
-		program: {},
-		attributes: {
-			aTexcoord: {value:null},
-			aPos: {value:null},
-		},
-		uniforms: {
-			uTexture: {value:null},
-		},
-		}
 	};
 
 	const params = {
@@ -95,7 +77,6 @@ export function Scene(canvas, _ode) {
 		];
 		canvas.setAttribute("width", screen[0]);
 		canvas.setAttribute("height", screen[1]);
-		this.initFBO();
 		this.gl.viewport( 0, 0, screen[0], screen[1] );
 	}
 
@@ -129,79 +110,9 @@ export function Scene(canvas, _ode) {
 	}
 
 	this.initPlaneBuffer();
-	this.initFBO();
-
 	return this;
 }
 
-Scene.prototype.initFBO = function(){
-	this.initFBO();
-	return this;
-}
-
-Scene.prototype.initFBO = function(){
-  const gl = this.gl;
-
-
-  const texWidth =  gl.canvas.width;
-  const texHeight = gl.canvas.height;
-  
-  const framebuffer =  gl.createFramebuffer();
-  gl.bindFramebuffer(gl.FRAMEBUFFER,framebuffer);
-
-  const texture = gl.createTexture();
-  gl.bindTexture(gl.TEXTURE_2D, texture);
-  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, texWidth, texHeight, 0,  gl.RGBA, gl.UNSIGNED_BYTE, null);
-  
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-
-
-  /* const max = gl.getParameter(this.ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-  gl.texParameterf(gl.TEXTURE_2D, this.ext.TEXTURE_MAX_ANISOTROPY_EXT,max); */
-  
-
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
-  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
-
-  gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
-
-  
-
-  //
-  const depthBuffer = gl.createRenderbuffer();
-  gl.bindRenderbuffer(gl.RENDERBUFFER, depthBuffer);
-
-  gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, texWidth, texHeight);
-  gl.framebufferRenderbuffer(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, depthBuffer);
-
-
-
-  gl.bindTexture(gl.TEXTURE_2D, null);
-  gl.bindFramebuffer(gl.FRAMEBUFFER,null);
-  gl.bindRenderbuffer(gl.RENDERBUFFER, null);
-
-  
-  this.fbo.framebuffer.value = framebuffer;
-  this.fbo.texture.value = texture;
-  this.fbo.depthBuffer.value = depthBuffer;
-
-
-  /////////////////////
-
-  const positionBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(screenData.coords), gl.DYNAMIC_DRAW);
-  
-  const textCoordBuffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, textCoordBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(screenData.texCoords), gl.DYNAMIC_DRAW);
-  gl.bindBuffer(gl.ARRAY_BUFFER, null);
-  
-  this.shaders.frame.attributes.aPos.value = positionBuffer;
-  this.shaders.frame.attributes.aTexcoord.value = textCoordBuffer;
-
-}
 
 Scene.prototype.initPlaneBuffer = function(){
   const gl = this.gl;
@@ -250,8 +161,6 @@ Scene.prototype.initPointsBuffers = function()  {
 
       colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
           (Math.sin(s.lifeRand + (i*10)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
-      
-        
 
     });
   });
@@ -259,8 +168,6 @@ Scene.prototype.initPointsBuffers = function()  {
   const positionBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW);
-
-
 
   const sizeFactorBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, sizeFactorBuffer);
@@ -282,75 +189,18 @@ Scene.prototype.initPointsBuffers = function()  {
 }
 
 
-Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
-
-  const pointShader = this.shaders.point;
-  const gl = this.gl;
-
-  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
-
-  gl.useProgram(pointShader.program); 
-
-  gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
-  gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
-  gl.uniformMatrix4fv(
-    pointShader.uniforms.uView.location,
-    false,
-    viewMatrix
-  );
-  gl.uniformMatrix4fv(
-    pointShader.uniforms.uProjection.location,
-    false,
-    projectionMatrix
-  );
-  
-  const num = this.initPointsBuffers();
-  const type = gl.FLOAT;
-
-  //  Size multiplier
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aSize.value);
-  gl.vertexAttribPointer(
-    pointShader.attributes.aSize.location,
-    1,type,false,0,0
-  );
-  gl.enableVertexAttribArray(pointShader.attributes.aSize.location);
-  
-
-  //  Colour definition
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aColorVector.value);
-  gl.vertexAttribPointer(
-    pointShader.attributes.aColorVector.location,
-    3,type,false,0,0
-  );
-  gl.enableVertexAttribArray(pointShader.attributes.aColorVector.location);
-  
-  //  Point positions
-  gl.bindBuffer(gl.ARRAY_BUFFER, pointShader.attributes.aPoint.value);
-  gl.vertexAttribPointer(
-    pointShader.attributes.aPoint.location,
-    3,type,false,0,0
-  );
-  gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
-  
-
-  //  Draw Points                         
-  gl.drawArrays(gl.POINTS, 0, num); 
-}
-
 
 Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 
   const pointShader = this.shaders.point;
   const gl = this.gl;
 
-  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
 
   gl.useProgram(pointShader.program); 
 
-  gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
-  gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
+  //gl.clearColor(0.0, 0.0, 0.0, 0.0);  //
+  //gl.clearDepth(1.0);
+  //gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);  //
   
   gl.uniformMatrix4fv(
     pointShader.uniforms.uView.location,
@@ -461,15 +311,9 @@ Scene.prototype.drawScene = function ()  {
 
   const projectionMatrix = camera.getProjectionMatrix(screen[0] / screen[1]);
   const viewMatrix = camera.getViewMatrix();
- 
-
-  gl.bindFramebuffer(gl.FRAMEBUFFER,this.fbo.framebuffer.value);//
 
 
-
-
-
-  // draaw points & the grid
+  // draw points & the grid
   this.drawPoints(projectionMatrix, viewMatrix);
 
 
@@ -481,48 +325,7 @@ Scene.prototype.drawScene = function ()  {
   }
   
 
-
-
-
-
-  // render the frame
-  gl.useProgram(this.shaders.frame.program);
-  gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-  gl.bindTexture(gl.TEXTURE_2D, this.fbo.texture.value);
-
-  gl.clearColor(0.0, 0.0, 0.0, 0.0);
-  gl.clearDepth(1.0);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-  
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aPos.value);
-  gl.vertexAttribPointer(
-    this.shaders.frame.attributes.aPos.location,
-    2,gl.FLOAT,false,0,0
-  );
-  //gl.enableVertexAttribArray(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aPos.location); // error?
-
-  gl.bindBuffer(gl.ARRAY_BUFFER, this.shaders.frame.attributes.aTexcoord.value);
-  gl.vertexAttribPointer(
-    this.shaders.frame.attributes.aTexcoord.location,
-    2,gl.FLOAT,false,0,0
-  );
-  gl.enableVertexAttribArray(this.shaders.frame.attributes.aTexcoord.location);
-
- 
-  
-  
-
-  //gl.uniform1i(this.fbo.texture.location, 0);
-
-  gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-
-  //  Clean Up
-  
-  gl.bindTexture(gl.TEXTURE_2D, null);
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
-  gl.disableVertexAttribArray(pointShader.attributes.aPoint.location);
   gl.useProgram(null);
 
   

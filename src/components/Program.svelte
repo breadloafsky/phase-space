@@ -75,8 +75,8 @@
 	.loading{
 		position: absolute;
 		align-self: center;
-		width: 50vh;
-		height: 50vh;
+		width: 20vh;
+		height: 20vh;
 		border: 16px solid #000000; 
 		border-top: 16px solid #636363; 
 		border-radius: 50%;
