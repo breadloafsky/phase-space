@@ -221,7 +221,7 @@
 								bind:val={$programParams.setLength} 
 								step={1} 
 								round={1}
-								range={[0,40000]}
+								range={[1,40000]}
 								incrementGrowth={1.05}
 								/>
 							</div>

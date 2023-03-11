@@ -9,13 +9,11 @@ interface Point {
 
 export class PointSet {
 	count = 0;
-	x=0;
-	y=0;
-	z=0;
+	pos:Point;
 	points:Point[] = [];
 	lifeCount = 0;
 	lifeRand = 0;	// lifetime randomizer
-	lastDir = {};
+	lastDir:Point;
 	ode:ODE;
 	
 	
@@ -23,13 +21,19 @@ export class PointSet {
 		this.ode = ode;
 		const sPos = ode.params.startPos;
 		const sRand = ode.params.startRnd;
-		this.x = (Math.random()-0.5)*sRand[0] + sPos[0],
-		this.y = (Math.random()-0.5)*sRand[1] + sPos[1], 
-		this.z = (Math.random()-0.5)*sRand[2] + sPos[2],
+		
 		this.points = [];
 
 		this.lifeCount = 0;	// iterations counter
 		this.lifeRand = Math.random();  // random factor
+
+		this.pos = {
+			x : (Math.random()-0.5)*sRand[0] + sPos[0],
+			y : (Math.random()-0.5)*sRand[1] + sPos[1], 
+			z : (Math.random()-0.5)*sRand[2] + sPos[2],
+		}
+		this.lastDir = {...this.pos};
+		
     }
 
 	lifeMax() {
@@ -43,18 +47,17 @@ export class PointSet {
     }
 }
 function update(set:PointSet){
-	var x = set.x;
-	var y = set.y;
-	var z = set.z;
+	var x = set.pos.x;
+	var y = set.pos.y;
+	var z = set.pos.z;
 	const dt = set.ode.params.dt;
 	const v = set.ode.params.v;
 
 	
-	
 	const equation = set.ode.equation;
 	const length = set.ode.params.setLength;
 	const respawn = set.ode.params.respawn;
-	const diffSub =  set.ode.params.iterationStep;
+	const iterationStep =  set.ode.params.iterationStep;
 	
 	if(respawn)
 	{
@@ -67,44 +70,29 @@ function update(set:PointSet){
 		}
 		set.lifeCount++;
 	}
-	set.points = [];
-
-for (let i = 0; i < length; i++) {
-	set.points.push({
-		x: x,
-		y: y,
-		z: z,
-	});
-	[x,y,z] = euler(x,y,z,v,dt, equation);
-}
-
-[x,y,z] = euler(x,y,z,v,dt, equation);
-
-set.lastDir = {x,y,z};
+	
 
 	if(set.ode.params.iterate)
 	{
-		if(diffSub < length)
+		for(let i = 0; i < iterationStep; i++)
 		{
-			set.x = set.points[diffSub].x;
-			set.y = set.points[diffSub].y;
-			set.z = set.points[diffSub].z;
-		}
-		else if(diffSub >= length){	
-			x = set.points[length-1].x;
-			y = set.points[length-1].y;
-			z = set.points[length-1].z;
-
-			for(let i = 0; i < diffSub-length+1; i++)
-			{
-				[x,y,z] = euler(x,y,z,v,dt, equation);
-			}
-			set.x = x;
-			set.y = y;
-			set.z = z;
+			[x,y,z] = euler(x,y,z,v,dt, equation);
 		}
 		
 	}
+	
+	set.pos = {x,y,z};
+	set.points = [];
+	for (let i = 0; i < length; i++) {
+		set.points.push({
+			x: x,
+			y: y,
+			z: z,
+		});
+		[x,y,z] = euler(x,y,z,v,dt, equation);
+	}
+	[x,y,z] = euler(x,y,z,v,dt, equation);
+	set.lastDir = {x,y,z};
 }
 
 

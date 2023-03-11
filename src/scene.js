@@ -28,7 +28,6 @@ const screenData ={
 
 
 
-
 export function Scene(canvas, _ode) {
 	this.ode = _ode;
 	this.fbo = {
@@ -232,27 +231,22 @@ Scene.prototype.initPointsBuffers = function()  {
     
     const points = s.points.map(p=>{return {...p, x:p[dimensions[0]], y:p[dimensions[1]], z:p[dimensions[2]]}});  //remap dimensions
     const lastDir = {x:s.lastDir[dimensions[0]], y:s.lastDir[dimensions[1]],  
-      z:s.lastDir[dimensions[2]], a:s.lastDir[dimensions[3]] };
+      z:s.lastDir[dimensions[2]]};
 
     points.forEach((point, i) => {
       
       const next = i >= points.length-1 ? [lastDir.x,lastDir.y,lastDir.z] :[points[i+1].x,points[i+1].y,points[i+1].z];
-      const distance = vec3.distance( [point.x, point.y, point.z], next);
       const normal = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z],next) :vec3.subtract([],next, [point.x,point.y,point.z]) 
       );
       const normalCam = vec3.normalize([],
         i == 0 ? vec3.subtract([], [point.x,point.y,point.z], this.ode.camera.position) :vec3.subtract([], this.ode.camera.position, [point.x,point.y,point.z]) 
       );
-
       positions.push(point.x, point.y, point.z);
       sizeFactors.push(this.ode.params.pointSize * (this.ode.params.sizeRatio ? (i+1) / points.length : 1) / (this.ode.params.respawn ? s.lifeMax()/(s.lifeMax()-s.lifeCount) : 1));
       
-      colorVectors.push(distance > 0 ? Math.abs(vec3.dot(normalCam,normal))/1.2 : 0.2,
+      colorVectors.push( Math.abs(vec3.dot(normalCam,normal))/1.2,
           (Math.sin((s.lifeRand*100+i*15)/points.length))/2, 1); // Get the colour of the point based on the camera position + point rotation.
-      
-        
-
     });
   });
   

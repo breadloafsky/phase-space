@@ -34,6 +34,7 @@ export const shaders = {
 		//col = col/(sin(r*50.)/10.+1.);
 		col = col/(r+0.5);
 		gl_FragColor = col;
+		
 	}
 `,
 planeVs:`
