@@ -88,6 +88,27 @@
 		"cameraPitch":-0.6
 	  },
 	  {
+		"name":"Thomas attractor 2",
+		"equation":{
+		  "x": "sin(y/2)-v*x",
+		  "y": "sin(z/2)-v*y",
+		  "z": "sin(x/2)-v*z"
+		},
+		"dt": 0.1,
+		"iterationStep":4,
+		"v" : 0.02,
+		"vStep" : 0.1,
+		"vRange" : [0.02, 0.1],
+		"setNum" : 5000,
+		"setLength" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [1,1,1],
+		"pointSize" : 0.1,
+		"cameraDistance":30,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6
+	  },
+	  {
 		"name":"Dadras attractor",
 		"equation":{
 		  "x": "y-3*x+2.7*y*z",

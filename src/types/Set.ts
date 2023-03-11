@@ -96,9 +96,6 @@ function update(set:PointSet){
 }
 
 
-
-
-
 //	Euler method for differentiation
 //	ToDo: replace with Runge-Kutta method
 function euler(x:number,y:number,z:number,v:number,dt:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null)

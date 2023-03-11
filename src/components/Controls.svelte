@@ -128,7 +128,7 @@
 								bind:val={$programParams.iterationStep} 
 								step={1} 
 								round={1}
-								range={[1,100]}
+								range={[1,1000]}
 								/>
 							</div>
 						</div>
@@ -268,6 +268,9 @@
 								incrementGrowth={1.01}
 								/>
 							</div>
+						</div>
+						<div class="w-full flex justify-center pt-4">
+							<button class="btn h-8" style="border-radius: 4px; color:white;" on:click={() => $metaParams.needsUpdate = true } ><div class="px-3">Reset Positions</div></button>
 						</div>
 					</Collapse>
 					<Collapse label="Sets Spawn Positions" collapsed={false}>
