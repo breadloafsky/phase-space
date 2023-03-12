@@ -7,13 +7,13 @@
 			"y": "x*(28-z)-y",
 			"z": "x*y-(8/3)*z"
 		},
-		"dt": 0.002,
+		"delta": 0.002,
 		"iterationStep":2,
 		"pointSize" : 0.2,
 		"sizeRatio":false,
 		"setNum" : 100,
 		"setLength" : 100,
-		"cameraTarget":[ 3.66, -2.28, 29.55 ],
+		"cameraTarget":[ 0, 0, 25 ],
 		"cameraDistance":52,
 		"cameraYaw":0.13,
 		"cameraPitch":-0.36,
@@ -26,7 +26,7 @@
 		  "y": "-10*y+x*z",
 		  "z": "-0.38*z+x*(y/3)"
 		},
-		"dt": 0.002,
+		"delta": 0.002,
 		"iterationStep":10,
 		"pointSize" : 0.2,
 		"cameraDistance":40,
@@ -40,7 +40,7 @@
 		  "y": "x+0.2*y",
 		  "z": "0.2+z*(x-5.7)"
 		},
-		"dt": 0.035,
+		"delta": 0.035,
 		"pointSize" : 0.2,
 		"setNum" : 150,
 		"setLength" : 100,
@@ -56,7 +56,7 @@
 		  "y": "x+v*y",
 		  "z": "0.2+z*(x-5.7)"
 		},
-		"dt": 0.04,
+		"delta": 0.04,
 		"iterationStep":100,
 		"v" : 0,
 		"vStep" : 0.4,
@@ -77,7 +77,7 @@
 		  "y": "sin(z/2)-0.043*y",
 		  "z": "sin(x/2)-0.043*z"
 		},
-		"dt": 0.1,
+		"delta": 0.1,
 		"setNum" : 100,
 		"setLength" : 200,
 		"startPos" : [0,0,0],
@@ -94,10 +94,10 @@
 		  "y": "sin(z/2)-v*y",
 		  "z": "sin(x/2)-v*z"
 		},
-		"dt": 0.1,
-		"iterationStep":4,
+		"delta": 0.6,
+		"iterationStep":1,
 		"v" : 0.02,
-		"vStep" : 0.1,
+		"vStep" : 0.5,
 		"vRange" : [0.02, 0.1],
 		"setNum" : 5000,
 		"setLength" : 1,
@@ -115,7 +115,7 @@
 		  "y": "1.7*y-x*z+z",
 		  "z": "2*x*y-9*z"
 		},
-		"dt": 0.001,
+		"delta": 0.001,
 		"iterationStep":40,
 		"setNum" : 10,
 		"setLength" : 1000,
@@ -133,7 +133,7 @@
 		  "y": "-x+y*z",
 		  "z": "1.5-pow(y,2)"
 		},
-		"dt": 0.005,
+		"delta": 0.005,
 		"iterationStep":40,
 		"setNum" : 10,
 		"setLength" : 1000,
@@ -145,13 +145,38 @@
 		"cameraPitch":-0.6
 	  },
 	  {
+		"name":"Dequan Li attractor",
+		"cameraTarget":[0,0,100],
+	  	"cameraDistance":546,
+		"cameraYaw":5.1,
+		"cameraPitch":-0.1,
+		"equation":{
+			"x":"40*(y-x)+0.16*x*z",
+			"y":"55*x+20*y-z*x",
+			"z":"1.833*z+x*y-0.65*pow(x,2)"
+		},
+		"integrate":true,
+		"iterationStep":4,
+		"setNum":100,
+		"setLength":100,
+		"respawn":false,
+		"respawnRate":100,
+		"startPos":[0,0,1],
+		"startRnd":[10,10,400],
+		"sizeRatio":true,
+		"pointSize":2,
+		"delta":0.0004
+		
+	},
+
+	{
 		"name":"Untitled",
 		"equation":{
 		  "x": "y*z*3",
 		  "y": "y-z*x/v",
 		  "z": "-x*y"
 		},
-		"dt": 0.0005,
+		"delta": 0.0003,
 		"vRange":[-2,2],
 		"v":-2,
 		"vStep":0.3,
@@ -164,18 +189,18 @@
 		"sizeRatio" : false,
 		"pointSize" : 1,
 		"cameraDistance":150,
-		"cameraYaw":3.14,
-		"cameraPitch":0
-	  },
-	  {
+		"cameraYaw":2,
+		"cameraPitch":-0.4
+	},
+	{
 		"name":"Untitled2",
 		"equation":{
 		  "x": "sin(y*cos(v*PI/4))*200",
 		  "y": "cos(x*cos(v*PI/4))*200",
 		  "z": "1"
 		},
-		"dt": 0.001,
-		"vRange":[-2,2],
+		"delta": 0.001,
+		"vRange":[-2,6],
 		"v":-2,
 		"vStep":0.2,
 		"setNum" : 60,
@@ -188,6 +213,27 @@
 		"pointSize" : 1,
 		"cameraDistance":150,
 		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"\"The Cube\"",
+		"equation":{
+		  "x": "-y-x*cos(x)",
+		  "y": "-z-y*cos(y)",
+		  "z": "-x-z*cos(z)"
+		},
+		"delta": 0.01,
+		"iterationStep":4,
+		"setNum" : 100,
+		"setLength" : 10,
+		"startPos" : [0,0,0],
+		"startRnd" : [100,100,100],
+		"respawn":true,
+		"respawnRate":500,
+		"sizeRatio" : false,
+		"pointSize" : 1,
+		"cameraDistance":150,
+		"cameraYaw":4,
 		"cameraPitch":-0.6
 	  }
   ]

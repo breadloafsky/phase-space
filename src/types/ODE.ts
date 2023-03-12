@@ -44,12 +44,10 @@ export class ODE {
     update()
     {
 		let resetEquation = false;
-		//	check if the equation changed
 		["x","y","z"].forEach(e => {
 			if((this.params.equation as any)[e] != (this.equationString as any)[e])
 				resetEquation = true;
 		});
-		
 		if(resetEquation)	//	update equation function
 		{
 			Object.entries(this.params.equation).forEach(([key,val]) => {
@@ -57,7 +55,6 @@ export class ODE {
 			});
 			this.equationString = {...this.params.equation};
 		}
-
         this.updateSetsLength();
         this.sets.forEach((s,i) =>{
 			s.update();

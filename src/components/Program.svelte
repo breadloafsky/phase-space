@@ -10,6 +10,9 @@
 	let ode:ODE;
 	let scene:Scene;
 	let loading = true;
+	let previousTime = 0;
+    let fpsLimit = 80;
+
 	onMount(() => {
 		ode = new ODE();
 		programParams.subscribe(p => Object.assign(ode.params, p) );
@@ -18,33 +21,36 @@
 		loading = false;
   	});
 
-	function update(){
+	function update(time:number){
+
 		requestAnimationFrame(update);
 
-		let range = $programParams.vRange;
-		let step = $programParams.vStep;
-		let v = $programParams.v;
+		const delta = time - previousTime;	//limit the fps
+		if (fpsLimit && delta < 1000 / fpsLimit)
+        	return;
 
-		if(range[0] < range[1] && step > 0)
+		previousTime = time;
+
+		const range = $programParams.vRange;
+		const step = $programParams.vStep;
+
+		if(range[0] < range[1] && step > 0)	// update the slider
         {
             let s = $programParams.v + $programParams.vStep * Math.abs(range[1] - range[0]) / 100;
 			$programParams.v = (s <= range[1]) ? s : range[0];
         }
 
-		if($metaParams.needsUpdate)
+		if($metaParams.needsUpdate)	// reset
 		{
 			ode.sets = [];
 			$metaParams.needsUpdate = false;
 		}
 		ode.update();
-		scene.drawScene();
-		
+		scene.drawScene();	
 	}
-	
- 
 </script>
 
-<div class="canvas-container">
+<div class="canvas-container flex">
 	<div class="loading {!loading && "hidden"}">
 
 	</div>
@@ -60,7 +66,6 @@
 	.canvas-container {
 		display: flex;
 		justify-content: center;
-        /* background-color: black;  */
 		background-color: black;
         min-height: 100%;
         width: 100%;

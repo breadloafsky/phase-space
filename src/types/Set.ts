@@ -50,7 +50,7 @@ function update(set:PointSet){
 	var x = set.pos.x;
 	var y = set.pos.y;
 	var z = set.pos.z;
-	const dt = set.ode.params.dt;
+	const delta = set.ode.params.delta;
 	const v = set.ode.params.v;
 
 	
@@ -72,11 +72,11 @@ function update(set:PointSet){
 	}
 	
 
-	if(set.ode.params.iterate)
+	if(set.ode.params.integrate)
 	{
 		for(let i = 0; i < iterationStep; i++)
 		{
-			[x,y,z] = euler(x,y,z,v,dt, equation);
+			[x,y,z] = RK4Step(x,y,z,v,delta, equation);
 		}
 		
 	}
@@ -89,30 +89,37 @@ function update(set:PointSet){
 			y: y,
 			z: z,
 		});
-		[x,y,z] = euler(x,y,z,v,dt, equation);
+		[x,y,z] = RK4Step(x,y,z,v,delta, equation);
 	}
-	[x,y,z] = euler(x,y,z,v,dt, equation);
+	[x,y,z] = RK4Step(x,y,z,v,delta, equation);
 	set.lastDir = {x,y,z};
 }
 
 
-//	Euler method for differentiation
-//	ToDo: replace with Runge-Kutta method
-function euler(x:number,y:number,z:number,v:number,dt:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null)
-{
+//	Runge-Kutta 4th order
+function RK4Step(x:number,y:number,z:number,v:number,h:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null) {
 	if(equation && equation.x instanceof Function)
 	{
-		const _x = x;
-		const _y = y;
-		const _z = z;
-		x += equation.x(_x, _y, _z, v)*dt;
-		y += equation.y(_x, _y, _z, v)*dt;
-		z += equation.z(_x, _y, _z, v)*dt;
+		const kx0 = equation.x(x,y,z,v);
+		const ky0 = equation.y(x,y,z,v);
+		const kz0 = equation.z(x,y,z,v);
+		const kx1 = equation.x(x+0.5*h*kx0,y+0.5*h*ky0, z+0.5*h*kz0, v);
+		const ky1 = equation.y(x+0.5*h*kx0,y+0.5*h*ky0, z+0.5*h*kz0, v);
+		const kz1 = equation.z(x+0.5*h*kx0,y+0.5*h*ky0, z+0.5*h*kz0, v);
+		const kx2 = equation.x(x+0.5*h*kx1,y+0.5*h*ky1, z+0.5*h*kz1, v);
+		const ky2 = equation.y(x+0.5*h*kx1,y+0.5*h*ky1, z+0.5*h*kz1, v);
+		const kz2 = equation.z(x+0.5*h*kx1,y+0.5*h*ky1, z+0.5*h*kz1, v);
+		const kx3 = equation.x(x+h*kx2,y+h*ky2, z+h*kz2, v);
+		const ky3 = equation.y(x+h*kx2,y+h*ky2, z+h*kz2, v);
+		const kz3 = equation.z(x+h*kx2,y+h*ky2, z+h*kz2, v);
+
+		return [ x+h/6*(kx0+2*(kx1+kx2)+kx3), y+h/6*(ky0+2*(ky1+ky2)+ky3),
+			z+h/6*(kz0+2*(kz1+kz2)+kz3) ];
 	}
 	
-    return ([x,y,z]);
+	else return [x,y,z];
+    
 }
 
-export function generateTree() {
-	return new Set();
-}
+
+

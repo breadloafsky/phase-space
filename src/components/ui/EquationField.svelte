@@ -14,6 +14,7 @@
 	let error = false;
 	function update()
 	{
+		resize();
 		try {
 				error = true;
 				let eq = new Function("x,y,z,v", "return " + parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
@@ -51,7 +52,7 @@
 </script>
 
 <div class="flex-grow">
-	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  style={`${error && "color:red"}`} class="equation" on:input={resize} on:blur={update} />
+	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  class={`equation ${error && "error"}`}  on:input={update}/>
 </div>
 
 
@@ -61,6 +62,10 @@
 	width: 100%;
 	padding: 0px;
 	padding-left:4px ;
+}
+.equation.error{
+	outline-style:inset !important;
+	color:red;
 }
 
 .equation:focus{

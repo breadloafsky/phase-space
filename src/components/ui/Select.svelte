@@ -1,14 +1,11 @@
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { onMount } from "svelte";
 	export let id:string;
 	export let val:any;
 	export let options: any[];
 	const dispatch = createEventDispatcher<{change:{val:any}}>();
-	onMount(() => {
-
-	});
+	
 	function update(e:Event|any)
 	{
 		dispatch('change', {val:e.target.value});

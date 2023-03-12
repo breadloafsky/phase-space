@@ -1,25 +1,14 @@
 
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import { onMount } from "svelte";
 	export let id:string;
 	export let val:boolean;
-	const dispatch = createEventDispatcher<{change:{val:boolean}}>();
-	onMount(() => {
-		update();
-	});
-
-	function update()
-	{
-		dispatch('change', {val:val});
-	}
-	
 
 </script>
 
-<input bind:checked={val} hidden type="checkbox"  id={id} on:change={update} />
+<input bind:checked={val} hidden type="checkbox"  id={id}  />
 <div class="flex h-full justify-center switch-container">
-	<button on:click={() => {val = !val; update();}} class={`switch ${!val &&  "off"}`}>
+	<button on:click={() => {val = !val; }} class={`switch ${!val &&  "off"}`}>
 		<div><div/></div>
 	</button>
 </div> 

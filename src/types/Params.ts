@@ -10,7 +10,7 @@ export class ProgramParams{
     cameraYaw:number = 2;
     cameraPitch:number = 0;
     equation : {x:string, y:string, z:string} = {x:"",y:"",z:""};
-    iterate:boolean = true;
+    integrate:boolean = true;
     iterationStep:number = 1;
     setNum:number = 100;
     setLength:number = 150;
@@ -23,5 +23,5 @@ export class ProgramParams{
     v:number = 0;
     vRange:number[] = [0,0];
     vStep:number = 0;
-    dt:number = 0.01;
+    delta:number = 0.01;
 }
