@@ -71,7 +71,7 @@
 
 
 	function downloadScene() {
-    	var file = new Blob([JSON.stringify([{...$programParams,name:"Untitled"}]) as any], {type: "json"});
+    	var file = new Blob([JSON.stringify({...$programParams,name:"Untitled"},null,"\t") as any], {type: "json"});
 		var a = document.createElement("a"),
 				url = URL.createObjectURL(file);
 		a.href = url;
@@ -233,7 +233,7 @@
 								</div>
 							</div>
 							<div class="parameter-field">
-								<label class="parameter-label" for="integrate">Integration shift</label>
+								<label class="parameter-label" for="integrate">Active Integration</label>
 								<div class="w-20">
 									<Switch
 									id={"integrate"}
@@ -305,8 +305,6 @@
 					<div class="w-6 mx-3 my-1">
 						<Pin />
 					</div>
-					
-					
 				</div> -->
 				<div on:contextmenu={(e) => e.preventDefault()} on:mousedown={(e) => {mouseDown = e.button;}} on:wheel={wheel} class="scene grow"/>
 			</div>
