@@ -634,7 +634,8 @@
 	padding: 20px;
 	transition: all 0.1s;
 	display: flex;
-	overflow-x:hidden;
+	
+
 }
 :global(.main:not(.mobile)) .controls-bar{
 	opacity: 0;	
@@ -646,14 +647,12 @@
 	opacity: 1;	
 }
 
-
-
-
 .middle > .controls-bar{
 	overflow-y: hidden;
 	flex-direction: column;
 	min-width: 50px;
 	max-width: 50px;
+	overflow-x:hidden;
 }
 
 .middle > .controls-bar:nth-child(1){
@@ -671,7 +670,7 @@
 
 
 .controls-bar.horizontal {
-	overflow-y: hidden !important;
+	overflow-y: visible !important;
 	min-height: 20px;
 	padding: 10px;
 	width: 100%;
