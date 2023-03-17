@@ -64,7 +64,7 @@
 		"v" : 0,
 		"vStep" : 0.15,
 		"vRange" : [0.05, 0.3],
-		"setNum" : 3,
+		"setNum" : 1,
 		"setLength" : 5000,
 		"startPos" : [1,1,10],
 		"startRnd" : [0,0,0],
@@ -80,8 +80,8 @@
 		  "y": "1.7*y-x*z+z",
 		  "z": "2*x*y-9*z"
 		},
-		"delta": 0.01,
-		"iterationStep":5,
+		"delta": 0.004,
+		"iterationStep":6,
 		"v" : 4,
 		"vRange" : [1, 8],
 		"setNum" : 20,
@@ -264,7 +264,7 @@
 		"equation":{
 		  "x": "sin(y*cos(v*PI/4))*200",
 		  "y": "cos(x*cos(v*PI/4))*200",
-		  "z": "1"
+		  "z": "0"
 		},
 		"delta": 0.001,
 		"vRange":[-2,6],
@@ -275,7 +275,7 @@
 		"startPos" : [0,0,0],
 		"startRnd" : [140,140,140],
 		"respawn":true,
-		"respawnRate":100,
+		"respawnRate":40,
 		"sizeRatio" : false,
 		"pointSize" : 1,
 		"cameraDistance":150,
@@ -298,7 +298,7 @@
 		"respawn":true,
 		"respawnRate":500,
 		"sizeRatio" : false,
-		"pointSize" : 1,
+		"pointSize" : 0.8,
 		"cameraDistance":150,
 		"cameraYaw":4,
 		"cameraPitch":-0.6

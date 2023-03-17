@@ -12,7 +12,6 @@
 	import Section from "./ui/Section.svelte";
 	import EquationField from "./ui/EquationField.svelte";
 	import presets from "../presets.json";
-    import { custom_event } from "svelte/internal";
 	let mouseDown:number|boolean = false;
 	let presetIndex = 0;
 
@@ -137,21 +136,21 @@
 							<div>
 								<div class="flex justify-center">
 									<button class="btn w-6" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+presets.length-1)%presets.length)}>{"<"}</button>
-									<div class="px-4">{presetIndex+1}/{presets.length}</div>
+									<div class="px-4 w-20 text-center">{presetIndex+1}/{presets.length}</div>
 									<button class="btn w-6" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+1)%presets.length)}>{">"}</button>
 								</div>
 								<!-- <div class="flex justify-center"><Select/></div> -->
-								<div class="text-center py-2">{presets[presetIndex].name}</div>
+								<h2 class="text-center py-4 font-serif font-bold text-lg h-20">{presets[presetIndex].name}</h2>
 							</div>
 							<div class="parameter-field">
-								<div class="flex">User Preset</div>
+								<div class="flex">load user preset</div>
 								<label class="custom-file-upload btn w-10 cursor-pointer" title="select file">
 									<Icon name="folder"/>
 									<input bind:this={fileInput} on:change={() => setCustom()} type="file" accept="application/JSON" hidden/>
 								</label>
 							</div>
 							<div class="parameter-field">
-								<div>Save Current</div>
+								<div>save the current scene</div>
 								<button 
 								class="custom-file-upload btn w-10 border-0" 
 								title="save current scene parameters to a file"
@@ -173,7 +172,7 @@
 							<br/>
 							The equations can be modified in real time.
 							<br/>
-							All the methods and properties of JavaScript <span class="text-sky-300 italic">Math</span> can be used, just without "Math." e.g., <span class="text-sky-300 italic">Math.</span><span class="text-yellow-200 italic">sin</span>() {"->"}  <span class="text-yellow-200 italic">sin</span>() 
+							All the methods and properties of JavaScript <span class="text-sky-300 italic">Math</span> can be used, just without "Math." e.g., <span class="text-sky-300 italic">Math.</span><span class="text-yellow-200 italic">sin</span><span class="text-yellow-500 italic">()</span> {"->"}  <span class="text-sky-300 italic">sin</span><span class="text-yellow-500 italic">()</span>
 						</div>
 						<div slot="body">
 							<div class="parameter-field"><label class="parameter-label italic pr-2" for="eqX">f'(x)=</label>
@@ -533,11 +532,11 @@
 				</div>
 			</div>
 			<div class="parameter-field w-full">
-				<label class="parameter-label pr-2" for="vInput">v:</label>
+				<label class="parameter-label pr-2 italic" for="vInput" style="color:#d5a1ff">v</label>
 				<div class="w-full">
 					<Range
 						id={"vInput"} 
-						color="rgb(27, 234, 156)"
+						color="#bf71ff"
 						bind:val={$programParams.v}
 						range={$programParams.vRange}
 					/>
@@ -559,7 +558,8 @@
 				<label class="parameter-label pr-5" for="vChange">slider animation:</label>
 				<div class="w-full">
 					<Range
-						color="#bf71ff"
+						
+						color="rgb(27, 234, 156)"
 						id={"vChange"} 
 						bind:val={$programParams.vStep} 
 						range={[0,1]}

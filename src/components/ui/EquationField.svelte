@@ -2,18 +2,24 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from "svelte";
+    import { each } from 'svelte/internal';
 	let element:HTMLTextAreaElement;
 	export let val:string = "";
 	export let id:string;
+	import { utils } from '../../utils.js';
+	let oldVal:string|null = null;
 	let timeout:NodeJS.Timeout;
+	let parsedVal:any[] = [];
 	const dispatch = createEventDispatcher();
 	onMount(() => {
 		update();
 	});
 	
 	let error = false;
+	let focused = false;
 	function update()
 	{
+		parsedVal = utils.parser(val);
 		resize();
 		try {
 				error = true;
@@ -24,6 +30,7 @@
 					{
 						error = false;
 						dispatch('change', {val:val});
+						oldVal = val;
 					}	
 				}
 				
@@ -31,13 +38,17 @@
 				console.log("Equation Error");
 				error = true;
 			}
+
 	}
 	$:{
 		
-		if(element && document.activeElement != element && val)
+		if(element && document.activeElement != element && val != oldVal)
 		{
+			
 			clearTimeout(timeout);
 			timeout = setTimeout(update,1);
+
+			
 		}
 			
 	}
@@ -55,24 +66,59 @@
 
 </script>
 
-<div class="flex-grow">
-	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  class={`equation ${error && "error"}`}  on:input={update} on:focus={update} on:blur={() => val = val == "" ? "0" : val}  />
+<div class={`equation ${error && "error"} ${focused && "focused"}`}>
+	<span class="formatted">
+		{#each parsedVal as v}
+			<span style="{v.style}">{v.str}</span>
+		{/each}
+	</span>
+	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30" class="w-full" spellcheck="false" on:input={update} on:focus={()=>{update(); focused=true;}} on:blur={() => {val = val == "" ? "0" : val; focused=false}}  />
+	
 </div>
 
 
 <style>
+
+
 .equation{
-	min-height: 2em;
+	flex-grow: 1;
+	width: 100%;
+	padding: 2px;
+	position: relative;
+	padding-left:4px ;
+}
+.equation.focused{
+	border: 1px white inset;
+}
+.equation textarea{
 	width: 100%;
 	padding: 0px;
-	padding-left:4px ;
 	word-break: break-all;
-}
-.equation.error{
-	outline-style:inset !important;
-	color:red;
+	color:transparent;
+	position: relative;
+	z-index: 2;
+	caret-color: white;
 }
 
+.equation .formatted{
+	white-space:break-spaces;
+	pointer-events: none;
+	max-width: 100%;
+	word-break: break-all;
+	position: absolute;
+	z-index: 0;
+}
+
+.equation.error textarea{
+	
+}
+.equation.error {
+	outline-style:inset !important;
+	color:red !important;
+}
+.equation.error .formatted > * {
+	color:red !important;
+}
 .equation:focus{
 	
 }

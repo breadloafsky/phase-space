@@ -17,11 +17,11 @@ body {
 ::-webkit-scrollbar {
     height: 12px;
     width: 18px;
-    background: rgba(150, 150, 150, 0.199);
+    background: #61616142;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ffffff42;
+    background: rgba(150, 150, 150, 0.199);
 }
 
 ::-webkit-scrollbar-corner {
@@ -49,8 +49,8 @@ h3{
     font-size: larger;
 }
 
-textarea, input, select, button {
-    background-color: rgba(100, 100, 100, 0.11);
+input, select, button, .equation {
+    background-color: rgba(0, 0, 0, 0.26);
     color: white;
     overflow: hidden;
     border-width: 1px;
@@ -60,7 +60,15 @@ textarea, input, select, button {
     outline-width: 1px !important;
     line-height: 1.4em;
 }
-textarea:focus, input:focus, select:focus{
+
+textarea{
+    border: none;
+    overflow: hidden;
+    background-color: transparent;
+    outline-style: inset !important;
+    line-height: 1.4em;
+}
+ input:focus, select:focus{
     outline-style: inset !important;
     /* border: 2px rgba(179, 179, 179, 0.623) solid; */
     background-color: rgb(22, 22, 22) !important;

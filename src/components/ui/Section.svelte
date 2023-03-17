@@ -38,7 +38,7 @@
 </script>
 
 <div class="section" >
-	<button class="header"  >
+	<div class="header"  >
 		<h3>{label}</h3>
 		<div class="ml-2 info w-5 h-5 text-center self-center text-sm font-bold"
 			on:mousemove={(e) => showTooltip(true,e)}
@@ -46,7 +46,7 @@
 		>
 			?
 		</div>
-	</button>
+	</div>
 	<div class="body"><div class="p-40"><slot name="body"/></div></div>
 </div>
 
@@ -69,6 +69,7 @@
 .header{
 	width: 100%;
 	padding-inline: 14px;
+	height: 36px;
 	padding-block: 6px;
 	display: flex;
 	justify-content: space-between;
@@ -107,5 +108,6 @@
 	pointer-events: none;
 	width: max-content;
 	font-size: 0.9em;
+	z-index: 4;
 }
 </style>
