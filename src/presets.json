@@ -1,14 +1,16 @@
 [
 
 	{
-		"name":"Lorenz attractor",
+		"name":"Lorenz Attractor",
 		"equation":{
 			"x": "10*(y-x)",
 			"y": "x*(28-z)-y",
-			"z": "x*y-(8/3)*z"
+			"z": "x*y-(v/3)*z"
 		},
 		"delta": 0.002,
 		"iterationStep":2,
+		"v" : 8,
+		"vRange" : [0, 20],
 		"pointSize" : 0.2,
 		"sizeRatio":false,
 		"setNum" : 100,
@@ -20,7 +22,7 @@
 		"startRnd" : [50,50,50]
 	},
 	{
-		"name":"Chen-Lee attractor",
+		"name":"Chen-Lee Attractor",
 		"equation":{
 		  "x": "5*x-y*z",
 		  "y": "-10*y+x*z",
@@ -34,7 +36,7 @@
 		"cameraPitch":-0.4
 	  },
 	  {
-		"name":"Rössler attractor",
+		"name":"Rössler Attractor",
 		"equation":{
 		  "x": "-(y+z)",
 		  "y": "x+0.2*y",
@@ -43,6 +45,7 @@
 		"delta": 0.035,
 		"pointSize" : 0.2,
 		"setNum" : 150,
+		"startPos" : [1,1,10],
 		"setLength" : 100,
 		"cameraDistance":30,
 		"cameraYaw":2.17,
@@ -50,7 +53,7 @@
 		
 	  },
 	  {
-		"name":"Rössler attractor (bifurcation)",
+		"name":"Rössler Attractor (bifurcation)",
 		"equation":{
 		  "x": "-(y+z)",
 		  "y": "x+v*y",
@@ -59,11 +62,11 @@
 		"delta": 0.04,
 		"iterationStep":100,
 		"v" : 0,
-		"vStep" : 0.4,
+		"vStep" : 0.15,
 		"vRange" : [0.05, 0.3],
 		"setNum" : 3,
 		"setLength" : 5000,
-		"startPos" : [1,1,1],
+		"startPos" : [1,1,10],
 		"startRnd" : [0,0,0],
 		"cameraDistance":30,
 		"cameraYaw":2.17,
@@ -71,7 +74,48 @@
 		"pointSize" : 0.2
 	  },
 	  {
-		"name":"Thomas attractor",
+		"name":"Dadras Attractor",
+		"equation":{
+		  "x": "y-v*x+2.7*y*z",
+		  "y": "1.7*y-x*z+z",
+		  "z": "2*x*y-9*z"
+		},
+		"delta": 0.01,
+		"iterationStep":5,
+		"v" : 4,
+		"vRange" : [1, 8],
+		"setNum" : 20,
+		"setLength" : 500,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.15,
+		"cameraDistance":22,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Dadras Attractor 2",
+		"equation":{
+		  "x": "y-4*x+v*y*z",
+		  "y": "1.7*y-x*z+z",
+		  "z": "2*x*y-9*z"
+		},
+		"delta": 0.01,
+	
+		"v" : 0,
+		"vStep" : 0.1,
+		"vRange" : [0.0, 4],
+		"setNum" : 5000,
+		"setLength" : 1,
+		"startPos" : [0,0,0],
+		"startRnd" : [10,10,10],
+		"pointSize" : 0.1,
+		"cameraDistance":22,
+		"cameraYaw":2,
+		"cameraPitch":-0.6
+	  },
+	  {
+		"name":"Thomas Attractor",
 		"equation":{
 		  "x": "sin(y/2)-0.043*x",
 		  "y": "sin(z/2)-0.043*y",
@@ -88,7 +132,7 @@
 		"cameraPitch":-0.6
 	  },
 	  {
-		"name":"Thomas attractor 2",
+		"name":"Thomas Attractor 2",
 		"equation":{
 		  "x": "sin(y/2)-v*x",
 		  "y": "sin(z/2)-v*y",
@@ -97,7 +141,7 @@
 		"delta": 0.6,
 		"iterationStep":1,
 		"v" : 0.02,
-		"vStep" : 0.5,
+		"vStep" : 0.3,
 		"vRange" : [0.02, 0.15],
 		"setNum" : 5000,
 		"setLength" : 1,
@@ -108,26 +152,9 @@
 		"cameraYaw":3.9,
 		"cameraPitch":-0.6
 	  },
+	  
 	  {
-		"name":"Dadras attractor",
-		"equation":{
-		  "x": "y-4*x+2.7*y*z",
-		  "y": "1.7*y-x*z+z",
-		  "z": "2*x*y-9*z"
-		},
-		"delta": 0.01,
-		"iterationStep":10,
-		"setNum" : 20,
-		"setLength" : 500,
-		"startPos" : [0,0,0],
-		"startRnd" : [10,10,10],
-		"pointSize" : 0.15,
-		"cameraDistance":22,
-		"cameraYaw":2,
-		"cameraPitch":-0.6
-	  },
-	  {
-		"name":"Nose - Hoover attractor",
+		"name":"Nose - Hoover Attractor",
 		"equation":{
 		  "x": "y",
 		  "y": "-x+y*z",
@@ -138,14 +165,14 @@
 		"setNum" : 2,
 		"setLength" : 5000,
 		"startPos" : [0,0,0],
-		"startRnd" : [10,10,10],
+		"startRnd" : [4,4,4],
 		"pointSize" : 0.06,
 		"cameraDistance":10,
 		"cameraYaw":2,
 		"cameraPitch":-0.6
 	  },
 	  {
-		"name":"Dequan Li attractor",
+		"name":"Dequan Li Attractor",
 		"cameraTarget":[0,0,100],
 	  	"cameraDistance":546,
 		"cameraYaw":5.1,
@@ -153,22 +180,62 @@
 		"equation":{
 			"x":"40*(y-x)+0.16*x*z",
 			"y":"55*x+20*y-z*x",
-			"z":"1.833*z+x*y-0.65*pow(x,2)"
+			"z":"1.833*z+x*y\n-0.65*pow(x,2)"
 		},
-		"integrate":true,
 		"iterationStep":4,
 		"setNum":100,
 		"setLength":100,
 		"respawn":false,
 		"respawnRate":100,
-		"startPos":[0,0,1],
+		"startPos":[0,0,0],
 		"startRnd":[10,10,400],
 		"sizeRatio":true,
 		"pointSize":2,
 		"delta":0.0004
 		
 	},
-
+	{
+		"name":"Halvorsen Attractor",
+		"equation":{
+			"x": "-1.4*x-4*y-4*z-y*y",
+			"y": "-1.4*y-4*x-4*z-z*z",
+			"z": "-1.4*z-4*x-4*y-x*x"
+		},
+		"delta": 0.004,
+		"iterationStep":4,
+		"pointSize" : 0.1,
+		"sizeRatio":false,
+		"setNum" : 100,
+		"setLength" : 100,
+		"cameraTarget":[ -4, -4, -4 ],
+		"cameraDistance":30,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6,
+		"startPos" : [-5,-5,-5],
+		"startRnd" : [5,5,5]
+	},
+	{
+		"name":"Halvorsen Attractor 2",
+		"equation":{
+			"x": "-v*x-4*y-4*z-y*y",
+			"y": "-v*y-4*x-4*z-z*z",
+			"z": "-v*z-4*x-4*y-x*x"
+		},
+		"delta": 0.01,
+		"v" : 1,
+		"vStep" : 0.15,
+		"vRange" : [1, 5],
+		"pointSize" : 0.1,
+		"sizeRatio":false,
+		"setNum" : 5000,
+		"setLength" : 1,
+		"cameraTarget":[ -2, -2, -2 ],
+		"cameraDistance":30,
+		"cameraYaw":3.9,
+		"cameraPitch":-0.6,
+		"startPos" : [-5,-5,-5],
+		"startRnd" : [5,5,5]
+	},
 	{
 		"name":"Untitled",
 		"equation":{

@@ -211,7 +211,7 @@
 						</div>
 						<div slot="body">
 							<div class="parameter-field"><label class="parameter-label italic" for="delta">Δ (step)</label>
-								<div class="w-32">
+								<div class="w-28">
 									<NumberPicker 
 									id="delta" 
 									bind:val={$programParams.delta} 
@@ -221,8 +221,8 @@
 								</div>
 							</div>
 							<div class="parameter-field">
-								<label class="parameter-label" for="intStep">shifts per frame</label>
-								<div class="w-32">
+								<label class="parameter-label" for="intStep">Shifts per frame</label>
+								<div class="w-28">
 									<NumberPicker 
 									id={"intStep"}
 									bind:val={$programParams.iterationStep} 
@@ -390,7 +390,7 @@
 										bind:val={$programParams.respawnRate} 
 										step={1} 
 										round={1}
-										range={[0,false]}
+										range={[10,10000]}
 										incrementGrowth={1.01}
 									/>
 								</div>

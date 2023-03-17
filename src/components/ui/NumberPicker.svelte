@@ -55,7 +55,7 @@
 
 
 <div class="input-container">
-	<input bind:value={val} type="number" class="input" id={id} />
+	<input bind:value={val} type="number" class="input" id={id} on:blur={() => val = val ? val : (typeof(range[0]) =="number" ? range[0] : 0)}/>
 	<div class="btn-container ">
 		<button class="btn" on:mousedown={() =>{mouseDown=true; increment();}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><Icon name="arrow-up"/></button>
 		<button class="btn" on:mousedown={() =>{mouseDown=true; increment(false);}} on:mouseup={() => stop()} on:mouseleave={() => stop()}><Icon name="arrow-down"/></button>

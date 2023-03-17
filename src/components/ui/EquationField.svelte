@@ -5,7 +5,7 @@
 	let element:HTMLTextAreaElement;
 	export let val:string = "";
 	export let id:string;
-
+	let timeout:NodeJS.Timeout;
 	const dispatch = createEventDispatcher();
 	onMount(() => {
 		update();
@@ -35,7 +35,11 @@
 	$:{
 		
 		if(element && document.activeElement != element && val)
-			update();
+		{
+			clearTimeout(timeout);
+			timeout = setTimeout(update,1);
+		}
+			
 	}
 
 	function parse(str:string){
@@ -52,7 +56,7 @@
 </script>
 
 <div class="flex-grow">
-	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  class={`equation ${error && "error"}`}  on:input={update}/>
+	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30"  class={`equation ${error && "error"}`}  on:input={update} on:focus={update} on:blur={() => val = val == "" ? "0" : val}  />
 </div>
 
 
@@ -62,6 +66,7 @@
 	width: 100%;
 	padding: 0px;
 	padding-left:4px ;
+	word-break: break-all;
 }
 .equation.error{
 	outline-style:inset !important;
