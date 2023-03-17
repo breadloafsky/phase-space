@@ -29,8 +29,14 @@
 		document.removeEventListener("mouseup", cleanUp)
 	}
 
-	function mouseMove(e:MouseEvent) {
-		const pos = e.clientX - component.offsetLeft;
+	function mouseMove(e:MouseEvent|TouchEvent|any) {
+		let pos = 0;
+		if(e.type == "mousemove")
+			pos = e.clientX - component.offsetLeft;
+		else if(e.type == "touchmove")
+			pos = e.touches[0].clientX - component.offsetLeft;
+		
+		
 		if(pos < 0)
 			progress = 0;
 		else if(pos > component.clientWidth)
@@ -55,7 +61,7 @@
 
 </script>
 
-<div bind:this={component} on:mousedown={mouseDown} class={`range-container ${disabled && "disabled"} ${range[0] == val  && "start"}`} style={`--progress:${progress}%; --color:${color};`}>
+<div bind:this={component} on:touchmove={mouseMove}  on:mousedown={mouseDown} class={`range-container ${disabled && "disabled"} ${range[0] == val  && "start"}`} style={`--progress:${progress}%; --color:${color};`}>
 	<div class="relative flex w-full">
 		<button class="knob"/>
 		<div class="label">{val}</div>

@@ -2,11 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @media screen  and (orientation: portrait) {
+    html {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      height: 100vw;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+  } */
+
+html{
+    font-size: 16px;
+    --font-size:16px;
+    --sidebar-size:340px;
+}
+
+@media (min-width: 0) and (max-width: 60em) {
+    html{
+        font-size: 12px;
+        --font-size:12px;
+        --sidebar-size:260px;
+    }
+}
+  
+  
 body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-::-moz-selection, ::selection {
+::selection {
     color: rgb(0, 0, 0);
     background: rgb(168, 168, 168);
 }

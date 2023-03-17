@@ -260,7 +260,7 @@
 		"cameraPitch":-0.4
 	},
 	{
-		"name":"Untitled2",
+		"name":"Untitled 2",
 		"equation":{
 		  "x": "sin(y*cos(v*PI/4))*200",
 		  "y": "cos(x*cos(v*PI/4))*200",

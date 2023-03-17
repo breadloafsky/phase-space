@@ -12,9 +12,10 @@
 	import Section from "./ui/Section.svelte";
 	import EquationField from "./ui/EquationField.svelte";
 	import presets from "../presets.json";
+
 	let mouseDown:number|boolean = false;
 	let presetIndex = 0;
-
+	export let mobile:boolean;
 	
 
 	let fileInput:any;
@@ -23,25 +24,40 @@
 	});
 
 	// update the camera
-	function mouseMove(e:MouseEvent){
+	let previousTouch:any = {x:0,y:0};
+	function mouseMove(e:MouseEvent|TouchEvent|any){
 		const moveStep = window.innerHeight < window.innerWidth ? window.innerWidth : window.innerHeight;
 		if(mouseDown !== false)
 		{
+			let movementX = 0; 
+			let movementY = 0;
+			if(e.type == "mousemove")
+			{
+				movementX = e.movementX;
+				movementY = e.movementY;
+			}
+			else if(e.type == "touchmove")
+			{
+				movementX = (e.touches[0].pageX-previousTouch.x);
+				movementY = (e.touches[0].pageY-previousTouch.y);
+				previousTouch.x = e.touches[0].pageX;
+				previousTouch.y = e.touches[0].pageY;
+			}
 			programParams.update(p => {
 				let t = p.cameraTarget;
 				let pitch = p.cameraPitch;
 				let yaw = p.cameraYaw;
 				// rotate the camera around the target (vertically and horizontally)
 				if (mouseDown === 0) {
-					let a = yaw + e.movementX*6/moveStep;
+					let a = yaw + movementX*6/moveStep;
 					yaw = (a + Math.PI * 2 ) % (Math.PI*2);
-					a = pitch - e.movementY*6/moveStep;
+					a = pitch - movementY*6/moveStep;
 					pitch =  Math.abs(a) > Math.PI/2 ? pitch : a;
 				}
 				// move the camera target
 				else if (mouseDown === 2) {
-					const moveX = p.cameraDistance * e.movementX/moveStep / 2;
-					const moveY = p.cameraDistance * e.movementY/moveStep / 2;
+					const moveX = p.cameraDistance * movementX/moveStep / 2;
+					const moveY = p.cameraDistance * movementY/moveStep / 2;
 					t[0] +=   moveX * Math.cos(p.cameraYaw- Math.PI/2) + Math.cos(p.cameraYaw) * Math.sin(p.cameraPitch) * -moveY;
 					t[1] +=   Math.cos(p.cameraPitch) * moveY;
 					t[2] +=   moveX * Math.sin(p.cameraYaw- Math.PI/2) + Math.sin(p.cameraYaw) * Math.sin(p.cameraPitch) * -moveY;
@@ -105,20 +121,23 @@
 	<div 
 		class="controls" 
 		on:mousemove={mouseMove} 
+		on:touchmove={mouseMove}
+		on:touchend={() => mouseDown = false}
 		on:mouseup={() => mouseDown = false} 
 		on:mouseleave={() => mouseDown = false} 
 		>
 		<div class="middle">
 			<div class="controls-bar" data-pinned="true">
-				<div class="flex justify-between">
-					
+				<div class="flex justify-between flex-row-reverse">
+					<div class="pl-2"><Pin/></div>
 					<a href="https://github.com/ilgo1/phase-space" class="flex text-sm">
 						<div class="w-8 h-8 pr-2">
 							<Icon name="github"/>
 						</div> 
 						<div class="self-center text-neutral-500 text-xs">src <br/> code</div>
 					</a>
-					<Pin/>
+					
+					
 				</div>
 				<div>
 					<!-- preset -->
@@ -305,11 +324,11 @@
 						<Pin />
 					</div>
 				</div> -->
-				<div on:contextmenu={(e) => e.preventDefault()} on:mousedown={(e) => {mouseDown = e.button;}} on:wheel={wheel} class="scene grow"/>
+				<div on:contextmenu={(e) => e.preventDefault()} on:touchstart={(e) => {previousTouch = {x:e.touches[0].clientX, y:e.touches[0].clientY}; mouseDown = (e.touches.length > 1 ? false : 0);}} on:mousedown={(e) => {mouseDown = e.button;}} on:wheel={wheel} class="scene grow"/>
 			</div>
 			
 			<div class="controls-bar"  data-pinned="true">
-				<div class="h-8"><Pin/></div>
+				<div class="h-8 pr-2"><Pin/></div>
 				<div>
 					<!-- set properties -->
 					<Section label="Sets Properties" >
@@ -381,7 +400,7 @@
 									/>
 								</div>
 							</div>
-							<div class="parameter-field">
+							<div class={`parameter-field ${$programParams.respawn ? "" : "text-neutral-600"}`}>
 								<label class="parameter-label" for="respawnRate">Respawn Interval</label>
 								<div class="w-24">
 									<NumberPicker 
@@ -520,8 +539,8 @@
 		</div>
 		<div class="controls-bar horizontal"  data-pinned="true">
 			<div class="parameter-field">
-				<label class="parameter-label  w-14" for="vMin">v min:</label>
-				<div class="w-24">
+				<label class="parameter-label  w-1/5" for="vMin">v min:</label>
+				<div class="w-2/3 self-center">
 					<NumberPicker 
 						id={"vMin"}
 						bind:val={$programParams.vRange[0]} 
@@ -543,8 +562,8 @@
 				</div>
 			</div>
 			<div class="parameter-field">
-				<label class="parameter-label w-14" for="vMax">v max:</label>
-				<div class="w-24">
+				<label class="parameter-label w-1/5 " for="vMax">v max:</label>
+				<div class="w-2/3  self-center">
 					<NumberPicker 
 						id={"vMax"}
 						bind:val={$programParams.vRange[1]} 
@@ -554,11 +573,10 @@
 					/>
 				</div>
 			</div>
-			<div class="parameter-field w-11/12" style="max-width: 20%;">
-				<label class="parameter-label pr-5" for="vChange">slider animation:</label>
-				<div class="w-full">
+			<div class="parameter-field w-1/2" >
+				<label class="parameter-label pr-4" for="vChange">slider animation:</label>
+				<div class="w-3/4">
 					<Range
-						
 						color="rgb(27, 234, 156)"
 						id={"vChange"} 
 						bind:val={$programParams.vStep} 
@@ -566,9 +584,12 @@
 					/>
 				</div>
 			</div>
-			<div class="w-6 mx-3 my-1">
+			{#if !mobile}
+			<div class="w-6 mx-3 my-1 self-center">
 				<Pin />
 			</div>
+			{/if}
+			
 			
 		</div>
 	</div>
@@ -587,9 +608,8 @@
 	min-width: fit-content;
 }
 
-
 .controls{
-	width: 100%;
+	max-width: 100vw;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -605,7 +625,7 @@
 
 .middle{
 	flex-grow: 1;
-	max-height: calc(100vh - 60px);
+	max-height: calc(100% - 60px);
 	justify-content: space-between;
 	display: flex;
 }
@@ -614,13 +634,28 @@
 	padding: 20px;
 	transition: all 0.1s;
 	display: flex;
+	overflow-x:hidden;
+}
+:global(.main:not(.mobile)) .controls-bar{
+	opacity: 0;	
+}
+:global(.main.mobile) .controls-bar  :global(.section){
 	opacity: 0;
 }
-.middle > .controls-bar{
-	overflow-y: scroll;
-	flex-direction: column;
-	min-width: 10vw;
+:global(.main.mobile) .controls-bar[data-pinned="true"]  :global(.section){
+	opacity: 1;	
 }
+
+
+
+
+.middle > .controls-bar{
+	overflow-y: hidden;
+	flex-direction: column;
+	min-width: 50px;
+	max-width: 50px;
+}
+
 .middle > .controls-bar:nth-child(1){
 	direction: rtl;
 }
@@ -628,17 +663,20 @@
 	direction: ltr;
 }
 
-.middle .controls-bar[data-pinned="true"] , .controls-bar:hover {
-	min-width: 340px;
-	opacity: 1;
+.middle .controls-bar[data-pinned="true"] , :global(.main:not(.mobile)) .controls-bar:hover {
+	min-width: var(--sidebar-size);
+	overflow-y: scroll;
+	opacity: 1 !important;
 }
 
+
 .controls-bar.horizontal {
+	overflow-y: hidden !important;
 	min-height: 20px;
 	padding: 10px;
 	width: 100%;
 }
-.controls-bar.horizontal[data-pinned="true"] , .controls-bar.horizontal:hover {
+.controls-bar.horizontal[data-pinned="true"] , :global(.main:not(.mobile)) .controls-bar.horizontal:hover {
 	min-height: 60px;
 	max-height: 60px;
 	opacity: 1;

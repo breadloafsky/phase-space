@@ -95,6 +95,10 @@
 	opacity: 0.6;
 	cursor:pointer;
 }
+
+:global(.mobile) .info{
+	visibility: hidden;
+}
 .info:hover {
 	opacity: 1;
 }

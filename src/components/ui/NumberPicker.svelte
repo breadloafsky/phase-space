@@ -80,8 +80,9 @@
 	display: flex;
 	flex-direction: column;
 	max-height: 2em;
-	max-width: 25px;
-	min-width: 25px;
+	min-height: var(--font-size);
+	max-width: calc(var(--font-size) * 1.4);
+	min-width: calc(var(--font-size) * 1.4);
 	height: auto;
 }
 

@@ -23,8 +23,8 @@
 	@apply   px-2;
 }
 .switch{
-	height: 20px;
-	width: 38px;
+	height: calc(var(--font-size) * 1.4);
+	width: calc(var(--font-size) *2.4);
 	display: flex;
 	position: relative;
 	background-color: rgb(97, 97, 97);
@@ -44,7 +44,6 @@
 	justify-content: flex-end;
 	background-color: rgb(0, 170, 170);
 	flex-grow: 1;
-	height: 20px;
 	border-radius: 4px;
 }
 .switch.off > div:nth-child(1) {
@@ -55,8 +54,8 @@
 .switch > div:nth-child(1) > div{
 	background-color: rgb(0, 219, 219);
 	border-radius: 4px;
-	width: 20px;
-	height: 20px;
+	width: calc(var(--font-size) *1.2);
+	height: calc(var(--font-size) * 1.4);
 	border: 1px rgba(123, 123, 123, 0.57) solid;
 	transition: all 0.2s;
 	/* position: absolute; */
