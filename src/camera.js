@@ -11,9 +11,6 @@ export function Camera(programParams) {
 	this.fov = 1;
   }
   
-  Camera.prototype.setFov = function (v) {
-	this.fov = v;
-  };
   
   Camera.prototype.getViewMatrix = function () {
 	var target = mat3.create();

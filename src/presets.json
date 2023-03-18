@@ -5,14 +5,11 @@
 		"equation":{
 			"x": "10*(y-x)",
 			"y": "x*(28-z)-y",
-			"z": "x*y-(v/3)*z"
+			"z": "x*y-(8/3)*z"
 		},
-		"delta": 0.002,
+		"delta": 0.005,
 		"iterationStep":2,
-		"v" : 8,
-		"vRange" : [0, 20],
-		"pointSize" : 0.2,
-		"sizeRatio":false,
+		"pointSize" : 0.4,
 		"setNum" : 100,
 		"setLength" : 100,
 		"cameraTarget":[ 0, 0, 25 ],
@@ -253,7 +250,6 @@
 		"startRnd" : [100,100,100],
 		"respawn":true,
 		"respawnRate":40,
-		"sizeRatio" : false,
 		"pointSize" : 1,
 		"cameraDistance":150,
 		"cameraYaw":2,

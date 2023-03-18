@@ -27,7 +27,7 @@ const screenData ={
 }
 
 
-
+// initialize the scene
 export function Scene(canvas, _ode) {
 	this.ode = _ode;
 	this.fbo = {
@@ -275,18 +275,12 @@ Scene.prototype.initPointsBuffers = function()  {
 
 
 
-
+// draw points
 Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
 
   const pointShader = this.shaders.point;
   const gl = this.gl;
-
-  
-
   gl.useProgram(pointShader.program); 
-
- 
-  
   gl.uniformMatrix4fv(
     pointShader.uniforms.uView.location,
     false,
@@ -327,10 +321,11 @@ Scene.prototype.drawPoints = function(projectionMatrix, viewMatrix){
   );
   gl.enableVertexAttribArray(pointShader.attributes.aPoint.location);
   
-  //  Draw Points                             
+  //  Draw                              
   gl.drawArrays(gl.POINTS, 0, num); 
 }
 
+// draw the coordinate plane
 Scene.prototype.drawPlane = function(projectionMatrix, viewMatrix){
 
   const planeShader = this.shaders.plane;
@@ -371,12 +366,9 @@ Scene.prototype.drawPlane = function(projectionMatrix, viewMatrix){
   );
 
   gl.drawArrays(gl.TRIANGLES, 0, 6);
- 
 }
 
-
-
-// draw scene
+// draw the scene
 Scene.prototype.drawScene = function ()  {
 
   const gl = this.gl;
@@ -436,15 +428,10 @@ Scene.prototype.drawScene = function ()  {
     2,gl.FLOAT,false,0,0
   );
   //gl.enableVertexAttribArray(this.shaders.frame.attributes.aTexcoord.location);
-
- 
   gl.uniform1i(this.fbo.texture.location, 0);
-
   gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-
   //  Clean Up
-  
   gl.bindTexture(gl.TEXTURE_2D, null);
   gl.bindBuffer(gl.ARRAY_BUFFER, null);
   gl.disableVertexAttribArray(pointShader.attributes.aPoint.location);

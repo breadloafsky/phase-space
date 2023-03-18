@@ -84,7 +84,7 @@
 	}
 
 
-
+	// download the scene as a json
 	function downloadScene() {
     	var file = new Blob([JSON.stringify({...$programParams,name:"Untitled"},null,"\t") as any], {type: "json"});
 		var a = document.createElement("a"),
@@ -100,7 +100,7 @@
 	}
 
 
-
+	// set a custom preset
 	function setCustom() {
     const file = fileInput.files[0];
     if (file) {
@@ -129,18 +129,15 @@
 		<div class="middle">
 			<div class="controls-bar" data-pinned="true">
 				<div class="flex justify-between flex-row-reverse">
-					<div class="pl-2"><Pin/></div>
+					<div class="pl-2 self-center"><Pin/></div>
 					<a href="https://github.com/ilgo1/phase-space" class="flex text-sm">
-						<div class="w-8 h-8 pr-2">
+						<div class="w-8 h-8 pr-2 self-center">
 							<Icon name="github"/>
 						</div> 
-						<div class="self-center text-neutral-500 text-xs">src <br/> code</div>
 					</a>
-					
-					
 				</div>
 				<div>
-					<!-- preset -->
+					<!-- preset picker -->
 					<Section label="Preset" >
 						<div slot="tooltip">
 							Preset selection. 
@@ -189,7 +186,7 @@
 							<br/>
 							and 1 global variable <span class="text-purple-500 italic">v</span>, which can be controlled on the bottom bar.
 							<br/>
-							The equations can be modified in real time.
+							The equations can be modified in real time using JavaScript syntax (e.g., coefficients should be written as "2*x", instead of "2x").
 							<br/>
 							All the methods and properties of JavaScript <span class="text-sky-300 italic">Math</span> can be used, just without "Math." e.g., <span class="text-sky-300 italic">Math.</span><span class="text-yellow-200 italic">sin</span><span class="text-yellow-500 italic">()</span> {"->"}  <span class="text-sky-300 italic">sin</span><span class="text-yellow-500 italic">()</span>
 						</div>
@@ -264,7 +261,8 @@
 					</Section>
 					<Section label="Dimensional Mapping" >
 						<div slot="tooltip">
-							The variables <span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span> can be remapped for each dimension
+							The variables <span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span> can be remapped for each dimension<br/>
+							The coordinates grid has the step of 10
 						</div>
 						<div slot="body">
 							<div class="flex flex-col justify-center ">
