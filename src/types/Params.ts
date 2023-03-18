@@ -2,6 +2,7 @@ export class MetaParams {
     needsUpdate:boolean = true;
 	dimMap:(string|any)[] = ["x","y","z"];
 	showGrid:boolean = false;
+    
 }
 
 export class ProgramParams{

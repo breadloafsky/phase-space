@@ -8,6 +8,10 @@ https://ilgo1.github.io/phase-space
 
 the application can crash your browser when the number of points is too big
 
+
+## About
+The phase portraits consist of sets of points that can have from one to many points that share the same initial condition, just having different order of numerical integration. The initial conditions of sets can be shifted by activating the integration of sets. The method used for the integration is RK4 Runge-Kutta.
+
 ## Usage
 
 

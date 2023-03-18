@@ -216,7 +216,7 @@
 						<div slot="tooltip">
 							Integration settings
 							<br/>
-							4th order Runge–Kutta is used for integration
+							4th order Runge–Kutta or Euler can be used for the integration.
 							<br/>
 							<span class="italic">Δ</span> is the numerical step for integration
 							<br/>
@@ -225,6 +225,7 @@
 							The integration process for sets can be paused/resumed by clicking the switch
 						</div>
 						<div slot="body">
+							
 							<div class="parameter-field"><label class="parameter-label italic" for="delta">Δ (step)</label>
 								<div class="w-28">
 									<NumberPicker 
