@@ -15,6 +15,8 @@ export class PointSet {
 	lifeRand = 0;	// lifetime randomizer
 	lastDir:Point;
 	ode:ODE;
+	changeDir:number = 0 // direction of the change;
+	pointDistance:number = 0 // direction of the change;
 	
 	
     constructor(ode:ODE){
@@ -23,7 +25,6 @@ export class PointSet {
 		const sRand = ode.params.startRnd;
 		
 		this.points = [];
-
 		this.lifeCount = 0;	// iterations counter
 		this.lifeRand = Math.random();  // random factor
 
@@ -46,6 +47,7 @@ export class PointSet {
 		update(this);
     }
 }
+
 function update(set:PointSet){
 	var x = set.pos.x;
 	var y = set.pos.y;
@@ -93,8 +95,32 @@ function update(set:PointSet){
 	}
 	[x,y,z] = RK4Step(x,y,z,v,delta, equation);
 	set.lastDir = {x,y,z};
+
+	
+
+	computeBifurcation(x,y,z,set);
 }
 
+// calculate values for bifurcation diagram
+function computeBifurcation(x:number,y:number,z:number,set:PointSet) {
+	let old_distance = set.pointDistance;
+	let dir = 0;
+	set.pointDistance = Math.sqrt(x*x+y*y+z*z);
+
+
+	if(set.pointDistance > old_distance)
+		dir = 1;
+	else if(set.pointDistance < old_distance)
+		dir = -1;
+
+	if(dir != set.changeDir)
+	{
+		set.changeDir = dir;
+		if(set.ode.bifurcation.length >= 100)
+			set.ode.bifurcation.shift();
+		set.ode.bifurcation.push(set.pointDistance);
+	}
+}
 
 //	Runge-Kutta 4th order
 function RK4Step(x:number,y:number,z:number,v:number,h:number, equation : { [key: string]: (x:number,y:number,z:number,v:number)=> number }|null) {
@@ -118,7 +144,6 @@ function RK4Step(x:number,y:number,z:number,v:number,h:number, equation : { [key
 	}
 	
 	else return [x,y,z];
-    
 }
 
 

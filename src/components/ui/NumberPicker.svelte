@@ -7,7 +7,7 @@
 	export let val:number;
 	export let step:number = 1;	//	buttons increment step
 	export let round:number = 1;	// round factor
-	export let range:(number|boolean)[] = [false,false];	//	max and min value
+	export let range:(number|boolean|any)[] = [false,false];	//	max and min value
 	export let incrementGrowth = 1;	// the buttons hold increment speed increase factor
 	let mouseDown:number|boolean = false;
 	var timer:number|any = 0;

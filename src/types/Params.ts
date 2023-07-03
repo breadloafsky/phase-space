@@ -1,9 +1,14 @@
+
+
 export class MetaParams {
+    bifurcation:number[] = []
     needsUpdate:boolean = true;
 	dimMap:(string|any)[] = ["x","y","z"];
 	showGrid:boolean = false;
-    
 }
+
+
+
 
 export class ProgramParams{
     cameraTarget:number[] = [0,0,0];

@@ -1,11 +1,9 @@
 
 <script lang="ts">
 	import { programParams, metaParams } from "../stores.js";
-	
  	import { onMount } from "svelte";
 	import { Scene } from "../scene.js";
 	import { ODE } from "../types/ODE.js";
-	
     let canvas:HTMLCanvasElement;
 	let ode:ODE;
 	let scene:Scene;
@@ -15,16 +13,18 @@
 
 	onMount(() => {
 		ode = new ODE();
-		programParams.subscribe(p => Object.assign(ode.params, p) );
+		programParams.subscribe(p => Object.assign(ode.params, p) );	//set the params
 		scene = new Scene(canvas, ode);
 		requestAnimationFrame(update);
 		loading = false;
   	});
 
 	function update(time:number){
-
+		
 		requestAnimationFrame(update);
 
+		//$metaParams.bifurcation = ode.bifurcation; // update the bifurcation diagram
+		
 		const delta = time - previousTime;	//limit the fps
 		if (fpsLimit && delta < 1000 / fpsLimit)
         	return;

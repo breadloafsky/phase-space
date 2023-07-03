@@ -1,6 +1,7 @@
 import { Camera } from "../camera";
 import { PointSet } from "./Set";
 import { ProgramParams, MetaParams } from "./Params";
+import { Bifurcation } from "./Bifurcation";
 
 
 
@@ -10,7 +11,7 @@ export class ODE {
     params:ProgramParams = new ProgramParams();
 	equationString = {x:"",y:"",z:""};
 	equation:any = {};
-   
+	bifurcation:number[] = [];
     constructor(){
         this.camera = new Camera(this.params);
 		this.update();

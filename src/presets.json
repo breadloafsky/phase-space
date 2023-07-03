@@ -234,6 +234,47 @@
 		"startRnd" : [5,5,5]
 	},
 	{
+		"name": "Loop Attractor",
+		"cameraTarget": [
+			0,
+			0,
+			4
+		],
+		"cameraDistance": 14.285445426516732,
+		"cameraYaw": 0.6105043856407928,
+		"cameraPitch": -0.5537500000000021,
+		"equation": {
+			"x": "y*(3-z)+z",
+			"y": "(z-y)*0.1+x*1.4",
+			"z": "y*x*0.6"
+		},
+		"integrate": true,
+		"iterationStep": 4,
+		"setNum": 200,
+		"setLength": 80,
+		"respawn": false,
+		"respawnRate": 100,
+		"startPos": [
+			0,
+			0,
+			0
+		],
+		"startRnd": [
+			4,
+			4,
+			4
+		],
+		"sizeRatio": true,
+		"pointSize": 0.08,
+		"v": 0.10030090270812408,
+		"vRange": [
+			-4,
+			10
+		],
+		"vStep": 0,
+		"delta": 0.008
+	},
+	{
 		"name":"Untitled",
 		"equation":{
 		  "x": "y*z*3",

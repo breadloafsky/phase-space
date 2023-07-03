@@ -12,7 +12,8 @@
 	import Section from "./ui/Section.svelte";
 	import EquationField from "./ui/EquationField.svelte";
 	import presets from "../presets.json";
-
+	import Bifurcation from "./ui/Bifurcation.svelte";
+	
 	let mouseDown:number|boolean = false;
 	let presetIndex = 0;
 	export let mobile:boolean;
@@ -21,6 +22,10 @@
 	let fileInput:any;
 	onMount(() => {
 		setPreset(0);
+		///
+		//alert(Module['compute']("2+1"));
+
+		///
 	});
 
 	// update the camera
@@ -140,7 +145,7 @@
 					<!-- preset picker -->
 					<Section label="Preset" >
 						<div slot="tooltip">
-							Preset selection. 
+							<span class="text-lg text-cyan-500">Preset selection</span>
 							<br/>
 							The scene parameters (including equations, point sets settings, camera position and etc.)
 							<br/>
@@ -180,7 +185,7 @@
 					<!-- equations -->
 					<Section label="Equations" >
 						<div slot="tooltip">
-							The system of ordinary differential equations
+							<span class="text-lg text-cyan-500">The system of ordinary differential equations</span>
 							<br/>
 							Each equation has input of 3 dimensional variables (<span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span>) that are individual for each point
 							<br/>
@@ -214,11 +219,11 @@
 					</Section>
 					<Section label="Integration" >
 						<div slot="tooltip">
-							Integration settings
+							<span class="text-lg text-cyan-500">Integration settings</span>
 							<br/>
-							4th order Runge–Kutta or Euler can be used for the integration.
+							4th order Runge–Kutta is used for the numerical integration.
 							<br/>
-							<span class="italic">Δ</span> is the numerical step for integration
+							<span class="italic">Δ</span> is the numerical step of integration
 							<br/>
 							<span class="italic">"shifts per frame"</span> is how many times the itegration is applied to sets each update 
 							<br/>
@@ -262,6 +267,8 @@
 					</Section>
 					<Section label="Dimensional Mapping" >
 						<div slot="tooltip">
+							<span class="text-lg text-cyan-500">Dimensional Mapping</span>
+							<br/>
 							The variables <span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span> can be remapped for each dimension<br/>
 							The coordinates grid has the step of 10
 						</div>
@@ -332,6 +339,8 @@
 					<!-- set properties -->
 					<Section label="Sets Properties" >
 						<div slot="tooltip">
+							<span class="text-lg text-cyan-500">Sets Properties</span>
+							<br/>
 							The phase portrait is drawn by sets of points.
 							<br/>
 							Each set has its base coordinate, which is the initial condition for each point in the set.	
@@ -420,6 +429,8 @@
 					</Section>
 					<Section label="Sets Spawn Positions" >
 						<div slot="tooltip">
+							<span class="text-lg text-cyan-500">The Initial Positions Settings</span>
+							<br/>
 							The initial positions for the sets with random deviation
 						</div>
 						<div slot="body">
@@ -491,9 +502,19 @@
 							</div>
 						</div>
 					</Section>
+					<!-- <Section label="Bifurcation Plot" >
+						<div slot="tooltip">
+							Bifurcation Plot
+						</div>
+						<div slot="body">
+							<Bifurcation
+								bind:val={$metaParams.bifurcation}
+							/>
+						</div>
+					</Section> -->
 					<Section label="Camera Target" >
 						<div slot="tooltip">
-							The camera target point
+							<span class="text-lg text-cyan-500">The camera target point</span>
 						</div>
 						<div slot="body">
 							<div class="parameter-field">
