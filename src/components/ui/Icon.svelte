@@ -3,17 +3,10 @@
     import { onMount } from "svelte";
 	export let color = "dimgray";
 	export let name = "";
-
-	let path = "/phase-space"; 
 	
-	let src = ""
-	onMount(() => {
-		src = 	`ui/${name}.svg`;
-  	});
-
 </script>
 
-<div class="icon" style={`--icon: url("/phase-space/ui/${name}.svg"); background-color:${color};`}/>
+<div class="icon" style={`--icon: url("/ui/${name}.svg"); background-color:${color};`}/>
 
 <style>
 

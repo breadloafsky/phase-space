@@ -12,7 +12,7 @@
 	import Section from "./ui/Section.svelte";
 	import EquationField from "./ui/EquationField.svelte";
 	import presets from "../presets.json";
-	import Bifurcation from "./ui/Bifurcation.svelte";
+	//import Bifurcation from "./ui/Bifurcation.svelte";
 	
 	let mouseDown:number|boolean = false;
 	let presetIndex = 0;
@@ -22,10 +22,6 @@
 	let fileInput:any;
 	onMount(() => {
 		setPreset(0);
-		///
-		//alert(Module['compute']("2+1"));
-
-		///
 	});
 
 	// update the camera
@@ -135,7 +131,7 @@
 			<div class="controls-bar" data-pinned="true">
 				<div class="flex justify-between flex-row-reverse">
 					<div class="pl-2 self-center"><Pin/></div>
-					<a href="https://github.com/ilgo1/phase-space" class="flex text-sm">
+					<a href="https://github.com/breadloafsky/phase-space" class="flex text-sm">
 						<div class="w-8 h-8 pr-2 self-center">
 							<Icon name="github"/>
 						</div> 
