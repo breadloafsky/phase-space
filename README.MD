@@ -1,9 +1,9 @@
-![alt text](https://github.com/Ilgo1/phase-space/blob/master/res/1.PNG?raw=true)
+![alt text](https://github.com/breadloafsky/phase-space/blob/master/res/1.PNG?raw=true)
 # Phase Space
 This interactive application draws 3-dimensional phase portraits defined by systems of ordinary differential equations.
 
 ## Demo
-https://ilgo1.github.io/phase-space
+https://phase-space.netlify.app
 (epilepsy warning)
 
 the application can crash your browser when the number of points is too big

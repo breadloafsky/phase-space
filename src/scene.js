@@ -101,10 +101,6 @@ export function Scene(canvas, _ode) {
 	window.addEventListener("resize",() => resize());
 	resize();
 
-	/* this.gl.enable(this.gl.SAMPLE_COVERAGE);
-	this.gl.enable(this.gl.SAMPLE_ALPHA_TO_COVERAGE);
-	this.gl.sampleCoverage(0.2,false); */
-
 
 	if (!this.gl) {
 		alert("WebGL ERROR.");
@@ -134,11 +130,6 @@ export function Scene(canvas, _ode) {
 }
 
 Scene.prototype.initFBO = function(){
-	this.initFBO();
-	return this;
-}
-
-Scene.prototype.initFBO = function(){
   const gl = this.gl;
 
 
@@ -155,10 +146,6 @@ Scene.prototype.initFBO = function(){
 
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
 
-
-  /* const max = gl.getParameter(this.ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
-  gl.texParameterf(gl.TEXTURE_2D, this.ext.TEXTURE_MAX_ANISOTROPY_EXT,max); */
-  
 
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
