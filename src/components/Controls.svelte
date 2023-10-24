@@ -12,6 +12,7 @@
     import SetProperties from "./sections/SetProperties.svelte";
     import SpawnPos from "./sections/SpawnPos.svelte";
     import CamTarget from "./sections/CamTarget.svelte";
+    import { not_equal } from "svelte/internal";
 	//import Bifurcation from "./ui/Bifurcation.svelte";
 	
 	let mouseDown:number|boolean = false;

@@ -74,6 +74,8 @@
 	padding: 2px;
 	position: relative;
 	padding-left:4px ;
+	font-size: 16px;
+	font-family: monospace;
 }
 .equation.focused{
 	border: 1px white inset;
@@ -95,6 +97,8 @@
 	word-break: break-all;
 	position: absolute;
 	z-index: 0;
+	
+	
 }
 
 .equation.error textarea{

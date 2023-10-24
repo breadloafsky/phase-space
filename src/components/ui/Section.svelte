@@ -67,19 +67,6 @@
 
 
 <style>
-.info {
-	background-color: rgba(221, 221, 221, 0.212);
-	border-radius: 50%;
-	color:rgb(216, 216, 216);
-	opacity: 0.6;
-	cursor:crosshair;
-	margin-left: 8px;
-	width: 20px;
-	height: 20px;
-	text-align: center;
-	align-self: center;
-	font-weight: 800;
-}
 
 .section { 
 	transition:all 0.1s;
@@ -111,6 +98,19 @@
 	border-color: #2d2d2d8c;
 }
 
+.info {
+	background-color: rgba(221, 221, 221, 0.212);
+	border-radius: 50%;
+	color:rgb(216, 216, 216);
+	opacity: 0.6;
+	cursor:crosshair;
+	margin-left: 8px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	align-self: center;
+	font-weight: 800;
+}
 
 
 :global(.mobile) .info{

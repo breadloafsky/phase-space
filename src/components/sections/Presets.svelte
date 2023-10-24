@@ -54,7 +54,7 @@
   	}
 
 </script>
-<Section label="Preset" >
+<Section label="Preset Selection" >
 	<div slot="tooltip">
 		<span class="text-lg text-cyan-500">Preset selection</span>
 		<br/>
@@ -75,16 +75,16 @@
 			<h2 class="text-center py-4 font-serif font-bold text-lg h-20">{presets[presetIndex].name}</h2>
 		</div>
 		<div class="parameter-field">
-			<div class="flex">load user preset</div>
-			<label class="custom-file-upload btn w-10 cursor-pointer" title="select file">
+			<div class="flex">Load user preset</div>
+			<label class="custom-file-upload btn w-8 h-8 cursor-pointer" title="select file">
 				<Icon name="folder"/>
 				<input bind:this={fileInput} on:change={() => setCustom()} type="file" accept="application/JSON" hidden/>
 			</label>
 		</div>
 		<div class="parameter-field">
-			<div>save the current scene</div>
+			<div>Save the current scene</div>
 			<button 
-			class="custom-file-upload btn w-10 border-0" 
+			class="custom-file-upload btn w-8 h-8 border-0" 
 			title="save current scene parameters to a file"
 			on:click={() => downloadScene()}
 			>
