@@ -1,4 +1,4 @@
-const re = new RegExp(/([A-z])\w+|([()])|([\+\-\/\*\%])|([\d.]+)|(x|y|z|v)(?![A-z])/gm);
+const re = new RegExp(/([A-z])\w+|E|([()])|([\+\-\/\*\%])|([\d.]+)|(x|y|z|v)(?![A-z])/gm);
 
 const colors = ["#73d4ea","#dbd46e","white","#dfe4be"];
 
@@ -8,8 +8,11 @@ const varColors ={
 	z:"#9adeff",
 	v:"#dcb1ff"
 }
+
 export const utils = {
-	parser: (str:string) => {
+
+	// syntax highlighter
+	highlight: (str:string) => {
 		let lastIdx = 0;
 		let result = [];
 		let l = null;
@@ -24,8 +27,6 @@ export const utils = {
 				});
 				break;
 			}
-			
-			
 			if(l.index > lastIdx)
 			{
 				result.push({
@@ -42,12 +43,21 @@ export const utils = {
 			result.push(
 				{
 					str:l[0],
-					style: `${idx == 4 ? "color:" + varColors[l[0] as"x"|"y"|"z"|"v"]+";font-style:italic;" : "color:"+colors[idx]}`
+					style: `${
+						 idx == 4 ? "color:" + varColors[l[0] as"x"|"y"|"z"|"v"]+";font-style:italic;" :
+						 "color:"+colors[idx]}`
 				}
 			);
 			lastIdx = l.index+l[0].length;
 		};
 
 		return result;
+	},
+
+	// parser
+	parse: (str:string)=>{
+		str = str.replace(/([A-z])\w+|E/g, 'Math.$&');
+		//alert(str);
+		return str;
 	}
 }

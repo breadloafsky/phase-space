@@ -2,7 +2,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from "svelte";
-    import { each } from 'svelte/internal';
 	let element:HTMLTextAreaElement;
 	export let val:string = "";
 	export let id:string;
@@ -10,6 +9,7 @@
 	let oldVal:string|null = null;
 	let timeout:NodeJS.Timeout;
 	let parsedVal:any[] = [];
+
 	const dispatch = createEventDispatcher();
 	onMount(() => {
 		update();
@@ -19,44 +19,38 @@
 	let focused = false;
 	function update()
 	{
-		parsedVal = utils.parser(val);
+		
+		parsedVal = utils.highlight(val);	// syntax highlight
 		resize();
 		try {
-				error = true;
-				let eq = new Function("x,y,z,v", "return " + parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
-				if(typeof eq === 'function')
+			error = true;
+			let eq = new Function("x,y,z,v", "return " + utils.parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
+			if(typeof eq === 'function')
+			{
+				if(typeof eq(1, 1, 1, 1) == "number" && eq(1, 1, 1, 1) == eq(1, 1, 1, 1))	// check sample output
 				{
-					if(typeof eq(1, 1, 1, 1) == "number" && eq(1, 1, 1, 1) == eq(1, 1, 1, 1))	// check sample output
-					{
-						error = false;
-						dispatch('change', {val:val});
-						oldVal = val;
-					}	
-				}
-				
-			} catch (e) {
-				console.log("Equation Error");
-				error = true;
+					error = false;
+					dispatch('change', {val:val});
+					oldVal = val;
+				}	
 			}
-
+			
+		} catch (e) {
+			console.log("Equation Error");
+			error = true;
+		}
 	}
 	$:{
 		
 		if(element && document.activeElement != element && val != oldVal)
 		{
-			
 			clearTimeout(timeout);
 			timeout = setTimeout(update,1);
-
-			
 		}
 			
 	}
 
-	function parse(str:string){
-		str = str.replace(/([A-z])\w+/g, 'Math.$&');
-		return str;
-	}
+	
 
 	function resize()
 	{
@@ -73,13 +67,10 @@
 		{/each}
 	</span>
 	<textarea id={id} bind:this={element} bind:value={val} rows="1" cols="30" class="w-full" spellcheck="false" on:input={update} on:focus={()=>{update(); focused=true;}} on:blur={() => {val = val == "" ? "0" : val; focused=false}}  />
-	
 </div>
 
 
 <style>
-
-
 .equation{
 	flex-grow: 1;
 	width: 100%;

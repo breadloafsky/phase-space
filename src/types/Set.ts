@@ -107,7 +107,7 @@ function computeBifurcation(x:number,y:number,z:number,set:PointSet) {
 	let dir = 0;
 	set.pointDistance = Math.sqrt(x*x+y*y+z*z);
 
-
+	
 	if(set.pointDistance > old_distance)
 		dir = 1;
 	else if(set.pointDistance < old_distance)

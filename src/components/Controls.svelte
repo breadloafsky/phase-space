@@ -1,15 +1,10 @@
 
 <script lang="ts">
-	import { onMount } from "svelte";
 	import Range from "./ui/Range.svelte";
 	import { programParams, metaParams } from "../stores.js";
 	import Icon from "./ui/Icon.svelte";
-	import Select from "./ui/Select.svelte";
 	import NumberPicker from "./ui/NumberPicker.svelte";
-	import Switch from "./ui/Switch.svelte";
 	import Pin from "./ui/Pin.svelte";
-	import Section from "./ui/Section.svelte";
-	import EquationField from "./ui/EquationField.svelte";
     import Presets from "./sections/Presets.svelte";
     import Equations from "./sections/Equations.svelte";
     import Integration from "./sections/Integration.svelte";
@@ -20,11 +15,7 @@
 	//import Bifurcation from "./ui/Bifurcation.svelte";
 	
 	let mouseDown:number|boolean = false;
-	
 	export let mobile:boolean;
-	
-
-	
 	
 	// update the camera
 	let previousTouch:any = {x:0,y:0};

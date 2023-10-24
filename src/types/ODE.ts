@@ -2,6 +2,7 @@ import { Camera } from "../camera";
 import { PointSet } from "./Set";
 import { ProgramParams, MetaParams } from "./Params";
 import { Bifurcation } from "./Bifurcation";
+import { utils } from "../utils";
 
 
 
@@ -20,7 +21,7 @@ export class ODE {
 	getEquationFunction(val:string)
 	{
 		try {
-				let eq = new Function("x,y,z,v", "return " + parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
+				let eq = new Function("x,y,z,v", "return " + utils.parse(val) ) as (x:number,y:number,z:number,v:number)=> number;
 				if(typeof eq === 'function')
 				{
 					if(typeof eq(1, 1, 1, 1) == "number" && eq(1, 1, 1, 1) == eq(1, 1, 1, 1))	// check sample output
@@ -79,10 +80,6 @@ export class ODE {
 			this.sets.pop();
 		}
 	}
-}
-function parse(str:string){
-	str = str.replace(/([A-z])\w+/g, 'Math.$&');
-	return str;
 }
 
 
