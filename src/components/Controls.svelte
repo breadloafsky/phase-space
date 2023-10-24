@@ -2,7 +2,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import Range from "./ui/Range.svelte";
-	import{ ProgramParams, MetaParams } from "../types/Params";
 	import { programParams, metaParams } from "../stores.js";
 	import Icon from "./ui/Icon.svelte";
 	import Select from "./ui/Select.svelte";
@@ -11,19 +10,22 @@
 	import Pin from "./ui/Pin.svelte";
 	import Section from "./ui/Section.svelte";
 	import EquationField from "./ui/EquationField.svelte";
-	import presets from "../presets.json";
+    import Presets from "./sections/Presets.svelte";
+    import Equations from "./sections/Equations.svelte";
+    import Integration from "./sections/Integration.svelte";
+    import DimMapping from "./sections/DimMapping.svelte";
+    import SetProperties from "./sections/SetProperties.svelte";
+    import SpawnPos from "./sections/SpawnPos.svelte";
+    import CamTarget from "./sections/CamTarget.svelte";
 	//import Bifurcation from "./ui/Bifurcation.svelte";
 	
 	let mouseDown:number|boolean = false;
-	let presetIndex = 0;
+	
 	export let mobile:boolean;
 	
 
-	let fileInput:any;
-	onMount(() => {
-		setPreset(0);
-	});
-
+	
+	
 	// update the camera
 	let previousTouch:any = {x:0,y:0};
 	function mouseMove(e:MouseEvent|TouchEvent|any){
@@ -75,47 +77,7 @@
 			return {...p, cameraDistance:a > 0.1 ? a : s};
 		});
 	}
-	// set preset
-	function setPreset(n:number)
-	{
-		presetIndex = n;
-		//	reset the parameters
-		metaParams.update(n => new MetaParams());
-		programParams.update(e => {return{...new ProgramParams(), ...structuredClone(presets[presetIndex])}});
-	}
-
-
-	// download the scene as a json
-	function downloadScene() {
-    	var file = new Blob([JSON.stringify({...$programParams,name:"Untitled"},null,"\t") as any], {type: "json"});
-		var a = document.createElement("a"),
-				url = URL.createObjectURL(file);
-		a.href = url;
-		a.download = "phase-space.json";
-		document.body.appendChild(a);
-		a.click();
-		setTimeout(function() {
-			document.body.removeChild(a);
-			window.URL.revokeObjectURL(url);  
-		}, 0); 
-	}
-
-
-	// set a custom preset
-	function setCustom() {
-    const file = fileInput.files[0];
-    if (file) {
-		const reader = new FileReader();
-		reader.addEventListener("load", function () {
-			metaParams.update(n => new MetaParams());
-			programParams.update(e => {return{...new ProgramParams(), ...JSON.parse(reader.result as string)}});
-		});
-		reader.readAsText(file);
-		return;
-    } 
-	alert("File error");
-
-  }
+	
 
 
 </script>
@@ -139,185 +101,13 @@
 				</div>
 				<div>
 					<!-- preset picker -->
-					<Section label="Preset" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">Preset selection</span>
-							<br/>
-							The scene parameters (including equations, point sets settings, camera position and etc.)
-							<br/>
-							 can be picked from the default presets, or uploaded from a file
-							<br/>
-							The current scene parameters can also be saved to a file
-						</div>
-						<div slot="body">
-							<div>
-								<div class="flex justify-center">
-									<button class="btn w-6" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+presets.length-1)%presets.length)}>{"<"}</button>
-									<div class="px-4 w-20 text-center">{presetIndex+1}/{presets.length}</div>
-									<button class="btn w-6" style="border-radius: 4px;" on:click={() => setPreset((presetIndex+1)%presets.length)}>{">"}</button>
-								</div>
-								<!-- <div class="flex justify-center"><Select/></div> -->
-								<h2 class="text-center py-4 font-serif font-bold text-lg h-20">{presets[presetIndex].name}</h2>
-							</div>
-							<div class="parameter-field">
-								<div class="flex">load user preset</div>
-								<label class="custom-file-upload btn w-10 cursor-pointer" title="select file">
-									<Icon name="folder"/>
-									<input bind:this={fileInput} on:change={() => setCustom()} type="file" accept="application/JSON" hidden/>
-								</label>
-							</div>
-							<div class="parameter-field">
-								<div>save the current scene</div>
-								<button 
-								class="custom-file-upload btn w-10 border-0" 
-								title="save current scene parameters to a file"
-								on:click={() => downloadScene()}
-								>
-									<Icon name="save"/>
-								</button>
-							</div>
-						</div>
-					</Section>
+					<Presets/>
 					<!-- equations -->
-					<Section label="Equations" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">The system of ordinary differential equations</span>
-							<br/>
-							Each equation has input of 3 dimensional variables (<span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span>) that are individual for each point
-							<br/>
-							and 1 global variable <span class="text-purple-500 italic">v</span>, which can be controlled on the bottom bar.
-							<br/>
-							The equations can be modified in real time using JavaScript syntax (e.g., coefficients should be written as "2*x", instead of "2x").
-							<br/>
-							All the methods and properties of JavaScript <span class="text-sky-300 italic">Math</span> can be used, just without "Math." e.g., <span class="text-sky-300 italic">Math.</span><span class="text-yellow-200 italic">sin</span><span class="text-yellow-500 italic">()</span> {"->"}  <span class="text-sky-300 italic">sin</span><span class="text-yellow-500 italic">()</span>
-						</div>
-						<div slot="body">
-							<div class="parameter-field"><label class="parameter-label italic pr-2" for="eqX">f'(x)=</label>
-								<EquationField 
-								id="eqX"
-								bind:val={$programParams.equation.x} 
-								on:change={(e) => $programParams.equation.x = e.detail.val}/>
-							</div>
-							<div class="parameter-field"><label class="parameter-label italic pr-2" for="eqY">f'(y)=</label>
-								<EquationField 
-								id="eqY"
-								bind:val={$programParams.equation.y} 
-								on:change={(e) => $programParams.equation.y = e.detail.val}/>
-							</div>
-							<div class="parameter-field"><label class="parameter-label italic pr-2" for="eqZ">f'(z)=</label>
-								<EquationField 
-								id="eqZ"
-								bind:val={$programParams.equation.z} 
-								on:change={(e) => $programParams.equation.z = e.detail.val}/>
-							</div>
-						</div>
-						
-					</Section>
-					<Section label="Integration" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">Integration settings</span>
-							<br/>
-							4th order Runge–Kutta is used for the numerical integration.
-							<br/>
-							<span class="italic">Δ</span> is the numerical step of integration
-							<br/>
-							<span class="italic">"shifts per frame"</span> is how many times the itegration is applied to sets each update 
-							<br/>
-							The integration process for sets can be paused/resumed by clicking the switch
-						</div>
-						<div slot="body">
-							
-							<div class="parameter-field"><label class="parameter-label italic" for="delta">Δ (step)</label>
-								<div class="w-28">
-									<NumberPicker 
-									id="delta" 
-									bind:val={$programParams.delta} 
-									step={0.00001} 
-									round={100000}
-									incrementGrowth={1.1} />
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="intStep">Shifts per frame</label>
-								<div class="w-28">
-									<NumberPicker 
-									id={"intStep"}
-									bind:val={$programParams.iterationStep} 
-									step={1} 
-									round={1}
-									range={[1,1000]}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="integrate">Active Integration</label>
-								<div class="w-20">
-									<Switch
-									id={"integrate"}
-									bind:val={$programParams.integrate} 
-									/>
-								</div>
-							</div>
-						</div>
-						
-					</Section>
-					<Section label="Dimensional Mapping" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">Dimensional Mapping</span>
-							<br/>
-							The variables <span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span> can be remapped for each dimension<br/>
-							The coordinates grid has the step of 10
-						</div>
-						<div slot="body">
-							<div class="flex flex-col justify-center ">
-								<div class="flex justify-around h-10 pt-2">
-									<label class=" w-6 h-6" for="dim0"><Icon name="dim-arrow0" color="white"/></label>
-									<label class=" w-6 h-6" for="dim1"><Icon name="dim-arrow1" color="white"/></label>
-									<label class=" w-6 h-6" for="dim2"><Icon name="dim-arrow2" color="white"/></label>
-								</div>
-								<div class="flex justify-around py-1">
-									<div class="w-1/4">
-										<Select
-										id={"dim0"}
-										options={["x","y","z"]}
-										bind:val={$metaParams.dimMap[0]}
-										on:change={(e) => { let s = $metaParams.dimMap.findIndex(v => v == e.detail.val); $metaParams.dimMap[s] = $metaParams.dimMap[0]; $metaParams.dimMap[0] = e.detail.val;}}
-										/>
-									</div>
-										
-									<div class="w-1/4">
-										<Select
-										id={"dim1"}
-										options={["x","y","z"]}
-										bind:val={$metaParams.dimMap[1]}
-										on:change={(e) => { let s = $metaParams.dimMap.findIndex(v => v == e.detail.val); $metaParams.dimMap[s] = $metaParams.dimMap[1]; $metaParams.dimMap[1] = e.detail.val;}}
-										/>
-									</div>
-									
-									<div class="w-1/4">
-										<Select
-										id={"dim2"}
-										options={["x","y","z"]}
-										bind:val={$metaParams.dimMap[2]}
-										on:change={(e) => { let s = $metaParams.dimMap.findIndex(v => v == e.detail.val); $metaParams.dimMap[s] = $metaParams.dimMap[2]; $metaParams.dimMap[2] = e.detail.val;}}
-										/>
-									</div>
-									
-								</div>
-							</div>
-							
-							<div class="parameter-field mt-8">
-								<label class="parameter-label" for="showGrid"><pre>{"Show the \ncoordinates plane"}</pre></label>
-								<div class="w-20">
-									<Switch
-									id={"showGrid"}
-									bind:val={$metaParams.showGrid} 
-									/>
-								</div>
-							</div>
-						</div>
-						
-					</Section>
+					<Equations/>
+					<!-- integration -->
+					<Integration/>
+					<!-- dimensional mapping -->
+					<DimMapping/>
 				</div>
 			</div>
 			<div class="flex flex-col w-full">
@@ -333,171 +123,12 @@
 				<div class="h-8 pr-2"><Pin/></div>
 				<div>
 					<!-- set properties -->
-					<Section label="Sets Properties" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">Sets Properties</span>
-							<br/>
-							The phase portrait is drawn by sets of points.
-							<br/>
-							Each set has its base coordinate, which is the initial condition for each point in the set.	
-							<br/>
-							"Size / Length" is the relationship between the point size and the point's location in the set.
-							<br/>
-							"Auto Respawn" is the automatic respawn of the sets
-							<br/> 
-							"Respawn Interval" is the average value for the auto respawn
-						</div>
-						<div slot="body">
-							<div class="parameter-field">
-								<label class="parameter-label" for="setNum">Number of Sets</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"setNum"}
-									bind:val={$programParams.setNum} 
-									step={1} 
-									round={1}
-									range={[0,40000]}
-									incrementGrowth={1.05}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="setLength">Set Length</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"setLength"}
-									bind:val={$programParams.setLength} 
-									step={1} 
-									round={1}
-									range={[1,40000]}
-									incrementGrowth={1.05}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="pointSize">Point Size</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"pointSize"}
-									bind:val={$programParams.pointSize} 
-									step={0.01} 
-									round={100}
-									range={[0,10]}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="sizeRatio">Size / Length</label>
-								<div class="w-20">
-									<Switch
-									id={"sizeRatio"}
-									bind:val={$programParams.sizeRatio} 
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="respawn">Auto Respawn</label>
-								<div class="w-20">
-									<Switch
-									id={"respawn"}
-									bind:val={$programParams.respawn} 
-									/>
-								</div>
-							</div>
-							<div class={`parameter-field ${$programParams.respawn ? "" : "text-neutral-600"}`}>
-								<label class="parameter-label" for="respawnRate">Respawn Interval</label>
-								<div class="w-24">
-									<NumberPicker 
-										id={"respawnRate"}
-										bind:val={$programParams.respawnRate} 
-										step={1} 
-										round={1}
-										range={[10,10000]}
-										incrementGrowth={1.01}
-									/>
-								</div>
-							</div>
-							<div class="w-full flex justify-center pt-4">
-								<button class="btn h-8" style="border-radius: 4px; color:white;" on:click={() => $metaParams.needsUpdate = true } ><div class="px-3">Respawn</div></button>
-							</div>
-						</div>
-						
-					</Section>
-					<Section label="Sets Spawn Positions" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">The Initial Positions Settings</span>
-							<br/>
-							The initial positions for the sets with random deviation
-						</div>
-						<div slot="body">
-							<div class="parameter-field">
-								<label class="parameter-label" for="startX">x</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startX"}
-									bind:val={$programParams.startPos[0]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-								<label class="self-center" for="startXRnd">+-</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startXRnd"}
-									bind:val={$programParams.startRnd[0]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="startY">y</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startY"}
-									bind:val={$programParams.startPos[1]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-								<label class="self-center" for="startYRnd">+-</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startYRnd"}
-									bind:val={$programParams.startRnd[1]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-							</div>
-							<div class="parameter-field">
-								<label class="parameter-label" for="startZ">z</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startZ"}
-									bind:val={$programParams.startPos[2]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-								<label class="self-center" for="startZRnd">+-</label>
-								<div class="w-24">
-									<NumberPicker 
-									id={"startZRnd"}
-									bind:val={$programParams.startRnd[2]} 
-									step={0.5} 
-									round={100}
-									incrementGrowth={1.05}
-									/>
-								</div>
-							</div>
-						</div>
-					</Section>
+					<SetProperties/>
+					<!-- set spawn positions -->
+					<SpawnPos/>
+					<!--camera target-->
+					<CamTarget/>
+
 					<!-- <Section label="Bifurcation Plot" >
 						<div slot="tooltip">
 							Bifurcation Plot
@@ -508,47 +139,6 @@
 							/>
 						</div>
 					</Section> -->
-					<Section label="Camera Target" >
-						<div slot="tooltip">
-							<span class="text-lg text-cyan-500">The camera target point</span>
-						</div>
-						<div slot="body">
-							<div class="parameter-field">
-								<label class="parameter-label" for="targetX">x</label>
-								<div class="w-28">
-									<NumberPicker 
-									id={"targetX"}
-									step={1} 
-									round={1000}
-									bind:val={$programParams.cameraTarget[0]}
-									/>
-								</div>
-							</div>
-							
-							<div class="parameter-field">
-								<label class="parameter-label" for="targetY">y</label>
-								<div class="w-28">
-									<NumberPicker 
-									id={"targetY"}
-									step={1} 
-									round={1000}
-									bind:val={$programParams.cameraTarget[1]}
-									/>
-								</div>
-							</div>						
-							<div class="parameter-field">
-								<label class="parameter-label" for="targetZ">z</label>
-								<div class="w-28">
-									<NumberPicker 
-									id={"targetZ"}
-									step={1} 
-									round={1000}
-									bind:val={$programParams.cameraTarget[2]}
-									/>
-								</div>
-							</div>
-						</div>
-					</Section>
 				</div>
 				
 			</div>
@@ -611,7 +201,7 @@
 	</div>
 <style>
 
-.parameter-field{
+:global(.parameter-field){
 	display: flex;
 	padding-block: 4px;
 	padding-inline: 4px;
