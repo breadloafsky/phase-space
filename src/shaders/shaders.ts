@@ -52,8 +52,6 @@ planeVs:`
 		
 		vec3 col = vec3(0.5,0.5,0.5);
 
-
-
 		vPos = uModel*aVertexPosition;
 
 		//col = mix(col,vec3(0.5,0.5,0.5), gl_Position.z/100.);

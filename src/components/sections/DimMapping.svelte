@@ -10,7 +10,7 @@
 	<div slot="tooltip">
 		<span class="text-lg text-cyan-500">Dimensional Mapping</span>
 		<br/>
-		The variables <span class="text-red-500 italic">x</span>, <span class="text-green-500 italic">y</span>, <span class="text-blue-500 italic">z</span> can be remapped for each dimension<br/>
+		The variables <span data-var="x">x</span>, <span data-var="y">y</span>, <span data-var="z">z</span> can be remapped for each dimension<br/>
 		The coordinates grid has the step of 10
 	</div>
 	<div slot="body">
@@ -29,7 +29,6 @@
 					on:change={(e) => { let s = $metaParams.dimMap.findIndex(v => v == e.detail.val); $metaParams.dimMap[s] = $metaParams.dimMap[0]; $metaParams.dimMap[0] = e.detail.val;}}
 					/>
 				</div>
-					
 				<div class="w-1/4">
 					<Select
 					id={"dim1"}
@@ -38,7 +37,6 @@
 					on:change={(e) => { let s = $metaParams.dimMap.findIndex(v => v == e.detail.val); $metaParams.dimMap[s] = $metaParams.dimMap[1]; $metaParams.dimMap[1] = e.detail.val;}}
 					/>
 				</div>
-				
 				<div class="w-1/4">
 					<Select
 					id={"dim2"}

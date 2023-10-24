@@ -9,6 +9,9 @@
 	let isTooltipVisible = false;
 	let tooltip:HTMLDivElement;
 
+
+	
+
 	onMount(() => {
 		tooltip.style.left = window.outerWidth/2+"";
 		tooltip.style.top = window.innerHeight/2+"";
@@ -23,24 +26,29 @@
 			let y = e.pageY;
 			let bbox= tooltip.getBoundingClientRect();
 
-			if(e.pageX+bbox.width+10 > window.innerWidth)
-				x -= bbox.width; 
-			
-			if(e.pageY+bbox.height+10 > window.innerHeight)
-				y -= bbox.height;
 
-			tooltip.style.left = x+10+"px";
-			tooltip.style.top = y+10+"px";
+			tooltip.style.visibility = bbox.width == 0 ? "hidden" : "visible"
+			
+			if(x > window.innerWidth/2)
+				x -= bbox.width;
+			
+			if(y > window.innerHeight/2)
+				y -= bbox.height; 
+
+			tooltip.style.left = x+"px";
+			tooltip.style.top = y+"px";
 		}
 		isTooltipVisible = show;
 	}
 
 </script>
 
+
+
 <div class="section" >
 	<div class="header"  >
 		<h3>{label}</h3>
-		<div class="ml-2 info w-5 h-5 text-center self-center text-sm font-bold"
+		<div class="info text-sm"
 			on:mousemove={(e) => showTooltip(true,e)}
 			on:mouseleave={(e) => showTooltip(false)}
 		>
@@ -59,6 +67,22 @@
 
 
 <style>
+
+
+.info {
+	background-color: rgba(221, 221, 221, 0.212);
+	border-radius: 50%;
+	color:rgb(216, 216, 216);
+	opacity: 0.6;
+	cursor:crosshair;
+	margin-left: 8px;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	align-self: center;
+	font-weight: 800;
+}
+
 .section { 
 	transition:all 0.1s;
 	margin-block: 10px;
@@ -74,6 +98,8 @@
 	display: flex;
 	justify-content: space-between;
 	background-color: #2d2d2d8c;
+	align-items: center;
+	color: #c9b69e;
 }
 
 .body {
@@ -88,13 +114,6 @@
 }
 
 
-.info {
-	background-color: rgba(221, 221, 221, 0.212);
-	border-radius: 50%;
-	color:rgb(216, 216, 216);
-	opacity: 0.6;
-	cursor:pointer;
-}
 
 :global(.mobile) .info{
 	visibility: hidden;
@@ -113,5 +132,8 @@
 	width: max-content;
 	font-size: 0.9em;
 	z-index: 4;
+	pointer-events: none;
+
+	font-size: 0.8rem;
 }
 </style>

@@ -5,7 +5,7 @@ const colors = ["#73d4ea","#dbd46e","white","#dfe4be"];
 const varColors ={
 	x:"#fb9191", 
 	y:"#96e6b3",
-	z:"#9adeff",
+	z:"#6da5ff",
 	v:"#dcb1ff"
 }
 
@@ -61,3 +61,4 @@ export const utils = {
 		return str;
 	}
 }
+

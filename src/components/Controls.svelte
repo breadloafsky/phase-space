@@ -197,6 +197,8 @@
 	padding-block: 4px;
 	padding-inline: 4px;
 	justify-content: space-between;
+	font-size:0.9rem;
+	align-items: center;
 }
 .parameter-label{
 	min-width: 4rem;

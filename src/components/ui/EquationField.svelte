@@ -41,16 +41,13 @@
 		}
 	}
 	$:{
-		
 		if(element && document.activeElement != element && val != oldVal)
 		{
 			clearTimeout(timeout);
 			timeout = setTimeout(update,1);
 		}
-			
 	}
 
-	
 
 	function resize()
 	{
@@ -111,7 +108,6 @@
 	color:red !important;
 }
 .equation:focus{
-	
 }
 
 </style>

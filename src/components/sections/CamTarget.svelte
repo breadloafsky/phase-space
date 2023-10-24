@@ -45,3 +45,10 @@
 		</div>
 	</div>
 </Section>
+
+
+<style>
+	.parameter-field{
+		justify-content: space-around;
+	}
+</style>

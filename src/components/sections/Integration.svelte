@@ -10,17 +10,16 @@
 	<div slot="tooltip">
 		<span class="text-lg text-cyan-500">Integration settings</span>
 		<br/>
-		4th order Runge–Kutta is used for the numerical integration.
+		4th order Runge-Kutta is used for the numerical integration.
 		<br/>
-		<span class="italic">Δ</span> is the numerical step of integration
+		<span class="italic">"Integration Step"</span> is the numerical step of integration
 		<br/>
-		<span class="italic">"shifts per frame"</span> is how many times the itegration is applied to sets each update 
+		<span class="italic">"Integrations per frame"</span> is how many times the itegration is applied to sets each update 
 		<br/>
 		The integration process for sets can be paused/resumed by clicking the switch
 	</div>
 	<div slot="body">
-		
-		<div class="parameter-field"><label class="parameter-label italic" for="delta">Δ (step)</label>
+		<div class="parameter-field"><label class="parameter-label" for="delta">Integration Step</label>
 			<div class="w-28">
 				<NumberPicker 
 				id="delta" 
@@ -31,7 +30,7 @@
 			</div>
 		</div>
 		<div class="parameter-field">
-			<label class="parameter-label" for="intStep">Shifts per frame</label>
+			<label class="parameter-label" for="intStep">Integrations per Frame</label>
 			<div class="w-28">
 				<NumberPicker 
 				id={"intStep"}

@@ -19,7 +19,7 @@
 				id={"startX"}
 				bind:val={$programParams.startPos[0]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>
@@ -29,7 +29,7 @@
 				id={"startXRnd"}
 				bind:val={$programParams.startRnd[0]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>
@@ -41,7 +41,7 @@
 				id={"startY"}
 				bind:val={$programParams.startPos[1]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>
@@ -51,7 +51,7 @@
 				id={"startYRnd"}
 				bind:val={$programParams.startRnd[1]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>
@@ -63,7 +63,7 @@
 				id={"startZ"}
 				bind:val={$programParams.startPos[2]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>
@@ -73,7 +73,7 @@
 				id={"startZRnd"}
 				bind:val={$programParams.startRnd[2]} 
 				step={0.5} 
-				round={100}
+				round={10000}
 				incrementGrowth={1.05}
 				/>
 			</div>

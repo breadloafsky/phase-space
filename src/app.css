@@ -15,6 +15,35 @@
     }
   } */
 
+
+/*functions and variables styling*/
+.function{
+    font-style: italic;
+    color: #7dd3fc;
+}
+.function>*{
+    color:#eab308;
+}
+[data-var]{
+    font-style: italic;
+    font-weight: 600;
+}
+[data-var=x]{
+    color:#fb9191;
+}
+[data-var=y]{
+    color: #96e6b3;
+}
+[data-var=z]{	
+    color:#6da5ff;
+}
+[data-var=v]{
+    color:#dcb1ff;
+}
+
+
+
+
 html{
     font-size: 16px;
     --font-size:16px;
