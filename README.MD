@@ -10,7 +10,7 @@ the application can crash your browser when the number of points is too big
 
 
 ## About
-The phase portraits consist of sets of points that can have from one to many points that share the same initial condition, just having different order of numerical integration. The initial conditions of sets can be shifted by activating the integration of sets. The method used for the integration is RK4 Runge-Kutta.
+The phase portraits consist of sets of points that can have from one to many points that share the same initial condition, but having different state of numerical integration. The initial conditions of sets can be shifted by activating the integration of sets. The method used for the integration is RK4 Runge-Kutta.
 
 ## Usage
 
@@ -28,8 +28,7 @@ Each of the variables has its corresponding differential equation:
 The equations can be edited on the left sidebar, using JavaScript-like syntax.
 
 
-***Δ*** is the integration step. very large value of ***Δ*** can "break" the prediction.
-
+***Integration Step*** is a numerical step of integration, very large values can reduce the accuracy or break prediction.\
 The global variable ***v*** can be used to add change with time.\
 The controls for ***v*** are on the bottom bar.
 

@@ -40,8 +40,8 @@
 		}
 		isTooltipVisible = show;
 	}
-
 </script>
+
 
 
 
@@ -59,16 +59,14 @@
 </div>
 
 
-
-
 <div bind:this={tooltip} class={`tooltip`} hidden={!isTooltipVisible}>
 	<slot name="tooltip"/>
 </div>
 
 
+
+
 <style>
-
-
 .info {
 	background-color: rgba(221, 221, 221, 0.212);
 	border-radius: 50%;
@@ -99,7 +97,7 @@
 	justify-content: space-between;
 	background-color: #2d2d2d8c;
 	align-items: center;
-	color: #c9b69e;
+	color: #fde2c1;
 }
 
 .body {
